@@ -1,0 +1,53 @@
+K 25
+svn:wc:ra_dav:version-url
+V 84
+/svn/fms/!svn/ver/2230/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources
+END
+prm.vm
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fms/!svn/ver/2219/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/prm.vm
+END
+actionsJava.vm
+K 25
+svn:wc:ra_dav:version-url
+V 99
+/svn/fms/!svn/ver/2445/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/actionsJava.vm
+END
+searchEnumLists.properties
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fms/!svn/ver/2221/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/searchEnumLists.properties
+END
+defaultCfg.vm
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fms/!svn/ver/2256/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/defaultCfg.vm
+END
+usr.vm
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fms/!svn/ver/2219/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/usr.vm
+END
+loadtest.properties
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fms/!svn/ver/2438/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/loadtest.properties
+END
+defaultUsp.vm
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fms/!svn/ver/2219/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/defaultUsp.vm
+END
+log4j.xml
+K 25
+svn:wc:ra_dav:version-url
+V 94
+/svn/fms/!svn/ver/2199/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/log4j.xml
+END

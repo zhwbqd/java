@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 91
+/svn/fms/!svn/ver/2426/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/lsrGen
+END
+testChief.vm
+K 25
+svn:wc:ra_dav:version-url
+V 104
+/svn/fms/!svn/ver/2426/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/lsrGen/testChief.vm
+END
+lsr.vm
+K 25
+svn:wc:ra_dav:version-url
+V 98
+/svn/fms/!svn/ver/2426/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/lsrGen/lsr.vm
+END
+groupChief.vm
+K 25
+svn:wc:ra_dav:version-url
+V 105
+/svn/fms/!svn/ver/2426/trunk/rm-perf-test/generator/fm-sprocessor/src/main/resources/lsrGen/groupChief.vm
+END

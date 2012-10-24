@@ -1,0 +1,41 @@
+###########################################################
+#   TESTING ENVIRONMENT
+birthday.xls=src/main/resources/ET Birthday Program.xls
+birthday.main.sheet=ALL
+
+gift.xls=src/main/resources/gift.xls
+gift.main.sheet=Sheet1
+
+manager.xls=src/main/resources/managers.xls
+manager.main.sheet=TEST
+
+mail.smtp.host=smtp3.hp.com
+mail.from=noreply@hp.com
+
+## the person to be copied as coordinator
+cooridinator.email=noreply@hp.com
+
+mail.manager.reminder.subject=[TESTING!!!][ET Birthday Program Reminder] $DATE_STRING is the birthday of $EMPLOYEE_NAME
+mail.manager.reminder.template=src/main/resources/template/ManagerReminder.htm
+mail.manager.reminder.category=
+
+###########################################################
+#   PRODUCTION ENVIRONMENT
+#birthday.xls=ET Birthday Program.xls
+#birthday.main.sheet=ALL
+#
+#gift.xls=gift.xls
+#gift.main.sheet=Sheet1
+#
+#manager.xls=managers.xls
+#manager.main.sheet=Sheet1
+#
+#mail.smtp.host=smtp3.hp.com
+#mail.from=wang.qiao-ling@hp.com
+#
+### the person to be copied as coordinator
+#cooridinator.email=wang.qiao-ling@hp.com
+#
+#mail.manager.reminder.subject=[ET Birthday Program Reminder] $DATE_STRING is the birthday of $EMPLOYEE_NAME
+#mail.manager.reminder.template=template/ManagerReminder.htm
+#mail.manager.reminder.category=Must Attend

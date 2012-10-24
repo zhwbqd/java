@@ -1,0 +1,61 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+[General]
+Type=General-Java
+RecordedProtocol=
+DefaultCfg=default.cfg
+AppName=
+BuildTarget=
+ParamRightBrace=>
+ParamLeftBrace=<
+NewFunctionHeader=1
+LastActiveAction=Actions
+CorrInfoReportDir=
+LastResultDir=
+DevelopTool=Vugen
+ActionLogicExt=action_logic
+MajorVersion=11
+MinorVersion=0
+ParameterFile=FMS_${serviceName}_${methodName}.prm
+GlobalParameterFile=
+RunType=Java-Interpreter
+LastModifyVer=11.0.0.0
+[TransactionsOrder]
+Order="${methodName}_"
+[Actions]
+vuser_init=vuser_init.java
+Actions=Actions.java
+vuser_end=vuser_end.java
+[Recorded Actions]
+vuser_init=0
+Actions=0
+vuser_end=0
+[Replayed Actions]
+vuser_init=1
+Actions=1
+vuser_end=1
+[Modified Actions]
+vuser_init=0
+Actions=0
+vuser_end=0
+[ProtocolsVersion]
+General-Java=11.0.0.0
+[RunLogicFiles]
+Default Profile=default.usp
+[StateManagement]
+1=1
+4=0
+9=0
+10=0
+11=0
+12=0
+17=0
+18=0
+20=0
+21=0
+CurrentState=1
+VuserStateHistory= 0 
+LastReplayStatus=0
+[Transactions]
+${methodName}_=

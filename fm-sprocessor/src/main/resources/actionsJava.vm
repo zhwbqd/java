@@ -1,0 +1,68 @@
+#set( $symbol_pound = '#' )
+#set( $symbol_dollar = '$' )
+#set( $symbol_escape = '\' )
+
+/*
+ * LoadRunner Java script. (Build: _build_number_)
+ * Service Version: ${fullVersionNumber}
+ * Script Description: 
+ *                     
+ */
+
+import lrapi.lr;
+${importPackage}
+
+
+public class Actions {
+
+	private ${className} _service;
+	
+	private EntityManager _entityManager = null;
+	
+	public int init() throws Throwable {
+		_entityManager = FmPerfTestEntityManager.getEntityMgr();
+		_service = new ${className}();
+		_service.setEntityManager(_entityManager);
+		_entityManager.getTransaction().begin();
+		return 0;
+	}//end of init
+	
+	
+	public int action() throws Throwable {
+		
+		${fields}
+		
+		try {
+			fmCriterion = new FmCriterion();
+			${methodName}(${params});
+			
+			#foreach ($enumEntry in $searchEnumMap.entrySet())
+			
+			fmCriterion = new FmCriterion();
+			fmCriterion.addCriteria(new FmOpCriteria<${searchEnumName}>(${searchEnumName}.${enumEntry.key}, Operand.eEquals, FmValue.createInstance("<${enumEntry.value}>")));
+			${methodName}(${params});
+			
+			#end
+		} catch (ServiceException e) {
+			lr.end_transaction(${transactionName},lr.FAIL);
+			lr.output_message("ERROR:${methodName}------"+e.getMessage());
+	    }
+		return 0;
+	}//end of action
+	
+	
+	public int end() throws Throwable {
+		_entityManager.getTransaction().commit();
+		if(_entityManager.isOpen()) {
+			_entityManager.close();
+		}
+		return 0;
+	}//end of end
+
+	private void ${methodName}(${signature}) throws ServiceException{
+		lr.start_transaction(${transactionName});
+		${returnType} returnVal = _service.${methodName}(${params});
+	    lr.end_transaction(${transactionName},lr.PASS);
+	    lr.output_message(${transactionName} +" size: "+returnVal.size());
+	}	
+}
