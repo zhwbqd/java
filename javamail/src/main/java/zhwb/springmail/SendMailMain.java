@@ -48,8 +48,8 @@ public class SendMailMain {
 				.getBean("mailSender");
 		// 创建一个纯文本邮件:
 		SimpleMailMessage mail = new SimpleMailMessage();
-		mail.setFrom("654752907@qq.com");
-		mail.setTo("shenzhen_zsw@163.com");
+        mail.setFrom("wen-bin.zhang@hp.com");
+        mail.setTo("wen-bin.zhang@hp.com");
 		mail.setSubject("Another test mail");
 		mail.setText("测试使用Spring MailSender发送邮件");
 		// 发送:
@@ -62,9 +62,8 @@ public class SendMailMain {
         helper.setTo("wen-bin.zhang@hp.com");
 		helper.setSubject("Test mime mail");
 		// 设定为HTML格式:
-		helper.setText("<html><body>访问Live在线书店：<br>"
-				+ "<a href='http://www.livebookstore.net' target='_blank'>"
-				+ "<img src='cid:logo'></a></body></html>", true);
+        helper.setText("<html><body>zhwbqdGitHub<br>" + "<a href='https://github.com/zhwbqd/' target='_blank'>"
+                + "link</a></body></html>", true);
         //		helper.addInline("logo", new ClassPathResource("logo.gif"));
         //		helper.addAttachment("freebsd.gif",
         //				new ClassPathResource("freebsd.gif"));
