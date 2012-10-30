@@ -21,9 +21,9 @@ public class CompareSameList
         }
         System.out.println(getSame(list1, list2));
         System.out.println(getSame2(list1, list2));
-        System.out.println(getDiffrent3(list1, list2));
-        System.out.println(getDiffrent4(list1, list2));
-
+        System.out.println(getSame3(list1, list2));
+        System.out.println(getSame4(list1, list2));
+        System.out.println(getSame5(list1, list2));
         //        getDiffrent total times 2789492240
         //        getDiffrent2 total times 3324502695
         //        getDiffrent3 total times 24710682
@@ -36,7 +36,51 @@ public class CompareSameList
      * @param list2
      * @return
      */
-    private static List<String> getDiffrent4(List<String> list1, List<String> list2)
+    private static List<String> getSame5(List<String> list1, List<String> list2)
+    {
+        long st = System.nanoTime();
+       
+        List<String> diff = new ArrayList<String>();
+        List<String> maxList = list1;
+        List<String> minList = list2;
+        if (list2.size() > list1.size())
+        {
+            maxList = list2;
+            minList = list1;
+        }
+        Map<String,Integer> maxMap = new HashMap<String,Integer>(maxList.size());
+    	Map<String,Integer> minMap = new HashMap<String,Integer>(minList.size());
+        for (String string : maxList)
+        {
+        	maxMap.put(string, 1);
+        }
+        for (String string : minList)
+        {
+            Integer cc = maxMap.get(string);
+            if (cc != null)
+            {
+            	minMap.put(string, cc);
+                continue;
+            }
+        }
+        for (Map.Entry<String,Integer> entry : minMap.entrySet())
+        {
+            
+                diff.add(entry.getKey());
+            
+        }
+        System.out.println("getDiffrent5 total times " + (System.nanoTime() - st));
+        return diff;
+
+    }
+    
+    /**
+     * 获取两个List的不同元素
+     * @param list1
+     * @param list2
+     * @return
+     */
+    private static List<String> getSame4(List<String> list1, List<String> list2)
     {
         long st = System.nanoTime();
         Map<String, Integer> map = new HashMap<String, Integer>(list1.size() + list2.size());
@@ -80,7 +124,7 @@ public class CompareSameList
      * @param list2
      * @return
      */
-    private static List<String> getDiffrent3(List<String> list1, List<String> list2)
+    private static List<String> getSame3(List<String> list1, List<String> list2)
     {
         long st = System.nanoTime();
         Map<String, Integer> map = new HashMap<String, Integer>(list1.size() + list2.size());
