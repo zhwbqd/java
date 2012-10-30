@@ -20,16 +20,14 @@ public class CompareDifferentList
         System.out.println(getDiffrent(list1, list2));
 
         System.out.println(getDiffrent2(list1, list2));
-        ;
         System.out.println(getDiffrent3(list1, list2));
-        ;
         System.out.println(getDiffrent4(list1, list2));
-        ;
-        //        getDiffrent total times 2789492240
-        //        getDiffrent2 total times 3324502695
-        //        getDiffrent3 total times 24710682
-        //        getDiffrent4 total times 15627685
+        System.out.println(getDiffrent4(list1, list2));
     }
+    
+    
+    
+    
     /**
      * 获取两个List的不同元素
      * @param list1
