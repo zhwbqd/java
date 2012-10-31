@@ -1,0 +1,179 @@
+<html>
+  <head>
+    <title></title>
+    <style type="text/css">
+        .panel{
+          border:1px dotted black;
+          margin:10px 0px 10px 0px;
+          padding:3px 3px 3px 3px;
+          }
+        .panel caption{
+		  font-size: 17px;
+          font-family:Arial, Helvetica, sans-serif;
+          }
+        .panel td{
+          margin:1px 0px 1px 5px;
+          padding:5px 5px 5px 5px;
+          font-family:Calibri;
+          font-size:14px;
+          }
+        .panel a{
+          text-decoration:none;
+          } 
+		  
+        .box{
+          width:1200px;
+          border:1px soild black;
+          margin:10px 5px 10px 0px;
+          }
+        .box caption{
+          font-family:Arial, Helvetica, sans-serif;
+		  font-size:17px;
+          }
+        .box a{
+          text-decoration:none;
+          }
+        .odd{
+          background-color:#CCC;
+          }
+        .even{}
+        .box td{
+          margin:1px 0px 1px 0px;
+          padding:1px 1px 1px 8px;
+          font-family:Calibri;
+          font-size:14px;
+          } 
+        .bottom{
+          border:1px dotted grey;
+          margin:10px 5px 10px 10px;
+          padding:3px 3px 3px 3px;
+          }
+        .bottom p{
+          font-family:Arial, Helvetica, sans-serif;
+          font-size:14px;
+          margin:10px 5px 10px 10px;
+          }
+    </style>
+  </head>
+  <body>
+    <!-- Header summary -->
+    <table style="border:1px dotted black;width:1100px;background-color:#F0F0F0">
+		 <tr>
+         <td width="70%">
+           <table class="panel" width="750px"><caption>Violation Dashboard</caption>
+		     <tr>
+				<td></td>
+				<td align="center"><img src=$reportSummary.get("AppContextPath")/image/BLOCKER.png ></img>Blocker</td>
+				<td align="center"><img src=$reportSummary.get("AppContextPath")/image/CRITICAL.png ></img>Critical</td>
+				<td align="center"><img src=$reportSummary.get("AppContextPath")/image/MAJOR.png ></img>Major</td>
+				<td align="center"><img src=$reportSummary.get("AppContextPath")/image/MINOR.png ></img>Minor</td>
+				<td align="center"><img src=$reportSummary.get("AppContextPath")/image/INFO.png ></img>Info</td>
+			</tr>
+             #foreach($violationSummary  in $aggregateSummary.entrySet())
+             <tr>
+				<td style="background-color:#CCC;">$violationSummary.getKey()</td>
+				#foreach($violationSeverity in $violationSummary.getValue())
+				<td>$violationSeverity</td>
+				#end
+			</tr>
+			 #end
+           </table>
+         </td>
+		 <td valign="top">
+           <table class="panel" ><caption>Report Summary</caption>
+             #set($violationLevelDecorate = "")
+             #if($reportSummary.get("violationPriority") == "Blocker")
+               #set($violationLevelDecorate = "Blocker")
+             #else
+               #set($violationLevelDecorate = $reportSummary.get("violationPriority") + " and above")
+             #end
+			 
+			 #set($reportPeriodDecorate = "")
+             #if($reportSummary.get("violationPeriod").equals("1"))
+               #set($reportPeriodDecorate = "SincePrevious")
+             #elseif($reportSummary.get("violationPeriod").equals("2"))
+               #set($reportPeriodDecorate = "Weekly")
+			 #elseif($reportSummary.get("violationPeriod").equals("3"))
+				#set($reportPeriodDecorate = "Monthly")
+             #end
+			 <tr><td bgcolor="#CCCCCC"><a title="Above which we could see the detail info in this report">Report period</a></td><td>$reportPeriodDecorate</td></tr>
+             <tr><td bgcolor="#CCCCCC"><a title="Above which we could see the detail info in this report">Report Level</a></td><td>$violationLevelDecorate</td></tr>
+             <tr><td bgcolor="#CCCCCC">Report Time</td><td>$reportSummary.get("reportDatetime")</td></tr>
+           </table>
+         </td>
+       </tr>
+    </table>
+    <!-- Violation Details -->
+   #if($violationDetails.size() == 0)
+   <table class="box" cellspaceing="0">
+       <caption>No New Violation Issues Found</caption>
+       <tr style="background-color:#6699CC;color:#FFFFFF"><td align="center">None</td></tr>
+   </table>
+   #else
+    #foreach($violationEntrySet in $violationDetails.entrySet())
+	
+		#*
+			Get the each severity violation total count
+		*#	
+		
+		#set($violationCollection = $violationEntrySet.getValue())
+		#set($displayCount = 0)
+		#foreach($violation in $violationCollection)
+			#set($displayCount = $displayCount + $violation.getDelta())
+		#end
+		
+    <table class="box" cellspaceing="0"><caption>$displayCount New $violationEntrySet.getKey() Issues Found</caption>
+	#if($displayCount == 0)
+		       <tr style="background-color:#6699CC;color:#FFFFFF"><td align="left">None new violations</td></tr>
+	#else
+      <tr class="odd"><td>New Violation</td><td>Last modified Ts</td><td>Last Modified Comments</td><td>Ascend </td><td>Owner</td></tr>
+	  #set($totalArtifactCount = 0)
+      #set($totalProjectCount = 0)
+      #foreach($violation in $violationCollection)
+        #set($eachViolationCount = 0)
+        #foreach($project in $violation.getProjects())
+          #set($eachViolationCount = $eachViolationCount +1)
+          #set($totalProjectCount = $totalProjectCount + 1)
+          #set($sequence = "")
+          #set($versionInfo = $versionDetails.get($project.getLongName()))
+		  #set($firstCommaIndex = $project.getKee().indexOf(':') + 1)
+          #set($projectArtifact = $project.getKee().substring(0, $project.getKee().indexOf(':')) + ":"+ $project.getKee().substring($firstCommaIndex).substring(0, $project.getKee().substring($firstCommaIndex).indexOf(':')) )
+          ## For each one project show the different background color ...
+          #if($totalProjectCount % 2 == 0)
+             #set($sequence = "odd")
+          #else
+             #set($sequence = "even")          
+          #end
+          
+          ## Each table row ...
+          #if($eachViolationCount == 1)
+            #set($violationIdentifier = "")
+            #if($violation.getRule().getPluginName()=="pmd")
+              #set($violationIdentifier = $violation.getRule().getPluginRuleKey())
+            #else
+              #set($violationIdentifier = $violation.getRule().getName())
+            #end
+      <tr style="background-color:#6699CC;color:#FFFFFF"><td colspan="5"><a>$violationIdentifier</a> ($violation.getDelta())</td></tr>
+      <tr class="$sequence"><td><a href=$projectContext.get($projectArtifact).get("PORTAL_URL")/resource/index/$project.getId()?tab=violations&period=$reportSummary.get("violationPeriod")&rule=$violation.getRule().getId()>$project.getName()</a></td><td>$dateFormat.format($versionInfo.getDate())</td><td>$versionInfo.getMessage()</td><td>$project.getViolationDelta()</td><td>$versionInfo.getAuthor()</td></tr>
+          #else
+      <tr class="$sequence"><td><a href=$projectContext.get($projectArtifact).get("PORTAL_URL")/resource/index/$project.getId()?tab=violations&period=$reportSummary.get("violationPeriod")&rule=$violation.getRule().getId()>$project.getName()</a></td><td>$dateFormat.format($versionInfo.getDate())</td><td>$versionInfo.getMessage()</td><td>$project.getViolationDelta()</td><td>$versionInfo.getAuthor()</td></tr>
+          #end
+        #end
+      #end
+	 #end
+    </table>
+    #end
+   #end
+    <!-- bottom statement lines -->
+    <table style="border:1px dotted black;width:1100px;background-color:#F0F0F0">
+      <tr>
+        <td>
+          <div class="bottom">
+            <p>Note: This email is generated automatically. Try to reply this is unserviceable.</p>
+            <p>Each violation ascended in this report should be reviewed and fixed in a timely manner. The owner column is picked up as the last person who modified each file, so it may not correct if several person change a same file during the report period. Owner please be responsible to notify the correct person if it's not you first broke the rule.</p>
+          </div>
+        </td>
+      </tr>
+    </table>
+  </body>
+</html>

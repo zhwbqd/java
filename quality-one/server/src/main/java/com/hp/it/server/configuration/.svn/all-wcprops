@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 102
+/svn/fms-lab/!svn/ver/189/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/configuration
+END
+ArtifactReportConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/configuration/ArtifactReportConstant.java
+END
+AggregateReportConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 131
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/configuration/AggregateReportConstant.java
+END
+GobalConstant.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/configuration/GobalConstant.java
+END

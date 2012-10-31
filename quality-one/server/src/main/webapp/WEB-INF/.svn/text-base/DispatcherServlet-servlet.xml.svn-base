@@ -1,0 +1,23 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd"
+	default-autowire="byName">
+
+	<bean id="viewResolver"
+		class="org.springframework.web.servlet.view.InternalResourceViewResolver">
+		<!--property name="prefix" value="/jsp/" /-->
+		<property name="suffix" value=".jsp" />
+	</bean>
+
+	<bean id="simpleUrlHandlerMapping"
+		class="org.springframework.web.servlet.handler.SimpleUrlHandlerMapping">
+		<property name="mappings">
+			<props>
+				<prop key="/hello.do">helloController</prop>
+			</props>
+		</property>
+	</bean>
+
+	<bean id="helloController" class="com.hp.it.mvc.controller.HelloController" />
+</beans>

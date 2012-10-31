@@ -1,0 +1,17 @@
+K 25
+svn:wc:ra_dav:version-url
+V 97
+/svn/fms-lab/!svn/ver/191/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/listener
+END
+LoggerInitializerListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/listener/LoggerInitializerListener.java
+END
+ContextInitializerListener.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/fms-lab/!svn/ver/191/trunk/Adrian/quality-one/server/src/main/java/com/hp/it/server/listener/ContextInitializerListener.java
+END
