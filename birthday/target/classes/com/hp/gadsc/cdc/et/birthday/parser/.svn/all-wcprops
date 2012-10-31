@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/parser
+END
+BirthdayParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 126
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/parser/BirthdayParser.java
+END
+GiftParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 122
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/parser/GiftParser.java
+END
+AbstractXslParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/parser/AbstractXslParser.java
+END
+ManagerParser.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/parser/ManagerParser.java
+END

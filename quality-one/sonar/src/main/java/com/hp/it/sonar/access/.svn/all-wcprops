@@ -1,0 +1,23 @@
+K 25
+svn:wc:ra_dav:version-url
+V 93
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/sonar/src/main/java/com/hp/it/sonar/access
+END
+PortalAccessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 113
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/sonar/src/main/java/com/hp/it/sonar/access/PortalAccessor.java
+END
+ProjectAccessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 114
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/sonar/src/main/java/com/hp/it/sonar/access/ProjectAccessor.java
+END
+RuleAccessor.java
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fms-lab/!svn/ver/187/trunk/Adrian/quality-one/sonar/src/main/java/com/hp/it/sonar/access/RuleAccessor.java
+END
