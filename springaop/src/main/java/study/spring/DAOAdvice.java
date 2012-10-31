@@ -16,9 +16,7 @@ import org.springframework.aop.MethodBeforeAdvice;
 
 public class DAOAdvice implements AfterReturningAdvice, MethodBeforeAdvice, MethodInterceptor
 {
-
-    @Override
-    public Object invoke(MethodInvocation invocation)
+public Object invoke(MethodInvocation invocation)
         throws Throwable
     {
         Object obj = invocation.proceed();
@@ -26,7 +24,6 @@ public class DAOAdvice implements AfterReturningAdvice, MethodBeforeAdvice, Meth
         return obj;
     }
 
-    @Override
     public void before(Method method, Object[] args, Object target)
         throws Throwable
     {
@@ -37,7 +34,6 @@ public class DAOAdvice implements AfterReturningAdvice, MethodBeforeAdvice, Meth
         }
     }
 
-    @Override
     public void afterReturning(Object returnValue, Method method, Object[] args, Object target)
         throws Throwable
     {

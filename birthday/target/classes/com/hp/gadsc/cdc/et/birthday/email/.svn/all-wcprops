@@ -1,0 +1,29 @@
+K 25
+svn:wc:ra_dav:version-url
+V 106
+/svn/fms-lab/!svn/ver/21/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/email
+END
+Invitation.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/email/Invitation.java
+END
+Email.java
+K 25
+svn:wc:ra_dav:version-url
+V 116
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/email/Email.java
+END
+EmailUtility.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/fms-lab/!svn/ver/21/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/email/EmailUtility.java
+END
+EmailGenerator.java
+K 25
+svn:wc:ra_dav:version-url
+V 125
+/svn/fms-lab/!svn/ver/3/trunk/vicky/et_birthday/birthday/src/main/java/com/hp/gadsc/cdc/et/birthday/email/EmailGenerator.java
+END
