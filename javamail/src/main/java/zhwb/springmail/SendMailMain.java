@@ -40,7 +40,7 @@ public class SendMailMain {
 		);
 	}
 
-	public static void javaMailSender() throws MessagingException {
+	public static void springMailSender() throws MessagingException {
 		// 使用Spring提供的MailSender:
 		ApplicationContext context = new ClassPathXmlApplicationContext(
 				"config.xml");
@@ -95,7 +95,7 @@ public class SendMailMain {
 	}
 
 	public static void main(String[] args) throws Exception {
-		javaMailSender();
+		springMailSender();
         sendTextMail();
 	}
 
