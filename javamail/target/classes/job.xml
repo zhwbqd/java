@@ -1,0 +1,19 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<quartz>
+  <job>
+    <job-detail>
+      <name>helloworld</name>
+      <group>group1</group>
+      <job-class>zhwb.quartz.job.SendMailJob</job-class>
+    </job-detail>
+    <trigger>
+      <cron>
+        <name>test</name>
+        <group>group1</group>
+        <job-name>helloworld</job-name>
+        <job-group>group1</job-group>
+        <cron-expression>0 0/1 * * * ?</cron-expression>
+     </cron>
+    </trigger>
+  </job>
+</quartz>
