@@ -1,0 +1,47 @@
+K 25
+svn:wc:ra_dav:version-url
+V 111
+/svn/fms/!svn/ver/2229/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile
+END
+TransforXmlFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 132
+/svn/fms/!svn/ver/2251/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/TransforXmlFile.java
+END
+XmlFile.java
+K 25
+svn:wc:ra_dav:version-url
+V 124
+/svn/fms/!svn/ver/2223/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/XmlFile.java
+END
+DBOperation.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/fms/!svn/ver/2229/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/DBOperation.java
+END
+UniqueColumns.java
+K 25
+svn:wc:ra_dav:version-url
+V 130
+/svn/fms/!svn/ver/2232/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/UniqueColumns.java
+END
+ReplaceValue.java
+K 25
+svn:wc:ra_dav:version-url
+V 129
+/svn/fms/!svn/ver/2224/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/ReplaceValue.java
+END
+GenerateSql.java
+K 25
+svn:wc:ra_dav:version-url
+V 128
+/svn/fms/!svn/ver/2254/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/GenerateSql.java
+END
+Util.java
+K 25
+svn:wc:ra_dav:version-url
+V 121
+/svn/fms/!svn/ver/2232/trunk/rm-perf-test/generator/fm-sprocessor/src/main/java/com/hp/fm/sprocessor/gensqlfile/Util.java
+END
