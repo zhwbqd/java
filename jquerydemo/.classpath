@@ -3,5 +3,13 @@
 	<classpathentry kind="src" path="src"/>
 	<classpathentry kind="con" path="org.eclipse.jdt.launching.JRE_CONTAINER"/>
 	<classpathentry kind="con" path="org.eclipse.jst.j2ee.internal.web.container"/>
+	<classpathentry kind="lib" path="C:/Users/zhawenbi/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5.jar" sourcepath="C:/Users/zhawenbi/.m2/repository/javax/servlet/servlet-api/2.5/servlet-api-2.5-sources.jar">
+		<attributes>
+			<attribute name="maven.groupId" value="javax.servlet"/>
+			<attribute name="maven.artifactId" value="servlet-api"/>
+			<attribute name="maven.version" value="2.5"/>
+			<attribute name="maven.scope" value="compile"/>
+		</attributes>
+	</classpathentry>
 	<classpathentry kind="output" path="WebRoot/WEB-INF/classes"/>
 </classpath>
