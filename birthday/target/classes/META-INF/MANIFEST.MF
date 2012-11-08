@@ -1,6 +1,0 @@
-Manifest-Version: 1.0
-Built-By: JackTheRipper
-Build-Jdk: 1.6.0_24
-Main-Class: com.hp.gadsc.cdc.et.birthday.HappyBirthday
-Created-By: Maven Integration for Eclipse
-
