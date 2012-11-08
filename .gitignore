@@ -1,6 +1,7 @@
 #################
 ## Eclipse
 #################
+.class
 .gitignore
 target/
 *.pydevproject
