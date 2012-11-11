@@ -1,21 +1,19 @@
-#################
-## Eclipse
-#################
+
 .class
+
 .gitignore
+
 target/
-*.pydevproject
+*
+.pydevproject
+
 .project
+
 .metadata
-bin/**
-tmp/**
-tmp/**/*
-*.tmp
-*.bak
-*.swp
-*~.nib
-local.properties
+bin
 .classpath
+
 .settings/
+
 .loadpath
 
