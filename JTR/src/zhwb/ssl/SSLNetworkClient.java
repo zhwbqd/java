@@ -1,8 +1,17 @@
+package zhwb.ssl;
+
 // Source File Name:   SSLNetworkClient.java
-import javax.net.ssl.*;
-import java.io.*;
-import java.net.Socket;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.BufferedReader;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.InputStreamReader;
+import java.io.PrintStream;
 import java.net.UnknownHostException;
+
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
 
 public class SSLNetworkClient
 {
