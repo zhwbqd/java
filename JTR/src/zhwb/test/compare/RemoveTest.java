@@ -5,7 +5,7 @@
  * Copyright (c) 2009   All rights reserved. ======================
  */
 
-package zhwb.test;
+package zhwb.test.compare;
 
 import java.util.LinkedList;
 

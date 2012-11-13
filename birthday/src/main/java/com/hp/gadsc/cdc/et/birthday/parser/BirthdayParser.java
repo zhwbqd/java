@@ -7,11 +7,6 @@ import java.util.ArrayList;
 import java.util.Collection;
 import java.util.Date;
 
-import org.apache.poi.hssf.usermodel.HSSFCell;
-import org.apache.poi.hssf.usermodel.HSSFCellStyle;
-import org.apache.poi.hssf.usermodel.HSSFDataFormat;
-import org.apache.poi.hssf.usermodel.HSSFRow;
-
 import com.hp.gadsc.cdc.et.birthday.bean.Employee;
 import com.hp.gadsc.cdc.et.birthday.util.Constants;
 import com.hp.gadsc.cdc.et.birthday.util.PropertyReader;

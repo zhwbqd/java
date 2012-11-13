@@ -4,8 +4,6 @@ import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
 
-import org.apache.poi.hssf.usermodel.HSSFRow;
-
 import com.hp.gadsc.cdc.et.birthday.bean.Employee;
 import com.hp.gadsc.cdc.et.birthday.bean.Gift;
 import com.hp.gadsc.cdc.et.birthday.util.Constants;
