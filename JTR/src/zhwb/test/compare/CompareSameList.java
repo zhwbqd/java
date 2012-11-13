@@ -1,4 +1,4 @@
-package zhwb.test;
+package zhwb.test.compare;
 
 import java.util.ArrayList;
 import java.util.Arrays;
