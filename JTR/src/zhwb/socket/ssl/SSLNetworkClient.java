@@ -1,7 +1,6 @@
-package zhwb.ssl;
+package zhwb.socket.ssl;
 
-// Source File Name:   NetworkClient.java
-
+// Source File Name:   SSLNetworkClient.java
 import java.io.BufferedInputStream;
 import java.io.BufferedOutputStream;
 import java.io.BufferedReader;
@@ -9,12 +8,14 @@ import java.io.IOException;
 import java.io.InputStream;
 import java.io.InputStreamReader;
 import java.io.PrintStream;
-import java.net.Socket;
 import java.net.UnknownHostException;
 
-public class NetworkClient
+import javax.net.ssl.SSLSocket;
+import javax.net.ssl.SSLSocketFactory;
+
+public class SSLNetworkClient
 {
-    protected Socket serverSocket;
+    protected SSLSocket serverSocket;
     public PrintStream serverOutput;
     public InputStream serverInput;
 
@@ -38,10 +39,16 @@ public class NetworkClient
         closeServer();
     }
 
-    protected Socket doConnect(String s, int i)
+    protected SSLSocket doConnect(String host, int port)
         throws IOException, UnknownHostException
     {
-        return new Socket(s, i);
+        
+	    SSLSocketFactory sslFact =
+      		(SSLSocketFactory)SSLSocketFactory.getDefault();
+    	SSLSocket s =
+      		(SSLSocket)sslFact.createSocket(host, port);
+
+        return s;
     }
 
     public void closeServer()
@@ -65,20 +72,20 @@ public class NetworkClient
         return serverSocket != null;
     }
 
-    public NetworkClient(String s, int i)
+    public SSLNetworkClient(String s, int i)
         throws IOException
     {
         serverSocket = null;
         openServer(s, i);
     }
 
-    public NetworkClient()
+    public SSLNetworkClient()
     {
         serverSocket = null;
     }
     
     public static void main(String args[]) throws IOException {
-    	NetworkClient client = new NetworkClient("localhost", 6667);
+    	SSLNetworkClient client = new SSLNetworkClient("localhost", 6667);
     	client.readFromServer();
     }
 }
