@@ -1,14 +1,23 @@
+package zhwb.ssl;
+
 /**
  * SSLNetworkServer.java
  */
 
-import java.io.*;
-import java.net.*;
-import java.security.*;
-import javax.net.ssl.*;
-import javax.security.cert.*;
-//import com.sun.net.ssl.*;
+import java.io.BufferedInputStream;
+import java.io.BufferedOutputStream;
+import java.io.FileInputStream;
+import java.io.IOException;
+import java.io.InputStream;
+import java.io.PrintStream;
+import java.security.KeyStore;
 import java.util.Date;
+
+import javax.net.ssl.KeyManagerFactory;
+import javax.net.ssl.SSLContext;
+import javax.net.ssl.SSLServerSocket;
+import javax.net.ssl.SSLServerSocketFactory;
+import javax.net.ssl.SSLSocket;
 
 public class SSLNetworkServer  implements Runnable, Cloneable
 {
