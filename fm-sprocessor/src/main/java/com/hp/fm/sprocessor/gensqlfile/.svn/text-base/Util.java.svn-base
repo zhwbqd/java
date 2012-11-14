@@ -25,6 +25,7 @@ public class Util
 {
     private static Logger _logger = Logger.getLogger(Util.class);
 
+    private static Map<String, Integer> sequence = new HashMap<String, Integer>();
     public static String getNewId(XmlFile xmlFile, Element element, String sourceId)
     {
         return xmlFile.getServiceClassName() + "_" + xmlFile.getVersion() + "_" + element.getName() + "_" + sourceId;
@@ -56,14 +57,16 @@ public class Util
     {
         String sql = "SELECT * FROM ALL_CONS_COLUMNS WHERE table_name = '" + tableName
                 + "'  AND CONSTRAINT_NAME LIKE 'AK%' order by CONSTRAINT_NAME";
-        ResultSet rSet = DBOperation.executeQuery(sql);
+        List<Map<String, String>> rSet = DBOperation.executeQuery(sql);
         Map<String, String> allconstraint = new HashMap<String, String>();
         String constraint_name = "";
         String column_name = "";
-        while (rSet.next())
+        Iterator<Map<String, String>> iterator = rSet.iterator();
+        while (iterator.hasNext())
         {
-            String constraint = rSet.getString("CONSTRAINT_NAME");
-            String column = rSet.getString("COLUMN_NAME");
+            Map<String, String> row = iterator.next();
+            String constraint = row.get("CONSTRAINT_NAME");
+            String column = row.get("COLUMN_NAME");
             if ("".equals(constraint_name))
             {
                 constraint_name = constraint;
@@ -112,12 +115,14 @@ public class Util
     {
         String sql = "SELECT * FROM ALL_CONS_COLUMNS WHERE table_name = '" + tableName
                 + "'  AND CONSTRAINT_NAME LIKE 'FK%' order by CONSTRAINT_NAME";
-        ResultSet rSet = DBOperation.executeQuery(sql);
+        List<Map<String, String>> rSet = DBOperation.executeQuery(sql);
+        Iterator<Map<String, String>> iterator = rSet.iterator();
         Map<String, String> aTableFks = new HashMap<String, String>();
-        while (rSet.next())
+        while (iterator.hasNext())
         {
-            String fkName = rSet.getString("CONSTRAINT_NAME");
-            String fkValue = rSet.getString("COLUMN_NAME");
+            Map<String, String> row = iterator.next();
+            String fkName = row.get("CONSTRAINT_NAME");
+            String fkValue = row.get("COLUMN_NAME");
             aTableFks.put(fkName, fkValue);
         }
         allFks.put(tableName, aTableFks);
@@ -146,6 +151,7 @@ public class Util
         {
             return exclude;
         }
+        _logger.info("cann't judge which column will replace,akColumns:" + akColumns);
         throw new Exception("cann't judge which column will replace");
     }
 
@@ -179,6 +185,20 @@ public class Util
         return xmlcontent;
     }
 
+    /**
+     * Map<String, Map<String, UniqueColumns>> allAks
+     *      |           |          |
+     *      tableName  akName      |
+     *                             |
+     *                        Map<String, List<String>>
+     *                             |           |
+     *                         columns Of ak   |
+     *                                      column value collection
+     * @param temp
+     * @param allAks
+     * @param allFks
+     * @throws Exception
+     */
     public static void replaceRepeat(XmlFile temp, Map<String, Map<String, UniqueColumns>> allAks,
             Map<String, Map<String, String>> allFks)
         throws Exception
@@ -236,19 +256,21 @@ public class Util
                             }
                             attribute = element.attribute(replaceColumn);
                         }
+                        
                         if (attribute == null)
                         {
-                            ReplaceValue.value = ReplaceValue.value + 1;
-                            element.addAttribute(replaceColumn, String.valueOf(ReplaceValue.value));
+                            element.addAttribute(replaceColumn, "0000");
                             attribute = element.attribute(replaceColumn);
                         }
-                        _logger.info("have replaced a element,source is:" + element.asXML());
-                        ReplaceValue.value = ReplaceValue.value + 1;
-                        element.setAttributeValue(replaceColumn,
-                                attribute.getStringValue() + String.valueOf(ReplaceValue.value));
+                        _logger.info("replace source:" + element.asXML());
+                        String replacedValue = Util.getAndIncrementSequence(aTableName, replaceColumn,
+                                attribute.getStringValue(),
+                                aTableName
+                                + contraintName + replaceColumn + attribute.getStringValue());
+                        element.setAttributeValue(replaceColumn, replacedValue);
                         addValue.put(replaceColumn, element.attributeValue(replaceColumn));
                         uniqueColumns.add(addValue);
-                        _logger.info("replaced with:" + element.asXML());
+                        _logger.info("replace with:  " + element.asXML());
                     }
                     //no need replace
                     else
@@ -264,13 +286,13 @@ public class Util
 
     }
 
-    public static void generateSQL(XmlFile temp, File targetFolder)
+    public static void generateSQL(XmlFile temp, File targetFolder, int m)
         throws Exception
     {
         SAXReader saxReader = new SAXReader();
         Document doc = saxReader.read(new StringReader(temp.getXmlContent()));
         String serviceName = temp.getServiceClassName();
-        File file = new File(targetFolder.getAbsolutePath() + "/" + serviceName + ".sql");
+        File file = new File(targetFolder.getAbsolutePath() + "/" + serviceName + "_" + m + ".sql");
         if (!file.exists())
         {
             file.createNewFile();
@@ -358,24 +380,75 @@ public class Util
 
     }
 
-    public static String subId(String tableName, String columnName, String newidValue)
+    public static String subIdRight(String tableName, String columnName, String newidValue)
         throws Exception
     {
         String sql = "select A.column_name clumnName,A.data_length length from user_tab_columns A where A.Table_Name = '"
                 + tableName + "' and A.column_name='" + columnName + "'";
         int dblength = 0;
-        ResultSet rSet = DBOperation.executeQuery(sql);
-        if (rSet.next())
+        List<Map<String, String>> rSet = DBOperation.executeQuery(sql);
+        Iterator<Map<String, String>> iterator = rSet.iterator();
+        if (iterator.hasNext())
         {
-            dblength = rSet.getInt(2);
+            Map<String, String> row = iterator.next();
+            try
+            {
+                dblength = Integer.parseInt(row.get("LENGTH"));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println(row);
+            }
+
         }
-        if (newidValue.length() > dblength)
+        return subRight(newidValue, dblength);
+    }
+
+    public static String subIdLeft(String tableName, String columnName, String newidValue)
+        throws Exception
+    {
+        String sql = "select A.column_name clumnName,A.data_length length from user_tab_columns A where A.Table_Name = '"
+                + tableName + "' and A.column_name='" + columnName + "'";
+        int dblength = 0;
+        List<Map<String, String>> rSet = DBOperation.executeQuery(sql);
+        Iterator<Map<String, String>> iterator = rSet.iterator();
+        if (iterator.hasNext())
         {
-            return newidValue.substring(0, dblength);
+            Map<String, String> row = iterator.next();
+            try
+            {
+                dblength = Integer.parseInt(row.get("LENGTH"));
+            }
+            catch (Exception e)
+            {
+                e.printStackTrace();
+                System.out.println(row);
+            }
+
+        }
+        return subLeft(newidValue, dblength);
+    }
+    public static String subLeft(String value,int dblength)
+    {
+        if (value.length() > dblength)
+        {
+            return value.substring(value.length()-dblength, value.length());
         }
         else
         {
-            return newidValue;
+            return value;
+        }
+    }
+    public static String subRight(String value,int dblength)
+    {
+        if (value.length() > dblength)
+        {
+            return value.substring(0, dblength);
+        }
+        else
+        {
+            return value;
         }
     }
 
@@ -410,4 +483,60 @@ public class Util
         return false;
     }
 
+    /**
+     * a number use to add to the end of a column to replace repeat
+     * @param name   source column value 
+     * @param string tableName+akName+replaceColumnName
+     * @return
+     * @throws Exception 
+     */
+    public static String getAndIncrementSequence(String tableName, String columnName, String name, String compond)
+        throws Exception
+    {
+        if (name.endsWith("0000"))
+        {
+            Integer integer = sequence.get(compond);
+            if (integer != null)
+            {
+                int temp = integer.intValue() + 1;
+                sequence.put(compond, new Integer(temp));
+                return subIdLeft(tableName, columnName, name + integer.intValue());
+            }
+
+            Integer integer1 = new Integer(1);
+            int temp = integer1.intValue() + 1;
+            sequence.put(compond, new Integer(temp));
+            return subIdLeft(tableName, columnName, name + integer1.intValue());
+
+        }
+        if (name.indexOf("0000") != -1)
+        {
+            int index = name.indexOf("0000");
+            String prex = name.substring(0, index + 4);
+            String endx = name.substring(index + 4, name.length());
+
+            int indexcompond = compond.indexOf("0000");
+            String prexcompond = compond.substring(0, indexcompond + 4);
+            String endxcompond = compond.substring(indexcompond + 4, compond.length());
+
+            Integer integer = sequence.get(prexcompond);
+            if (integer == null)
+            {
+                integer = new Integer(1);
+            }
+            int temp = integer.intValue() + 1;
+            sequence.put(prexcompond, new Integer(temp));
+            return subIdLeft(tableName, columnName, prex + integer.intValue());
+        }
+        Integer integer = sequence.get(compond);
+        if (integer == null)
+        {
+            integer = new Integer(1);
+        }
+        int temp = integer.intValue() + 1;
+        sequence.put(compond + "0000", new Integer(temp));
+        sequence.put(compond, new Integer(temp));
+        return subIdLeft(tableName, columnName, name + "0000" + integer.intValue());
+    }
+    
 }

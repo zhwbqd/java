@@ -1,22 +1,43 @@
 package com.hp.fm.sprocessor.gensqlfile;
 
-import java.io.InputStream;
 import java.sql.Connection;
-import java.sql.DriverManager;
 import java.sql.ResultSet;
+import java.sql.ResultSetMetaData;
 import java.sql.Statement;
+import java.util.ArrayList;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 import com.hp.fm.sprocessor.properties.PropertiesLoader;
 
 public class DBOperation
 {
-    public static String driverClassName;
 
-    public static String url;
+    public static String driverClassName = PropertiesLoader.getProperty("database.driverClassName");
 
-    public static String username;
+    public static String url = PropertiesLoader.getProperty("database.url");
 
-    public static String password;
+    public static String username = PropertiesLoader.getProperty("database.username");
+
+    public static String password = PropertiesLoader.getProperty("database.password");
+
+    //public static int count = 0;
+
+    public static DbcpDataSource dbcpDataSource = new DbcpDataSource(url, username, password, driverClassName);
+
+    //    static
+    //    {
+    //        try
+    //        {
+    //            Class.forName(driverClassName);
+    //        }
+    //        catch (ClassNotFoundException e)
+    //        {
+    //            // TODO Auto-generated catch block
+    //            e.printStackTrace();
+    //        }
+    //    }
 
     public DBOperation()
         throws Exception
@@ -25,26 +46,48 @@ public class DBOperation
     }
 
     public static Connection getConnection()
-        throws Exception
     {
-        if (driverClassName == null || username == null || password == null)
+
+        //Connection conn = dbcpDataSource.getConn();
+
+        Connection conn = null;
+        try
         {
-            PropertiesLoader propertiesLoader = PropertiesLoader.getInstance();
-            InputStream is = DBOperation.class.getResourceAsStream("/dbconfig/database.properties");
-            propertiesLoader.loadProperties(is);
-            driverClassName = propertiesLoader.getProperty("database.driverClassName");
-            url = propertiesLoader.getProperty("database.url");
-            username = propertiesLoader.getProperty("database.username");
-            password = propertiesLoader.getProperty("database.password");
+
+            conn = dbcpDataSource.getConn();
+            //conn = DriverManager.getConnection(url, username, password);
+
         }
-        Class.forName(driverClassName);
-        return DriverManager.getConnection(url, username, password);
+        catch (Exception e)
+        {
+            // TODO Auto-generated catch block
+            e.printStackTrace();
+        }
+        return conn;
+
+        
     }
 
-    public static ResultSet executeQuery(String sql)
+    public static List<Map<String, String>> executeQuery(String sql)
         throws Exception
     {
-        Statement statement = getConnection().createStatement();
-        return statement.executeQuery(sql);
+        List<Map<String, String>> results = new ArrayList<Map<String, String>>();
+        Connection conn = getConnection();
+        Statement statement = conn.createStatement();
+        ResultSet rs = statement.executeQuery(sql);
+        ResultSetMetaData metaData = rs.getMetaData();
+        int columnCounts = metaData.getColumnCount();
+        while (rs.next())
+        {
+            Map<String, String> aresult = new HashMap<String, String>();
+            for (int i = 1; i <= columnCounts; i++)
+            {
+                aresult.put(metaData.getColumnLabel(i).toUpperCase(), rs.getString(i));
+            }
+            results.add(aresult);
+        }
+        statement.close();
+        conn.close();
+        return results;
     }
 }

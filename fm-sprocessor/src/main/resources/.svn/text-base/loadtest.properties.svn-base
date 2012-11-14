@@ -28,3 +28,5 @@ scriptLoadrunnerLocation=C:\\LR\\CriteriaSearch-LoadTest\\service_limit_test\\
 
 ## How much vUser perMethod,default is 5
 vUserPerMethod=1
+
+multiple=100
