@@ -1,19 +1,11 @@
-
 .class
-
 .gitignore
-
 target/
-
-.pydevproject
-
 .project
-
 .metadata
-bin
+bin/
 .classpath
-
 .settings/
-
 .loadpath
+.svn/
 
