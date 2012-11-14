@@ -1,13 +1,11 @@
 package com.hp.fm.sprocessor.gensqlfile;
 
 import java.io.File;
+import java.io.FileWriter;
 import java.io.PrintWriter;
 import java.io.StringReader;
-import java.util.HashMap;
-import java.util.HashSet;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 import org.apache.log4j.Logger;
 import org.dom4j.Document;
@@ -51,6 +49,12 @@ public class TransforXmlFile
         return xmlFile;
     }
 
+    /**
+     * replace id with uuid
+     * @param xmlFile
+     * @return
+     * @throws Exception
+     */
     public static XmlFile replaceId(XmlFile xmlFile)
         throws Exception
     {
@@ -70,7 +74,7 @@ public class TransforXmlFile
                 continue;
             }
             String newidValue = Util.getUUID();
-            newidValue = Util.subId(element.getName(), element.getName() + "_ID", newidValue);
+            newidValue = Util.subIdRight(element.getName(), element.getName() + "_ID", newidValue);
             element.setAttributeValue(element.getName() + "_ID", newidValue);
             xmlContent = xmlContent.replace(element.getName() + "_ID=\"" + sourceId + "\"", element.getName()
                     + "_ID=\"" + newidValue + "\"");
@@ -122,39 +126,28 @@ public class TransforXmlFile
 
     }
 
-    public static void replaceRepeat(List<XmlFile> mergedXmlFile)
+    public static void replaceRepeat(List<XmlFile> mergedXmlFile, Map<String, Map<String, UniqueColumns>> allAks,
+            Map<String, Map<String, String>> allFks)
         throws Exception
     {
-        Set<String> allTableNames = new HashSet<String>();
-        for (XmlFile temp : mergedXmlFile)
-        {
-            Util.getAllTables(temp, allTableNames);
-        }
-        Map<String, Map<String, UniqueColumns>> allAks = new HashMap<String, Map<String, UniqueColumns>>();
-        Map<String, Map<String, String>> allFks = new HashMap<String, Map<String, String>>();
-        for (String s : allTableNames)
-        {
-            Util.addAksForTable(s, allAks);
-            Util.addFksForTable(s, allFks);
-        }
         for (XmlFile temp : mergedXmlFile)
         {
             Util.replaceRepeat(temp, allAks, allFks);
         }
     }
 
-    public static void generateSql(List<XmlFile> mergedXmlFile, File targetFolder, String mergeFileName)
+    public static void generateSql(List<XmlFile> mergedXmlFile, File targetFolder, String mergeFileName, int m)
         throws Exception
     {
         for (XmlFile temp : mergedXmlFile)
         {
-            Util.generateSQL(temp, targetFolder);
+            Util.generateSQL(temp, targetFolder, m);
         }
         File file = new File(targetFolder.getAbsolutePath() + "/" + mergeFileName + ".sql");
-        PrintWriter pwPrintWriter = new PrintWriter(file);
+        PrintWriter pwPrintWriter = new PrintWriter(new FileWriter(file, true));
         for (XmlFile temp : mergedXmlFile)
         {
-            pwPrintWriter.println("@" + temp.getServiceClassName() + ".sql");
+            pwPrintWriter.println("@" + temp.getServiceClassName() + "_" + m + ".sql");
             pwPrintWriter.println("commit;");
         }
         pwPrintWriter.flush();

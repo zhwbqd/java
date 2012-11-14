@@ -129,7 +129,7 @@ public class DateFileGenService
         {
             String fileName = allFile[i].getName();
             String[] parts = fileName.split("\\.");
-            if (parts.length == 2 && className.equals(parts[0]))
+            if (parts.length == 2 && parts[0].contains(className))
             {
                 sqlFileName = fileName;
                 break;
