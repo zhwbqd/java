@@ -1,0 +1,10 @@
+.class
+.gitignore
+target/
+.project
+.metadata
+bin/
+.classpath
+.settings/
+.loadpath
+.svn/
