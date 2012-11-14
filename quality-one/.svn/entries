@@ -1,80 +1,0 @@
-10
-
-dir
-319
-http://fms-wookong.asiapacific.hpqcorp.net:5002/svn/fms-lab/trunk/Adrian/quality-one
-http://fms-wookong.asiapacific.hpqcorp.net:5002/svn/fms-lab
-
-
-
-2012-10-25T11:49:53.923010Z
-319
-czhong@hp.com
-has-props
-
-
-
-
-
-
-
-
-
-
-
-
-
-ffd624a0-bfcb-d248-b018-c52d5fad8231
-
-mail
-dir
-
-sonar
-dir
-
-version
-dir
-
-server
-dir
-
-resource
-dir
-
-pom.xml
-file
-
-
-
-
-2012-09-10T02:57:59.672612Z
-1bc2c016beafa68b690718e0672dc153
-2012-06-19T12:44:46.919288Z
-187
-czhong@hp.com
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-623
-
-report
-dir
-
