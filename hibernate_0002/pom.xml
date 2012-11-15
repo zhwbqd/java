@@ -1,7 +1,7 @@
 <project xmlns="http://maven.apache.org/POM/4.0.0" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
   <modelVersion>4.0.0</modelVersion>
-  <groupId>hibernate_0001</groupId>
-  <artifactId>hibernate_0001</artifactId>
+  <groupId>hibernate_test</groupId>
+  <artifactId>hibernate_test</artifactId>
   <version>0.0.1-SNAPSHOT</version>
   <dependencies>
   	<dependency>
@@ -21,7 +21,7 @@
   	<dependency>
   		<groupId>log4j</groupId>
   		<artifactId>log4j</artifactId>
-  		<version>1.2.11</version>
+  		<version>1.2.12</version>
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
@@ -53,14 +53,60 @@
   		<type>jar</type>
   		<scope>compile</scope>
   	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring</artifactId>
+  		<version>2.5.6</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.springframework</groupId>
+  		<artifactId>spring-test</artifactId>
+  		<version>2.5.6</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>com.oracle</groupId>
+  		<artifactId>ojdbc14</artifactId>
+  		<version>10.2.0.4.0</version>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>c3p0</groupId>
+  		<artifactId>c3p0</artifactId>
+  		<version>0.9.1.2</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.aspectj</groupId>
+  		<artifactId>aspectjrt</artifactId>
+  		<version>1.6.7</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>org.aspectj</groupId>
+  		<artifactId>aspectjweaver</artifactId>
+  		<version>1.6.7</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>javassist</groupId>
+  		<artifactId>javassist</artifactId>
+  		<version>3.4.GA</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
+  	<dependency>
+  		<groupId>cglib</groupId>
+  		<artifactId>cglib-nodep</artifactId>
+  		<version>2.1_3</version>
+  		<type>jar</type>
+  		<scope>compile</scope>
+  	</dependency>
   </dependencies>
-  <dependencyManagement>
-  	<dependencies>
-  		<dependency>
-  			<groupId>com.oracle</groupId>
-  			<artifactId>ojdbc5</artifactId>
-  			<version>11.2.0.1.0</version>
-  		</dependency>
-  	</dependencies>
-  </dependencyManagement>
 </project>
