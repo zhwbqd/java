@@ -5,7 +5,12 @@ import java.util.List;
 import org.lr.ibatis.bean.Person;
 
 public interface PersonService {
-	public List<Person> getAllPerson();
-	public Person getPersonById(String id);
-	public void updateBlob(Person person);
+
+    List<Person> getAllPerson();
+
+    Person getPersonById(String id);
+
+    void updateBlob(Person person);
+
+    void createPerson(Person person);
 }

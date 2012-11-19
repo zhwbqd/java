@@ -25,4 +25,8 @@ public class PersonServiceImp implements PersonService {
 		personDao.updateBlob(person);
 	}
 
+    public void createPerson(Person person)
+    {
+        personDao.insertPerson(person);
+    }
 }

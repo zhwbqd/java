@@ -6,11 +6,13 @@
 <?xml-stylesheet type="text/xsl" href="SpecialDB.xslt"?>
 
 <sqlMap namespace="Person">
+
 	<typeAlias alias="Person" type="org.lr.ibatis.bean.Person" />
 	
 	<cacheModel id="person-cache" type="OSCACHE">
 		<flushInterval hours="24" />
 		<flushOnExecute statement="queryAll" />
+		<flushOnExecute statement="insertPerson" />
 		<property name="size" value="1000" />
 	</cacheModel>
 	
@@ -26,5 +28,27 @@
 	<update id="updateBlob" parameterClass="org.lr.ibatis.bean.Person">
 		update person set info_blob = #info_blob#
 	</update>
+	
+	<insert id="insertPerson" parameterClass="org.lr.ibatis.bean.Person">
+         insert
+          into person (
+        <dynamic prepend=" ">
+            <isNotNull prepend="," property="id">id</isNotNull>
+            <isNotNull prepend="," property="name">name</isNotNull>
+            <isNotNull prepend="," property="info">info</isNotNull>
+            <isNotNull prepend="," property="info_blob">info_blob</isNotNull>
+        </dynamic>
+          )
+        values (
+        <dynamic prepend=" ">
+            <isNotNull prepend="," property="id">#id:INT#</isNotNull>
+            <isNotNull prepend="," property="name">#name:VARCHAR#</isNotNull>
+            <isNotNull prepend="," property="info">#info:VARCHAR#</isNotNull>
+            <isNotNull prepend="," property="info_blob">#info_blob:BLOB#</isNotNull>
+        </dynamic>
+        ) 
+       <!-- insert
+          into person (id, name, info, info_blob) values (#id#,#name#,#info#,#info_blob#)  -->
+    </insert>
 
 </sqlMap>
