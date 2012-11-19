@@ -20,4 +20,9 @@ public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao {
 		getSqlMapClientTemplate().update("updateBlob",person);
 	}
 
+    public void insertPerson(Person person)
+    {
+        getSqlMapClientTemplate().insert("insertPerson", person);
+    }
+
 }

@@ -51,9 +51,8 @@
 			<ref bean="transactionManager" />
 		</property>
 		<property name="transactionAttributes">
-			<props>
+			<props><!-- 定义service层的传播条件，按方法名 -->
 				<prop key="create*">PROPAGATION_REQUIRED</prop>
-				<prop key="save*">PROPAGATION_REQUIRED</prop>
 				<prop key="update*">PROPAGATION_REQUIRED</prop>
 				<prop key="delete*">PROPAGATION_REQUIRED</prop>
 				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
