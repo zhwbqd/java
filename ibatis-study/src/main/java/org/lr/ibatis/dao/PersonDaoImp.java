@@ -16,8 +16,9 @@ public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao {
 		return (Person)getSqlMapClientTemplate().queryForObject("queryById",id);
 	}
 
-	public void updateBlob(Person person) {
-		getSqlMapClientTemplate().update("updateBlob",person);
+    public void updatePerson(Person person)
+    {
+        getSqlMapClientTemplate().update("updatePerson", person);
 	}
 
     public void insertPerson(Person person)
