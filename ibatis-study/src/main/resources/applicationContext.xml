@@ -1,0 +1,90 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+	<!-- ************************************************************************-->
+	<!-- //////////////////////////加载配置文件 //////////////////////////////////-->
+	<!-- ************************************************************************-->
+	<bean id="propertyConfig"
+		class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="location">
+			<value>classpath:jdbc.properties</value>
+		</property>
+	</bean>
+	<!-- ************************************************************************-->
+	<!-- ////////////////////////dbcp数据库连接池配置///////////////////////////////-->
+	<!-- ************************************************************************-->
+	<bean id="dataSource"
+		class="org.apache.commons.dbcp.BasicDataSource"
+		destroy-method="close">
+		<property name="driverClassName"
+			value="${jdbc.driverClassName}">
+		</property>
+		<property name="url" value="${jdbc.url}"></property>
+		<property name="username" value="${jdbc.username}"></property>
+		<property name="password" value="${jdbc.password}"></property>
+		<property name="maxActive" value="100"></property>
+		<property name="maxIdle" value="30"></property>
+		<property name="maxWait" value="1000"></property>
+		<property name="defaultAutoCommit" value="false"></property>
+		<property name="removeAbandoned" value="true"></property>
+		<property name="removeAbandonedTimeout" value="60"></property>
+		<property name="logAbandoned" value="true"></property>
+	</bean>
+	<!-- sql map client 配置 -->
+	<bean id="sqlMapClient"
+		class="org.springframework.orm.ibatis.SqlMapClientFactoryBean">
+		<property name="configLocation"
+			value="ibatis-sql-map-config.xml" />
+		<property name="dataSource" ref="dataSource" />
+	</bean>
+	<!-- ************************************************************************-->
+	<!-- //////////////////////ibatis事务代理配置///////////////////////////////-->
+	<!-- ************************************************************************-->
+	<bean id="transactionManager"
+		class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+		<property name="dataSource" ref="dataSource"></property>
+	</bean>
+	<bean id="txProxyTemplate" abstract="true"
+		class="org.springframework.transaction.interceptor.TransactionProxyFactoryBean">
+		<property name="transactionManager">
+			<ref bean="transactionManager" />
+		</property>
+		<property name="transactionAttributes">
+			<props>
+				<prop key="create*">PROPAGATION_REQUIRED</prop>
+				<prop key="save*">PROPAGATION_REQUIRED</prop>
+				<prop key="update*">PROPAGATION_REQUIRED</prop>
+				<prop key="delete*">PROPAGATION_REQUIRED</prop>
+				<prop key="*">PROPAGATION_REQUIRED,readOnly</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- ************************************************************************-->
+	<!-- //////////////////////dao配置///////////////////////////////////////////-->
+	<!-- ************************************************************************-->
+
+	<bean id="personDao"
+		class="org.lr.ibatis.dao.PersonDaoImp">
+		<property name="sqlMapClient">
+			<ref bean="sqlMapClient" />
+		</property>
+	</bean>
+	<!-- ************************************************************************-->
+	<!-- ////////////////////////////////SERVICE代理配置//////////////////////////-->
+	<!-- ************************************************************************-->
+	<bean id="personServiceTarget"
+		class="org.lr.ibatis.service.PersonServiceImp">
+		<property name="personDao" ref="personDao"></property>
+	</bean>
+	<!-- ************************************************************************-->
+	<!-- ///////////////////////////SERVICE配置///////////////////////////////////-->
+	<!-- ************************************************************************-->
+	<bean id="personService" parent="txProxyTemplate">
+		<property name="target" ref="personServiceTarget"></property>
+	</bean>
+	<!-- ************************************************************************-->
+	<!-- ///////////////////////////////结束/////////////////////////////////////-->
+	<!-- ************************************************************************-->
+</beans>

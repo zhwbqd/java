@@ -6,7 +6,7 @@ package com.util;
 public interface Global {
 	
 	/** 数据量 */
-	long NUM = 1000000;
+    long NUM = 100000;
 	
 	/** 是否批量 */
 	boolean IS_BATCH = true;
