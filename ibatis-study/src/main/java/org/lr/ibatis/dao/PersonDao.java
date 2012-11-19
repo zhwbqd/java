@@ -9,7 +9,7 @@ public interface PersonDao {
 
     Person getPersonById(String id);
 
-    void updateBlob(Person person);
+    void updatePerson(Person person);
 
     void insertPerson(Person person);
 }

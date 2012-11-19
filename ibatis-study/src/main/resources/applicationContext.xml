@@ -74,7 +74,7 @@
 	<!-- ////////////////////////////////SERVICE代理配置//////////////////////////-->
 	<!-- ************************************************************************-->
 	<bean id="personServiceTarget"
-		class="org.lr.ibatis.service.PersonServiceImp">
+		class="org.lr.ibatis.service.ds.PersonDataService">
 		<property name="personDao" ref="personDao"></property>
 	</bean>
 	<!-- ************************************************************************-->
@@ -82,6 +82,10 @@
 	<!-- ************************************************************************-->
 	<bean id="personService" parent="txProxyTemplate">
 		<property name="target" ref="personServiceTarget"></property>
+	</bean>
+	
+	<bean id="personBusinessService" class="org.lr.ibatis.service.bs.PersonBusinessService">
+		<property name="personDs" ref="personService"></property>
 	</bean>
 	<!-- ************************************************************************-->
 	<!-- ///////////////////////////////结束/////////////////////////////////////-->

@@ -25,8 +25,13 @@
 		select * from person where id=#id#
 	</select>
 	
-	<update id="updateBlob" parameterClass="org.lr.ibatis.bean.Person">
-		update person set info_blob = #info_blob#
+	<update id="updatePerson" parameterClass="org.lr.ibatis.bean.Person">
+		update person set 
+	    <dynamic prepend=" ">
+            <isNotNull prepend="," property="name">name = #name#</isNotNull>
+            <isNotNull prepend="," property="info">info = #info#</isNotNull>
+            <isNotNull prepend="," property="info_blob">info_blob = #info_blob#</isNotNull>
+        </dynamic>
 	</update>
 	
 	<insert id="insertPerson" parameterClass="org.lr.ibatis.bean.Person">
