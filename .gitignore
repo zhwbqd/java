@@ -1,7 +1,7 @@
 .class
 .gitignore
 target/
-.project
+
 .metadata
 bin/
 .classpath
