@@ -12,4 +12,8 @@ public interface PersonDao {
     void updatePerson(Person person);
 
     void insertPerson(Person person);
+
+    void batchUpdate(final List<Person> updateList);
+
+    void batchInsert(final List<Person> insertList);
 }
