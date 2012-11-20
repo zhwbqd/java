@@ -18,4 +18,6 @@ public interface IPersonBusinessService
     Person findPersonById(String id);
 
     void createOrUpdatePerson(Person person);
+
+    void createAndUpdatePersonList(List<Person> persons);
 }

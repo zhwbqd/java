@@ -1,29 +1,84 @@
 package org.lr.ibatis.dao;
 
+import java.sql.SQLException;
 import java.util.List;
 
+import org.apache.commons.logging.Log;
+import org.apache.commons.logging.LogFactory;
 import org.lr.ibatis.bean.Person;
+import org.springframework.orm.ibatis.SqlMapClientCallback;
 import org.springframework.orm.ibatis.support.SqlMapClientDaoSupport;
 
-public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao {
+import com.ibatis.sqlmap.client.SqlMapExecutor;
 
-	@SuppressWarnings("unchecked")
-	public List<Person> getAllPerson() {
-		return getSqlMapClientTemplate().queryForList("queryAll");
-	}
+public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao
+{
 
-	public Person getPersonById(String id ) {
-		return (Person)getSqlMapClientTemplate().queryForObject("queryById",id);
-	}
+    private static Log log = LogFactory.getLog(PersonDaoImp.class);
+
+    @SuppressWarnings("unchecked")
+    public List<Person> getAllPerson()
+    {
+        return getSqlMapClientTemplate().queryForList("queryAll");
+    }
+
+    public Person getPersonById(String id)
+    {
+        return (Person)getSqlMapClientTemplate().queryForObject("queryById", id);
+    }
 
     public void updatePerson(Person person)
     {
         getSqlMapClientTemplate().update("updatePerson", person);
-	}
+    }
 
     public void insertPerson(Person person)
     {
         getSqlMapClientTemplate().insert("insertPerson", person);
+    }
+
+    public void batchUpdate(final List<Person> updateList)
+    {
+        if (!updateList.isEmpty())
+        {
+            getSqlMapClientTemplate().execute(new SqlMapClientCallback()
+            {
+                public Object doInSqlMapClient(SqlMapExecutor executor)
+                    throws SQLException
+                {
+                    executor.startBatch();
+                    for (Person person : updateList)
+                    {
+                        executor.insert("updatePerson", person);
+                    }
+                    executor.executeBatch();
+
+                    return null;
+                }
+            });
+        }
+    }
+
+    public void batchInsert(final List<Person> insertList)
+    {
+        if (!insertList.isEmpty())
+        {
+            getSqlMapClientTemplate().execute(new SqlMapClientCallback()
+            {
+                public Object doInSqlMapClient(SqlMapExecutor executor)
+                    throws SQLException
+                {
+                    executor.startBatch();
+                    for (Person person : insertList)
+                    {
+                        executor.insert("insertPerson", person);
+                    }
+                    executor.executeBatch();
+
+                    return null;
+                }
+            });
+        }
     }
 
 }

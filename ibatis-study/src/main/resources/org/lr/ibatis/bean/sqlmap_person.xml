@@ -30,8 +30,9 @@
 	    <dynamic prepend=" ">
             <isNotNull prepend="," property="name">name = #name#</isNotNull>
             <isNotNull prepend="," property="info">info = #info#</isNotNull>
-            <isNotNull prepend="," property="info_blob">info_blob = #info_blob#</isNotNull>
+            , info_blob = #info_blob#
         </dynamic>
+        where id = #id#
 	</update>
 	
 	<insert id="insertPerson" parameterClass="org.lr.ibatis.bean.Person">

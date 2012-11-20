@@ -13,4 +13,7 @@ public interface IPersonDataService {
     void updatePerson(Person person);
 
     void createPerson(Person person);
+
+    void createAndUpdatePersonList(List<Person> person);
+
 }

@@ -50,4 +50,9 @@ public class PersonBusinessService implements IPersonBusinessService
         this.personDs = personDs;
     }
 
+    public void createAndUpdatePersonList(List<Person> persons)
+    {
+        this.personDs.createAndUpdatePersonList(persons);
+    }
+
 }

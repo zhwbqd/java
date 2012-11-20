@@ -1,6 +1,7 @@
 package org.lr.ibatis.test;
 
 import java.io.InputStream;
+import java.util.ArrayList;
 import java.util.LinkedList;
 import java.util.List;
 
@@ -64,5 +65,52 @@ public class PersonBusinessServiceTest extends TestCase {
         person.setInfo_blob(temp);
         IPersonBusinessService personService = (IPersonBusinessService)context.getBean("personBusinessService");
         personService.createOrUpdatePerson(person);
+    }
+
+    public void testPersonBatch()
+        throws Exception
+    {
+        InputStream fis = this.getClass().getResourceAsStream("/test.properties");
+        byte[] temp = new byte[(int)fis.available()];
+        fis.read(temp);
+        IPersonBusinessService personService = (IPersonBusinessService)context.getBean("personBusinessService");
+        //Test begin
+        List<Person> plist = new ArrayList<Person>();
+        Person person1 = new Person();
+        person1.setId(1);
+        person1.setName("jack");
+        person1.setInfo("emplyee");
+        person1.setInfo_blob(null);
+        plist.add(person1);
+
+        Person person2 = new Person();
+        person2.setId(9999999);
+        person2.setName("alex");
+        person2.setInfo("emplyee");
+        person2.setInfo_blob(null);
+        plist.add(person2);
+
+        Person person3 = new Person();
+        person3.setId(2);
+        person3.setName("mike");
+        person3.setInfo("emplyee");
+        person3.setInfo_blob(null);
+        plist.add(person3);
+
+        Person person4 = new Person();
+        person4.setId(5);
+        person4.setName("vicky");
+        person4.setInfo("boss");
+        person4.setInfo_blob(temp);
+        plist.add(person4);
+
+        Person person5 = new Person();
+        person5.setId(6);
+        person5.setName("cakin");
+        person5.setInfo("boss");
+        person5.setInfo_blob(null);
+        plist.add(person5);
+
+        personService.createAndUpdatePersonList(plist);
     }
 }
