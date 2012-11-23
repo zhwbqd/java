@@ -25,7 +25,6 @@ public class LogHandle implements InvocationHandler
         super();
     }
 
-    @Override
     public Object invoke(Object proxy, Method method, Object[] args)
         throws Throwable
     {
