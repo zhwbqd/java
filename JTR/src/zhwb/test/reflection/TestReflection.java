@@ -12,37 +12,46 @@ public class TestReflection {
 
 	public static void main(String[] args) throws SecurityException,
 			ClassNotFoundException {
-		Map<String, Map<Integer, String>> totalMap = new HashMap<String, Map<Integer, String>>();
-		Method[] methods = TestMethod.class.getDeclaredMethods();
-		for (Method method : methods) {
+        System.out.println(generateMap());
+    }
+
+    private static Map<String, Map<Integer, String>> generateMap()
+    {
+        Map<String, Map<Integer, String>> totalMap = new HashMap<String, Map<Integer, String>>();
+        Method[] methods = TestMethod.class.getDeclaredMethods();
+        for (Method method : methods)
+        {
             Map<Integer, String> map = new TreeMap<Integer, String>();
 
-			int paramCount = method.getParameterTypes().length;
+            int paramCount = method.getParameterTypes().length;
 
-			int totalNums = (int) Math.pow(2, paramCount);
+            int totalNums = (int)Math.pow(2, paramCount);
 
-			List<String> list = new ArrayList<String>();
-			
-			Annotation[][] param = method.getParameterAnnotations();
-			for (Annotation[] annotations : param) {
-				for (Annotation annotation : annotations) {
-					ParamName parm = (ParamName) annotation;
-					String parmeterName = parm.value();
-					list.add(parmeterName);
-				}
-			}
-			
-			for (int i = 0; i < totalNums; i++) {
+            List<String> list = new ArrayList<String>();
+
+            Annotation[][] param = method.getParameterAnnotations();
+            for (Annotation[] annotations : param)
+            {
+                for (Annotation annotation : annotations)
+                {
+                    ParamName parm = (ParamName)annotation;
+                    String parmeterName = parm.value();
+                    list.add(parmeterName);
+                }
+            }
+
+            for (int i = 0; i < totalNums; i++)
+            {
                 StringBuilder sb = new StringBuilder();
                 sb.append("test");
                 String formatBinary = format(paramCount, Integer.toBinaryString(i));
                 sb.append(generateName(formatBinary, list));
                 map.put(i, sb.toString());
-			}
-			totalMap.put(method.getName(), map);
-		}
-        System.out.println(totalMap);
-	}
+            }
+            totalMap.put(method.getName(), map);
+        }
+        return totalMap;
+    }
 
     private static String format(int paramCount, String binaryString)
     {
