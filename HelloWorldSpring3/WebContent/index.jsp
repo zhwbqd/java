@@ -1,5 +1,5 @@
 <%@ page language="java" contentType="text/html; charset=ISO-8859-1"
-    pageEncoding="ISO-8859-1"%>
+	pageEncoding="ISO-8859-1"%>
 <!DOCTYPE html PUBLIC "-//W3C//DTD HTML 4.01 Transitional//EN" "http://www.w3.org/TR/html4/loose.dtd">
 <html>
 <head>
@@ -7,9 +7,9 @@
 <title>Spring MVC 3.0 Example</title>
 </head>
 <body>
-<h1>Spring 3,MVC Examples</h1>
-<ul>
-<li><a href="forms/helloworld.html">Hello World</a></li>
-</ul>
+	<h1>Spring 3,MVC Examples</h1>
+	<ul>
+		<li><a href="forms/helloworld">Hello World</a></li>
+	</ul>
 </body>
 </html>
