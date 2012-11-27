@@ -9,7 +9,7 @@
 <body>
 	<h1>Spring 3,MVC Examples</h1>
 	<ul>
-		<li><a href="forms/helloworld">Hello World</a></li>
+		<li><a href="forms/hellojack">Hello World</a></li>
 	</ul>
 </body>
 </html>
