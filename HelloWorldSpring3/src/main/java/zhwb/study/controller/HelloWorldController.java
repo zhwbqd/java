@@ -8,8 +8,8 @@ import org.springframework.web.servlet.ModelAndView;
 @Controller
 public class HelloWorldController
 {
-	@RequestMapping("/hellojack")
-	public ModelAndView helloWorl()
+    @RequestMapping("/login")
+    public ModelAndView login()
     {
         String message = "Hello World, Spring 3.0!";
 		return new ModelAndView("helloworld", "message", message);
