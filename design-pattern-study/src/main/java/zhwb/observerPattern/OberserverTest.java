@@ -17,10 +17,10 @@ public class OberserverTest
      */
     public static void main(String[] args)
     {
-        EqualsNotification a = new EqualsNotification();
-        HappyObserver b = new HappyObserver();
-        a.addObserver(b);
-        a.testRandom();
+        EqualsNotification notifiy = new EqualsNotification();
+        HappyObserver observer = new HappyObserver();
+        notifiy.addObserver(observer);
+        notifiy.testRandom();
     }
 
 }
