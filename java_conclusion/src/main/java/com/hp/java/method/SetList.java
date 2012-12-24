@@ -9,7 +9,7 @@ import java.util.TreeSet;
 
 public class SetList {
     public static void main(String[] args) {
-        Set<Integer> set = new TreeSet<Integer>();
+        Set<Integer> set = new TreeSet<Integer>(); // -3 -2 -1 0 1 2
         List<Integer> list = new ArrayList<Integer>();
 
         for (int i = -3; i < 3; i++) {
@@ -19,7 +19,7 @@ public class SetList {
 
         for (int i = 0; i < 3; i++) {
             set.remove(i);
-            list.remove(i);
+            list.remove(Integer.valueOf(i));
         }
 
         System.out.println(set + " " + list);
