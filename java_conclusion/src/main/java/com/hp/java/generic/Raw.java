@@ -8,8 +8,13 @@ public class Raw {
     // Uses raw type (List) - fails at runtime! - Page 112
     public static void main(String[] args) {
 		List<String> strings = new ArrayList<String>();
+
+        Object[] o = new Long[1];
+        o[0] = "I am a String";
+        List<Long> l = new ArrayList<Long>();
+
         unsafeAdd(strings, new Integer(42));
-		// String s = strings.get(0); // Compiler-generated cast
+        //		 String s = strings.get(0); // Compiler-generated cast
         
 		Set<?> set1 = new HashSet();
 		set1.add(null);
