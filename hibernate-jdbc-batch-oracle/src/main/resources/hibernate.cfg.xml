@@ -1,0 +1,35 @@
+<?xml version='1.0' encoding='UTF-8'?>
+<!DOCTYPE hibernate-configuration PUBLIC
+          "-//Hibernate/Hibernate Configuration DTD 3.0//EN"
+          "http://hibernate.sourceforge.net/hibernate-configuration-3.0.dtd">
+
+<hibernate-configuration>
+
+	<session-factory>
+
+		<property name="hibernate.dialect">
+			org.hibernate.dialect.Oracle10gDialect
+		</property>
+
+		<!-- <property name="hibernate.jdbc.batch_size">50</property> -->
+
+		<!-- 下面两句注释与否, 测试时也会有很大差别 -->
+		<property name="hibernate.order_inserts">true</property>
+		<property name="hibernate.order_updates">true</property>
+		
+		<!-- 表生成后请改为 none -->
+		<property name="hibernate.hbm2ddl.auto">none</property>
+		
+		<!-- 如果数据量不多看看生成的 SQL 语句, 否则还是免了吧... -->
+		<property name="hibernate.show_sql">false</property>
+		<property name="hibernate.format_sql">false</property>
+
+		<property name="hibernate.current_session_context_class">
+			org.hibernate.context.ThreadLocalSessionContext
+		</property>
+
+		<mapping class="zhwb.batch.model.UserInfo" />
+
+	</session-factory>
+
+</hibernate-configuration>
