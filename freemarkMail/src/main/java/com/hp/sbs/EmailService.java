@@ -41,7 +41,6 @@ public class EmailService
             future = businessService.sendByTemplate(mailInfo, isSendInGroup);
             Object obj = future.get();
             status.setSuccess(true);
-            System.out.println(obj);
         }
         catch (MessagingException e)
         {

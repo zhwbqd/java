@@ -32,7 +32,7 @@ public class EmailServiceTest
     public void testSendEmailOneByOne()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.setFromAddress("wen-bin.zhang@hp.com");
+        mailInfo.setFromAddress("HPSC@hp.com");
         mailInfo.setSubject("Test Send Email One by One");
         mailInfo.setToAddress(createEmailList());
         mailInfo.setTemplateName("emailReminder.ftl");
@@ -44,7 +44,7 @@ public class EmailServiceTest
     public void testSendEmailInGroup()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.setFromAddress("wen-bin.zhang@hp.com");
+        mailInfo.setFromAddress("HPSC@hp.com");
         mailInfo.setSubject("Test Send Email In Group");
         mailInfo.setToAddress(createEmailList());
         mailInfo.setContent("This is a test");
