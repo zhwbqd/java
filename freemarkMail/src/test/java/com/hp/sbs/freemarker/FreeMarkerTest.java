@@ -7,10 +7,10 @@
 
 package com.hp.sbs.freemarker;
 
+import java.io.BufferedWriter;
 import java.io.File;
+import java.io.FileWriter;
 import java.io.IOException;
-import java.io.OutputStreamWriter;
-import java.io.Writer;
 import java.util.HashMap;
 import java.util.Map;
 
@@ -27,14 +27,15 @@ public class FreeMarkerTest
         cfg.setDirectoryForTemplateLoading(new File("src/test/resources/templates"));
         Template temp = cfg.getTemplate("example.ftl");
         /* 创建数据模型 */
-        Map root = new HashMap();
+        Map<String, Object> root = new HashMap<String, Object>();
         root.put("user", "Big Joe");
-        Map latest = new HashMap();
+        Map<String, Object> latest = new HashMap<String, Object>();
         root.put("latestProduct", latest);
         latest.put("url", "products/greenmouse.html");
         latest.put("name", "green mouse");
         /* 将模板和数据模型合并 */
-        Writer out = new OutputStreamWriter(System.out);
+        //        Writer out = new OutputStreamWriter(System.out);
+        BufferedWriter out = new BufferedWriter(new FileWriter(new File("src/test/resources/templates/result.txt")));
         temp.process(root, out);
         out.flush();
     }
