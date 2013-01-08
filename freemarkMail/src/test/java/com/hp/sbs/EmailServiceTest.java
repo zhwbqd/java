@@ -13,10 +13,13 @@ import java.util.HashMap;
 import java.util.List;
 import java.util.Map;
 
+import junit.framework.Assert;
+
 import org.junit.BeforeClass;
 import org.junit.Test;
 
 import com.hp.sbs.mail.bean.MailSenderInfo;
+import com.hp.sbs.mail.bean.ResponseStatus;
 
 public class EmailServiceTest
 {
@@ -32,23 +35,37 @@ public class EmailServiceTest
     public void testSendEmailOneByOne()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.setFromAddress("HPSC@hp.com");
+        mailInfo.setFromAddress("SBS@hp.com");
         mailInfo.setSubject("Test Send Email One by One");
         mailInfo.setToAddress(createEmailList());
         mailInfo.setTemplateName("emailReminder.ftl");
         mailInfo.setTemplateMapping(createTemplate());
-        service.sendFreemarkEmail(mailInfo, false);
+        ResponseStatus status = service.sendFreemarkEmail(mailInfo, false);
+        Assert.assertTrue("should be true", status.isSuccess());
     }
 
     @Test
     public void testSendEmailInGroup()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
-        mailInfo.setFromAddress("HPSC@hp.com");
+        mailInfo.setFromAddress("zhwbqd@gmail.com");
         mailInfo.setSubject("Test Send Email In Group");
         mailInfo.setToAddress(createEmailList());
         mailInfo.setContent("This is a test");
-        service.sendFreemarkEmail(mailInfo, true);
+        ResponseStatus status = service.sendFreemarkEmail(mailInfo, true);
+        Assert.assertTrue("should be true", status.isSuccess());
+    }
+
+    @Test
+    public void testSendInCorrectEmailInGroup()
+    {
+        MailSenderInfo mailInfo = new MailSenderInfo();
+        mailInfo.setFromAddress("SBS@hp.com");
+        mailInfo.setSubject("Test Send Email In Group");
+        mailInfo.setToAddress(createInCorrectEmailList());
+        mailInfo.setContent("This is a test");
+        ResponseStatus status = service.sendFreemarkEmail(mailInfo, true);
+        Assert.assertTrue("should be true", status.isSuccess());
     }
 
     private List<String> createEmailList()
@@ -57,6 +74,13 @@ public class EmailServiceTest
         emailAddress.add("wen-bin.zhang@hp.com");
         emailAddress.add("kid_zhwb@163.com");
         emailAddress.add("zhwbqd@gmail.com");
+        return emailAddress;
+    }
+
+    private List<String> createInCorrectEmailList()
+    {
+        List<String> emailAddress = new ArrayList<String>();
+        emailAddress.add("zhwadsassdsdsdsdsdssdsddfs@gmail.com");
         return emailAddress;
     }
 
