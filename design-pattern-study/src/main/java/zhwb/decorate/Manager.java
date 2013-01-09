@@ -1,5 +1,6 @@
 package zhwb.decorate;
 
+//decorate
 abstract class Manager implements Project {
     private Project project;        //实际上存放的是代码工人对象 
 

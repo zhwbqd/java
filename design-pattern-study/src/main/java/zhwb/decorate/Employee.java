@@ -1,5 +1,6 @@
 package zhwb.decorate;
 
+//concreateComponent
 public class Employee implements Project{ 
     /** 
      * 编码 
