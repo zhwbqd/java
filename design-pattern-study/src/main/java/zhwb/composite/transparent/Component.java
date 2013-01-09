@@ -5,13 +5,19 @@
  * Copyright (c) 2009   All rights reserved. ======================
  */
 
-package zhwb.bridge;
+package zhwb.composite.transparent;
 
-public interface Drawing
+import java.util.Enumeration;
+
+public interface Component
 {
+    void sampleOperation();
 
-    void drawCicle();
+    Composite getComposite();
 
-    void drawLine();
+    void add(Component component);
 
+    void remove(Component component);
+
+    Enumeration<Component> conponents();
 }
