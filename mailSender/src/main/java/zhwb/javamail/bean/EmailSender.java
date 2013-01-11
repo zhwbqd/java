@@ -8,7 +8,9 @@
 package zhwb.javamail.bean;
 
 import java.io.IOException;
+import java.util.ArrayList;
 import java.util.Date;
+import java.util.List;
 import java.util.Properties;
 
 import javax.activation.DataHandler;
@@ -32,6 +34,8 @@ public class EmailSender
     // 是否采用调试方式
     private boolean debug = false;
 
+    private boolean sendPartial = false;
+
     public EmailSender()
     {
     }
@@ -41,14 +45,10 @@ public class EmailSender
         this.email = email;
     }
 
-    public Email getEmail()
-    {
-        return email;
-    }
-
-    public void setEmail(Email email)
+    public EmailSender(Email email, boolean sendPartial)
     {
         this.email = email;
+        this.sendPartial = sendPartial;
     }
 
     private void fillEmail(Session session, MimeMessage msg)
@@ -119,15 +119,18 @@ public class EmailSender
         msg.setSentDate(new Date());
     }
 
-    public String sendEmail()
+    public ResponseStatus sendEmail()
         throws IOException, MessagingException
     {
+        ResponseStatus status = new ResponseStatus();
+        List<String> successEmails = new ArrayList<String>();
 
         Properties props = System.getProperties();
         props.put("mail.smtp.host", email.getSmtpHost());
         props.put("mail.smtp.auth", "false");
         //        props.setProperty("mail.smtp.socketFactory.class", "javax.net.ssl.SSLSocketFactory");
         //        props.setProperty("mail.smtp.socketFactory.fallback", "false");
+        props.setProperty("mail.smtp.sendpartial", String.valueOf(sendPartial));
         props.setProperty("mail.smtp.port", email.getPort());
         props.setProperty("mail.smtp.socketFactory.port", email.getPort());
 
@@ -137,8 +140,6 @@ public class EmailSender
         session.setDebug(debug);
         MimeMessage msg = new MimeMessage(session);
         Transport trans = null;
-
-        String result = "";
 
         try
         {
@@ -153,20 +154,19 @@ public class EmailSender
             catch (AuthenticationFailedException e)
             {
                 e.printStackTrace();
-                result = "连接邮件服务器错误";
-                return result;
+                status.setErrorMessage("连接邮件服务器错误");
+                return status;
             }
             catch (MessagingException e)
             {
-                result = "连接邮件服务器错误";
-                return result;
+                status.setErrorMessage("连接邮件服务器错误");
+                return status;
             }
             Transport.send(msg);
             trans.close();
         }
         catch (MessagingException mex)
         {
-            result = "发送邮件失败";
             mex.printStackTrace();
             Exception ex = null;
             if ((ex = mex.getNextException()) != null)
@@ -174,7 +174,7 @@ public class EmailSender
                 System.out.println(ex.toString());
                 ex.printStackTrace();
             }
-            return result;
+            return status;
         }
         finally
         {
@@ -189,7 +189,10 @@ public class EmailSender
             }
         }
         System.out.println("发送邮件成功！");
-        return "";
+        status.setSuccess(true);
+        status.setSuccessEmails(successEmails);
+
+        return status;
     }
 
 }
