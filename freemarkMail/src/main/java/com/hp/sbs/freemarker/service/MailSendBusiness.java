@@ -108,10 +108,8 @@ class SendEmailTask implements Runnable
         this.msg = msg;
     }
 
-    @Override
-    public void run()
-    {
-        mailSender.send(msg);
-    }
+	public void run() {
+		mailSender.send(msg);
+	}
 
 }

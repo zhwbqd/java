@@ -13,11 +13,11 @@ public class TestSmtpMail
     public static void main(String[] args)
     {
         SmtpMailSender sms = SmtpMailSender.createSmtpMailSender("\"Zhang\"<wen-bin.zhang@hp.com>");
-    //    SmtpMailSender sms=SmtpMailSender.createESmtpMailSender("smtp.163.com","\"Object\"<java.lang.object@163.com>","java.lang.object","******");
+        //        SmtpMailSender sms = SmtpMailSender.createESmtpMailSender("smtp.hp.com", "\"Zhang\"<wen-bin.zhang@hp.com>", "", "");
         
         sms.addLogManager(new LogPrinter());//添加日志管理器
         
-        if (sms.sendTextMail("\"Jack\"<zhwbqd@gmail.com>", "STMP邮件测试", "这是一封测试邮件。", new File[] {new File("java.gif")}) == SmtpMailSender.SUCCESSFUL)
+        if (sms.sendTextMail("\"Jack\"<wen-bin.zhang@hp.com>", "STMP邮件测试", "这是一封测试邮件。", new File[] {new File("java.gif")}) == SmtpMailSender.SUCCESSFUL)
         {
             System.out.println("邮件发送成功。");
         }

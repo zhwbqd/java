@@ -9,8 +9,6 @@ package zhwb.javamail.bean;
 
 import java.io.IOException;
 
-import javax.mail.MessagingException;
-
 import junit.framework.TestCase;
 
 import org.junit.Test;
@@ -19,16 +17,26 @@ public class EmailSenderTest extends TestCase
 {
     @Test
     public void testSendEmail()
-        throws IOException, MessagingException
+        throws IOException
     {
-        String mailTo = "wen-bin.zhang@hp.com";
-        String mailFrom = "wen-bin.zhang@hp.com";
-        String smtpHost = "smtp.hp.com";
+		String mailTo = "zhwbqd@unkonwnsdadggggggaas.dom,zhwbqd@gmail.com,asdd@gasada.sdac";
+		String mailFrom = "sbs@hp.com";
+		String smtpHost = "smtp3.hp.com";
         String subject = "TEST";
         String msgContent = "TEST";
-        String port = "25";
+		String port = "25";
         Email email = new Email.Builder(mailTo, mailFrom, smtpHost, subject, msgContent, port).builder();
-        EmailSender bean = new EmailSender(email);
-        bean.sendEmail();
+		EmailSender bean = new EmailSender(email);
+		ResponseStatus status = null;
+        try
+        {
+			status = bean.sendEmail(true, false);
+        }
+        catch (Exception e)
+        {
+            e.getMessage();
+        }
+		assertFalse(status.getErrorMessages().toString(), status.isSuccess());
+		assertTrue(status.getFailEmails().size() == 2);
     }
 }

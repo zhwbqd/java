@@ -18,6 +18,7 @@ import javax.servlet.http.HttpServletResponse;
 
 import zhwb.javamail.bean.Email;
 import zhwb.javamail.bean.EmailSender;
+import zhwb.javamail.bean.ResponseStatus;
 
 public class EmailService
 {
@@ -75,13 +76,13 @@ public class EmailService
             }
         }
 
-        String result = "";
+		ResponseStatus result = new ResponseStatus();
         Email email = new Email.Builder(to, from, stmp, subject, content, port).attachedFileList(vec).builder();
         EmailSender bean = new EmailSender(email);
 
         try
         {
-            result = bean.sendEmail();
+			result = bean.sendEmail(true, false);
         }
         catch (IOException e)
         {
@@ -96,13 +97,13 @@ public class EmailService
         {
             PrintWriter out = this.res.getWriter();
 
-            if (result.equals(""))
+			if (result.isSuccess())
             {
                 out.print("success");
             }
             else
             {
-                out.print(result);
+				out.print(result.getErrorMessages());
             }
         }
         catch (IOException e)
