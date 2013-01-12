@@ -42,7 +42,7 @@ public class SendMailJob implements Job
         EmailSender bean = new EmailSender(email);
         try
         {
-            bean.sendEmail();
+			bean.sendEmail(true, false);
         }
         catch (IOException e)
         {

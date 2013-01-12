@@ -916,6 +916,10 @@ public final class SmtpMailSender
         MX(int pri,String host)
         {
             this.pri=pri;
+            if (host.lastIndexOf(".") == host.length() - 1)
+            {
+                host = host.substring(0, host.length() - 1);
+            }
             this.address=host;
         }
     }
