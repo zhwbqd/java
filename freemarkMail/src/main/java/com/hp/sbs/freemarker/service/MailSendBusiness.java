@@ -4,6 +4,7 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
@@ -11,12 +12,14 @@ import java.util.concurrent.Future;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
+import org.springframework.mail.MailSendException;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
 import org.springframework.ui.freemarker.FreeMarkerTemplateUtils;
 import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.hp.sbs.mail.bean.MailSenderInfo;
+import com.hp.sbs.mail.bean.ResponseStatus;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -59,7 +62,7 @@ public class MailSendBusiness
         return htmlText;
     }
 
-    public Future<?> sendByTemplate(final MailSenderInfo info, final boolean isSendInGroup)
+    public Future<ResponseStatus> sendByTemplate(final MailSenderInfo info, final boolean isSendInGroup)
         throws MessagingException, IOException, TemplateException
     {
         MimeMessage msg = mailSender.createMimeMessage();
@@ -76,7 +79,7 @@ public class MailSendBusiness
         }
         String[] emailAddresses = new String[info.getToAddress().size()];
         info.getToAddress().toArray(emailAddresses);
-        Future<?> futureResult = null;
+        Future<ResponseStatus> futureResult = null;
         if (isSendInGroup)
         {
             helper.setTo(emailAddresses);
@@ -96,7 +99,7 @@ public class MailSendBusiness
     }
 }
 
-class SendEmailTask implements Runnable
+class SendEmailTask implements Callable<ResponseStatus>
 {
     private JavaMailSender mailSender;
 
@@ -108,8 +111,36 @@ class SendEmailTask implements Runnable
         this.msg = msg;
     }
 
-	public void run() {
-		mailSender.send(msg);
-	}
+    @Override
+    public ResponseStatus call()
+    {
+        ResponseStatus status = new ResponseStatus();
+        try
+        {
+        mailSender.send(msg);
+        }
+        catch (Exception ex)
+        {
+            if (ex instanceof MailSendException)
+            {
+                status.setErrorMessage(ex.getMessage());
+                for (Object message : ((MailSendException)ex).getFailedMessages().keySet())
+                {
+                    if (message instanceof MimeMessage)
+                    {
 
+                    }
+                    else
+                    {
+
+                    }
+                }
+            }
+            else
+            {
+                status.setErrorMessage(ex.getMessage());
+            }
+        }
+        return status;
+}
 }

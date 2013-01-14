@@ -35,12 +35,11 @@ public class EmailService
     public ResponseStatus sendFreemarkEmail(MailSenderInfo mailInfo, boolean isSendInGroup)
     {
         ResponseStatus status = new ResponseStatus();
-        Future<?> future = null;
+        Future<ResponseStatus> future = null;
         try
         {
             future = businessService.sendByTemplate(mailInfo, isSendInGroup);
-            Object obj = future.get();
-            status.setSuccess(true);
+            return future.get();
         }
         catch (MessagingException e)
         {

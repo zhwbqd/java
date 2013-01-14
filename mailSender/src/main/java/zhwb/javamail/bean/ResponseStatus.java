@@ -20,11 +20,13 @@ public class ResponseStatus
 	private Set<String> successEmails = new LinkedHashSet<String>();
 	private List<String> errorMessages = new ArrayList<String>();
 
-	public List<String> getFailEmails() {
+    public Set<String> getFailEmails()
+    {
 		return failEmails;
 	}
 
-	public List<String> getSuccessEmails() {
+    public Set<String> getSuccessEmails()
+    {
 		return successEmails;
 	}
 
