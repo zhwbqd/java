@@ -7,11 +7,26 @@
 
 package com.hp.sbs.mail.bean;
 
+import java.util.ArrayList;
+import java.util.List;
+
 public class ResponseStatus
 {
     private boolean isSuccess;
 
     private String errorMessage;
+
+    private List<String> failEmailList = new ArrayList<String>();
+
+    public List<String> getFailEmailList()
+    {
+        return failEmailList;
+    }
+
+    public void setFailEmail(String failEmailList)
+    {
+        this.failEmailList.add(failEmailList);
+    }
 
     public boolean isSuccess()
     {

@@ -80,7 +80,10 @@ public class EmailServiceTest
     private List<String> createInCorrectEmailList()
     {
         List<String> emailAddress = new ArrayList<String>();
-        emailAddress.add("zhwadsassdsdsdsdsdssdsddfs@gmail.com");
+        emailAddress.add("wen-bin.zhang@hp.com");
+        emailAddress.add("kid_zhwb@163.com");
+        emailAddress.add("zhwbqd@gmail.com");
+        emailAddress.add("sds@sdsdadail.com");
         return emailAddress;
     }
 
