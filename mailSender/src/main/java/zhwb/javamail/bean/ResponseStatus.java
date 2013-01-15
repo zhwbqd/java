@@ -7,28 +7,52 @@
 
 package zhwb.javamail.bean;
 
-import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.LinkedHashSet;
-import java.util.List;
+import java.util.Map;
 import java.util.Set;
 
 public class ResponseStatus
 {
     private boolean isSuccess;
 
-	private Set<String> failEmails = new LinkedHashSet<String>();
-	private Set<String> successEmails = new LinkedHashSet<String>();
-	private List<String> errorMessages = new ArrayList<String>();
+    private String errorMessage;
 
-    public Set<String> getFailEmails()
-    {
-		return failEmails;
-	}
+    private Map<String, String> errorMap = new LinkedHashMap<String, String>();
 
-    public Set<String> getSuccessEmails()
+    private Set<String> failEmailList = new LinkedHashSet<String>();
+
+    private Set<String> successEmailList = new LinkedHashSet<String>();
+
+    public Map<String, String> getErrorMap()
     {
-		return successEmails;
-	}
+        return errorMap;
+    }
+
+    public void addIntoErrorMap(String key, String value)
+    {
+        errorMap.put(key, value);
+    }
+
+    public Set<String> getSuccessEmailList()
+    {
+        return successEmailList;
+    }
+
+    public void setSuccessEmail(String successEmail)
+    {
+        this.successEmailList.add(successEmail);
+    }
+
+    public Set<String> getFailEmailList()
+    {
+        return failEmailList;
+    }
+
+    public void setFailEmail(String failEmail)
+    {
+        this.failEmailList.add(failEmail);
+    }
 
     public boolean isSuccess()
     {
@@ -40,20 +64,14 @@ public class ResponseStatus
         this.isSuccess = isSuccess;
     }
 
-	public void setFailEmail(String mail) {
-		failEmails.add(mail);
-	}
+    public String getErrorMessage()
+    {
+        return errorMessage;
+    }
 
-	public void setSuccessEmail(String mail) {
-		successEmails.add(mail);
-	}
-
-	public List<String> getErrorMessages() {
-		return errorMessages;
-	}
-
-	public void setErrorMessage(String errorMessage) {
-		errorMessages.add(errorMessage);
-	}
-
+    public void setErrorMessage(String errorMessage)
+    {
+        this.errorMessage = errorMessage;
+    }
 }
+
