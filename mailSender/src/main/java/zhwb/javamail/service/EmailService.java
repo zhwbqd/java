@@ -103,7 +103,7 @@ public class EmailService
             }
             else
             {
-				out.print(result.getErrorMessages());
+                out.print(result.getErrorMessage());
             }
         }
         catch (IOException e)

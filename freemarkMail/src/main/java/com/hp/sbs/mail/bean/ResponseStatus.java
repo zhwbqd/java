@@ -7,8 +7,10 @@
 
 package com.hp.sbs.mail.bean;
 
-import java.util.ArrayList;
-import java.util.List;
+import java.util.LinkedHashMap;
+import java.util.LinkedHashSet;
+import java.util.Map;
+import java.util.Set;
 
 public class ResponseStatus
 {
@@ -16,16 +18,40 @@ public class ResponseStatus
 
     private String errorMessage;
 
-    private List<String> failEmailList = new ArrayList<String>();
+    private Map<String, String> errorMap = new LinkedHashMap<String, String>();
 
-    public List<String> getFailEmailList()
+    private Set<String> failEmailList = new LinkedHashSet<String>();
+
+    private Set<String> successEmailList = new LinkedHashSet<String>();
+
+    public Map<String, String> getErrorMap()
+    {
+        return errorMap;
+    }
+
+    public void addIntoErrorMap(String key, String value)
+    {
+        errorMap.put(key, value);
+    }
+
+    public Set<String> getSuccessEmailList()
+    {
+        return successEmailList;
+    }
+
+    public void setSuccessEmail(String successEmail)
+    {
+        this.successEmailList.add(successEmail);
+    }
+
+    public Set<String> getFailEmailList()
     {
         return failEmailList;
     }
 
-    public void setFailEmail(String failEmailList)
+    public void setFailEmail(String failEmail)
     {
-        this.failEmailList.add(failEmailList);
+        this.failEmailList.add(failEmail);
     }
 
     public boolean isSuccess()

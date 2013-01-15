@@ -65,7 +65,10 @@ public class EmailServiceTest
         mailInfo.setToAddress(createInCorrectEmailList());
         mailInfo.setContent("This is a test");
         ResponseStatus status = service.sendFreemarkEmail(mailInfo, true);
-        Assert.assertTrue("should be true", status.isSuccess());
+        Assert.assertFalse("should be false", status.isSuccess());
+        Assert.assertEquals(3, status.getSuccessEmailList().size());
+        Assert.assertEquals(2, status.getFailEmailList().size());
+        System.out.println(status.getErrorMap());
     }
 
     private List<String> createEmailList()
@@ -80,6 +83,7 @@ public class EmailServiceTest
     private List<String> createInCorrectEmailList()
     {
         List<String> emailAddress = new ArrayList<String>();
+        emailAddress.add("ggsadasd@gga.c");
         emailAddress.add("wen-bin.zhang@hp.com");
         emailAddress.add("kid_zhwb@163.com");
         emailAddress.add("zhwbqd@gmail.com");

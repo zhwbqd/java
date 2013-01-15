@@ -162,24 +162,33 @@ public class EmailSender {
 		return status;
 	}
 
-	private void handleException(Exception mex, ResponseStatus status) {
-		if (mex != null) {
-			if (mex instanceof SMTPSendFailedException) {
-				SMTPSendFailedException ssf = (SMTPSendFailedException) mex;
-				for (Address addr : ssf.getValidSentAddresses()) {
-					status.setSuccessEmail(addr.toString());
-				}
-				for (Address addr : ssf.getInvalidAddresses()) {
-					status.setFailEmail(addr.toString());
-				}
-				handleException(ssf.getNextException(), status);
-			} else if (mex instanceof SMTPAddressFailedException) {
-				SMTPAddressFailedException saf = (SMTPAddressFailedException) mex;
-				status.setFailEmail(saf.getAddress().toString());
-				status.setErrorMessage(saf.getMessage());
-			} else {
-				status.setErrorMessage(mex.getMessage());
-			}
-		}
-	}
+    private void handleException(Exception mex, ResponseStatus status)
+    {
+        if (mex != null)
+        {
+            if (mex instanceof SMTPSendFailedException)
+            {
+                SMTPSendFailedException ssf = (SMTPSendFailedException)mex;
+                for (Address addr : ssf.getValidSentAddresses())
+                {
+                    status.setSuccessEmail(addr.toString());
+                }
+                for (Address addr : ssf.getInvalidAddresses())
+                {
+                    status.setFailEmail(addr.toString());
+                }
+                handleException(ssf.getNextException(), status);
+            }
+            else if (mex instanceof SMTPAddressFailedException)
+            {
+                SMTPAddressFailedException saf = (SMTPAddressFailedException)mex;
+                status.addIntoErrorMap(saf.getAddress().toString(), saf.getMessage());
+                handleException(saf.getNextException(), status);
+            }
+            else
+            {
+                status.setErrorMessage(mex.getMessage());
+            }
+        }
+    }
 }

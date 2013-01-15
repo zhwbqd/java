@@ -36,7 +36,7 @@ public class EmailSenderTest extends TestCase
         {
             e.getMessage();
         }
-		assertFalse(status.getErrorMessages().toString(), status.isSuccess());
-		assertTrue(status.getFailEmails().size() == 2);
+        assertFalse(status.getErrorMap().toString(), status.isSuccess());
+        assertTrue(status.getFailEmailList().size() == 2);
     }
 }

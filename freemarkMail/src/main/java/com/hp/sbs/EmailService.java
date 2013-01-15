@@ -13,6 +13,7 @@ import java.util.concurrent.Future;
 
 import javax.mail.MessagingException;
 
+import org.apache.commons.validator.routines.EmailValidator;
 import org.springframework.context.ApplicationContext;
 import org.springframework.context.support.ClassPathXmlApplicationContext;
 
@@ -69,5 +70,12 @@ public class EmailService
             status.setSuccess(false);
         }
         return status;
+    }
+
+    public boolean validateEmail(String email)
+    {
+        EmailValidator validate = EmailValidator.getInstance();
+        return validate.isValid(email);
+
     }
 }

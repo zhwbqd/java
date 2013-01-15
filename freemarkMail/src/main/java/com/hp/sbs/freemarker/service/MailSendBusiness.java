@@ -4,11 +4,13 @@ import java.io.IOException;
 import java.io.StringWriter;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.Map.Entry;
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 
+import javax.mail.Address;
 import javax.mail.MessagingException;
 import javax.mail.internet.MimeMessage;
 
@@ -20,6 +22,8 @@ import org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer;
 
 import com.hp.sbs.mail.bean.MailSenderInfo;
 import com.hp.sbs.mail.bean.ResponseStatus;
+import com.sun.mail.smtp.SMTPAddressFailedException;
+import com.sun.mail.smtp.SMTPSendFailedException;
 
 import freemarker.template.Template;
 import freemarker.template.TemplateException;
@@ -121,26 +125,46 @@ class SendEmailTask implements Callable<ResponseStatus>
         }
         catch (Exception ex)
         {
-            if (ex instanceof MailSendException)
-            {
-                status.setErrorMessage(ex.getMessage());
-                for (Object message : ((MailSendException)ex).getFailedMessages().keySet())
+            if(ex instanceof MailSendException){
+                @SuppressWarnings("unchecked")
+                Map<Object, MessagingException> map = ((MailSendException)ex).getFailedMessages();
+                for (Entry<Object, MessagingException> entry : map.entrySet())
                 {
-                    if (message instanceof MimeMessage)
-                    {
-
-                    }
-                    else
-                    {
-
-                    }
+                    MessagingException me = entry.getValue();
+                    handleException(me, status);
                 }
-            }
-            else
-            {
-                status.setErrorMessage(ex.getMessage());
-            }
+                }
         }
         return status;
 }
+
+    private void handleException(Exception mex, ResponseStatus status)
+    {
+        if (mex != null)
+        {
+            if (mex instanceof SMTPSendFailedException)
+            {
+                SMTPSendFailedException ssf = (SMTPSendFailedException)mex;
+                for (Address addr : ssf.getValidSentAddresses())
+                {
+                    status.setSuccessEmail(addr.toString());
+                }
+                for (Address addr : ssf.getInvalidAddresses())
+                {
+                    status.setFailEmail(addr.toString());
+                }
+                handleException(ssf.getNextException(), status);
+            }
+            else if (mex instanceof SMTPAddressFailedException)
+            {
+                SMTPAddressFailedException saf = (SMTPAddressFailedException)mex;
+                status.addIntoErrorMap(saf.getAddress().toString(), saf.getMessage());
+                handleException(saf.getNextException(), status);
+            }
+            else
+            {
+                status.setErrorMessage(mex.getMessage());
+            }
+        }
+    }
 }
