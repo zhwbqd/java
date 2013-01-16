@@ -8,6 +8,6 @@
       
     <aop:aspectj-autoproxy /> 
     
-<bean id="daoImpl" class="study.spring.DAOImpl"/>
-<bean id="simpleThrowingAspect" class="com.spring.annotation.SimpleThrowingAspect"/>
+<bean id="daoImpl" class="zhwb.aop.mockbusiness.DAOImpl"/>
+<bean id="simpleAspect" class="zhwb.aop.annotation.SimpleAspect"/>
 </beans>
