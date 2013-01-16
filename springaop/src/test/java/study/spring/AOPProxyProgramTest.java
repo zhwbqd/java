@@ -11,7 +11,7 @@ import zhwb.aop.mockbusiness.IDAO;
 /**
  * Unit test for simple App.
  */
-public class AOPAnnotationTest extends TestCase
+public class AOPProxyProgramTest extends TestCase
 {
     ApplicationContext context = null;
 
@@ -20,23 +20,15 @@ public class AOPAnnotationTest extends TestCase
         throws Exception
     {
         super.setUp();
-        this.context = new ClassPathXmlApplicationContext("/annotation-beans.xml");
+        this.context = new ClassPathXmlApplicationContext("/program-beans.xml");
     }
 
     public void testAOP()
     {
-        IDAO<Object> dao = (IDAO<Object>)context.getBean("daoImpl");
+        @SuppressWarnings("unchecked")
+        IDAO<String> dao = (IDAO<String>)context.getBean("proxy");
         dao.insert("sth");
         dao.find("sth");
         dao.delete("sth");
-        try
-        {
-            dao.find(null);
-        }
-        catch (Exception ex)
-        {
-            assertTrue(ex instanceof RuntimeException);
-        }
-
     }
 }
