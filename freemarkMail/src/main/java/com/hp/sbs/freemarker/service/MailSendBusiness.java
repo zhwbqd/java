@@ -36,10 +36,10 @@ public class MailSendBusiness
 
     private ExecutorService pool = null;
 
-    public MailSendBusiness(JavaMailSender mailSender, FreeMarkerConfigurer freeMarkerConfigurer)
+    public MailSendBusiness(final JavaMailSender mailSender, final FreeMarkerConfigurer freeMarkerConfigurer)
     {
         super();
-        pool = Executors.newFixedThreadPool(Runtime.getRuntime().availableProcessors());
+        pool = Executors.newCachedThreadPool();
         this.mailSender = mailSender;
         this.freeMarkerConfigurer = freeMarkerConfigurer;
     }
@@ -109,7 +109,7 @@ class SendEmailTask implements Callable<ResponseStatus>
 
     private MimeMessage msg;
 
-    public SendEmailTask(JavaMailSender mailSender, MimeMessage msg)
+    public SendEmailTask(final JavaMailSender mailSender, final MimeMessage msg)
     {
         this.mailSender = mailSender;
         this.msg = msg;
@@ -138,7 +138,7 @@ class SendEmailTask implements Callable<ResponseStatus>
         return status;
 }
 
-    private void handleException(Exception mex, ResponseStatus status)
+    private void handleException(final Exception mex, final ResponseStatus status)
     {
         if (mex != null)
         {
