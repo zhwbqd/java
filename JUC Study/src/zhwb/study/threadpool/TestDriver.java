@@ -18,12 +18,16 @@ public class TestDriver
     }
 
     public static void main(final String[] args)
+        throws InterruptedException
     {
+        long start = System.currentTimeMillis();
         for (int i = 0; i < 100; i++)
         {
             new TestDriver().sendMsg(Integer.toString(i));
         }
-
+        Thread.currentThread().join();
+        long end = System.currentTimeMillis();
+        System.out.println("process end, time :" + (end - start));
     }
 
 }

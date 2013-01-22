@@ -36,7 +36,7 @@ public class ThreadPoolManager
     // 消息缓冲队列 
     Queue<String> msgQueue = new LinkedList<String>();
 
-    // 访问消息缓存的调度线程 
+    // 重试策略调度线程
     final Runnable accessBufferThread = new Runnable()
     {
         @Override
@@ -59,8 +59,8 @@ public class ThreadPoolManager
         {
             if (!executor.isShutdown())
             {
-            System.out.println(((AccessDBThread)r).getMsg() + "消息放入队列中重新等待执行");
-            msgQueue.offer(((AccessDBThread)r).getMsg());
+                System.out.println(((AccessDBThread)r).getMsg() + "消息放入队列中重新等待执行");
+                msgQueue.offer(((AccessDBThread)r).getMsg());
             }
         }
     };
