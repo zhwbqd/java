@@ -1,0 +1,65 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
+
+	<bean id="emailDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="email-Queue" />
+	</bean>
+
+	<bean id="pendingQueuePolicy" class="org.apache.activemq.broker.region.policy.FilePendingQueueMessageStoragePolicy" />
+
+	<bean id="policyEntrie" class="org.apache.activemq.broker.region.policy.PolicyEntry">
+		<property name="pendingQueuePolicy" ref="pendingQueuePolicy"></property>
+		<property name="destination" ref="emailDestination"></property>
+		<property name="memoryLimit" value="1024" /><!-- byte for test -->
+		<property name="producerFlowControl" value="false" />
+	</bean>
+	<bean id="destinationPolicy" class="org.apache.activemq.broker.region.policy.PolicyMap">
+		<property name="policyEntries" ref="policyEntrie"></property>
+	</bean>
+	<bean id="broker" class="org.apache.activemq.broker.BrokerService" init-method="start" destroy-method="stop">
+		<property name="brokerName" value="emailBroker" />
+		<property name="persistent" value="true" />
+		<property name="destinationPolicy" ref="destinationPolicy" />
+		<property name="dataDirectory" value="C:/activemq/data" />
+		<property name="transportConnectorURIs">
+			<list>
+				<value>tcp://localhost:61616</value>
+			</list>
+		</property>
+	</bean>
+	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
+		<property name="brokerURL" value="tcp://localhost:61616" />
+	</bean>
+
+	<!-- A cached connection to wrap the ActiveMQ connection -->
+	<bean id="cachedConnectionFactory" class="org.springframework.jms.connection.CachingConnectionFactory">
+		<property name="targetConnectionFactory" ref="jmsConnectionFactory" />
+		<property name="sessionCacheSize" value="10" />
+	</bean>
+
+	<bean id="emailListener" class="com.hp.it.sbs.notification.service.jms.EmailJmsListener">
+		<constructor-arg ref="emailService" />
+	</bean>
+
+	<bean id="emailMLC" class="org.springframework.jms.listener.DefaultMessageListenerContainer">
+		<property name="connectionFactory" ref="cachedConnectionFactory" />
+		<property name="destination" ref="emailDestination" />
+		<property name="messageListener" ref="emailListener" />
+	</bean>
+	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
+		<property name="connectionFactory" ref="cachedConnectionFactory" />
+	</bean>
+	
+	<bean id="emailPublisher" class="com.hp.it.sbs.notification.service.jms.EmailJmsPublisher">
+		<constructor-arg ref="jmsTemplate" />
+		<constructor-arg ref="destination" />
+		
+	</bean>
+	<bean id="emailJmsService" class="com.hp.it.sbs.notification.service.jms.EmailJmsService">
+		<constructor-arg ref="emailService" />
+		<constructor-arg ref="templateService" />
+		<constructor-arg ref="emailPublisher" />
+	</bean>
+</beans>

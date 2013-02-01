@@ -43,8 +43,17 @@
 	</bean>
 
 	<!-- 定义自定义的类进行数据的注入 -->
-	<bean id="businessService" class="com.hp.sbs.freemarker.service.MailSendBusiness">
+	<bean id="emailService" class="zhwb.study.mailsender.service.mail.EmailService">
 		<constructor-arg ref="mailSender" />
+	</bean>
+	
+	<bean id="templateService" class="zhwb.study.mailsender.service.template.TemplateService">
 		<constructor-arg ref="freeMarkerConfigurer" />
 	</bean>
+	
+	<bean id="businessService" class="zhwb.study.mailsender.service.MailSendBusiness">
+		<constructor-arg ref="emailService" />
+		<constructor-arg ref="templateService" />
+	</bean>
+	
 </beans>

@@ -15,83 +15,102 @@ import java.util.Map;
 
 import junit.framework.Assert;
 
-import org.junit.BeforeClass;
-import org.junit.Test;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
 
-import com.hp.sbs.mail.bean.MailSenderInfo;
-import com.hp.sbs.mail.bean.ResponseStatus;
+import zhwb.study.mailsender.bean.MailSenderInfo;
+import zhwb.study.mailsender.bean.ReceptionEmail;
+import zhwb.study.mailsender.bean.ReceptionEmail.SendType;
+import zhwb.study.mailsender.bean.ResponseStatusCode;
+import zhwb.study.mailsender.service.MailSendBusiness;
+
 
 public class EmailServiceTest
 {
-    private static EmailService service;
+    private static MailSendBusiness service;
 
-    @BeforeClass
-    public static void setUpBeforeClass()
+
+    public static void main(final String[] args)
     {
-        service = new EmailService();
+        service = (MailSendBusiness)new ClassPathXmlApplicationContext("applicationContext.xml").getBean("businessService");
+        testSendEmailOneByOne();
+        testSendEmailInGroup();
+        testSendInCorrectEmailInGroup();
     }
 
-    @Test
-    public void testSendEmailOneByOne()
+    private static void testSendEmailOneByOne()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
+        mailInfo.setSendGroup(false);
         mailInfo.setFromAddress("SBS@hp.com");
         mailInfo.setSubject("Test Send Email One by One");
-        mailInfo.setToAddress(createEmailList());
+        mailInfo.setSendAddress(createEmailList());
         mailInfo.setTemplateName("emailReminder.ftl");
         mailInfo.setTemplateMapping(createTemplate());
-        ResponseStatus status = service.sendFreemarkEmail(mailInfo, false);
-        Assert.assertTrue("should be true", status.isSuccess());
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        Assert.assertEquals(1, status.getStatusCode());
     }
 
-    @Test
-    public void testSendEmailInGroup()
+
+    private static void testSendEmailInGroup()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
+        mailInfo.setSendGroup(true);
         mailInfo.setFromAddress("zhwbqd@gmail.com");
         mailInfo.setSubject("Test Send Email In Group");
-        mailInfo.setToAddress(createEmailList());
-        mailInfo.setContent("This is a test");
-        ResponseStatus status = service.sendFreemarkEmail(mailInfo, true);
-        Assert.assertTrue("should be true", status.isSuccess());
+        mailInfo.setSendAddress(createEmailList());
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        Assert.assertEquals(1, status.getStatusCode());
     }
 
-    @Test
-    public void testSendInCorrectEmailInGroup()
+
+    private static void testSendInCorrectEmailInGroup()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
+        mailInfo.setSendGroup(true);
         mailInfo.setFromAddress("SBS@hp.com");
         mailInfo.setSubject("Test Send Email In Group");
-        mailInfo.setToAddress(createInCorrectEmailList());
-        mailInfo.setContent("This is a test");
-        ResponseStatus status = service.sendFreemarkEmail(mailInfo, true);
-        Assert.assertFalse("should be false", status.isSuccess());
-        Assert.assertEquals(3, status.getSuccessEmailList().size());
-        Assert.assertEquals(2, status.getFailEmailList().size());
-        System.out.println(status.getErrorMap());
+        mailInfo.setSendAddress(createInCorrectEmailList());
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        Assert.assertEquals(1, status.getStatusCode());
     }
 
-    private List<String> createEmailList()
+    private static List<ReceptionEmail> createEmailList()
     {
-        List<String> emailAddress = new ArrayList<String>();
-        emailAddress.add("wen-bin.zhang@hp.com");
-        emailAddress.add("kid_zhwb@163.com");
-        emailAddress.add("zhwbqd@gmail.com");
+        List<ReceptionEmail> emailAddress = new ArrayList<ReceptionEmail>();
+        ReceptionEmail mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("wen-bin.zhang@hp.com");
+        mail1.setSendType(SendType.TO);
+        emailAddress.add(mail1);
+        mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("kid_zhwb@163.com");
+        mail1.setSendType(SendType.CC);
+        emailAddress.add(mail1);
+        mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("zhwbqd@gmail.com");
+        mail1.setSendType(SendType.BCC);
+        emailAddress.add(mail1);
         return emailAddress;
     }
 
-    private List<String> createInCorrectEmailList()
+    private static List<ReceptionEmail> createInCorrectEmailList()
     {
-        List<String> emailAddress = new ArrayList<String>();
-        emailAddress.add("ggsadasd@gga.c");
-        emailAddress.add("wen-bin.zhang@hp.com");
-        emailAddress.add("kid_zhwb@163.com");
-        emailAddress.add("zhwbqd@gmail.com");
-        emailAddress.add("sds@sdsdadail.com");
+        List<ReceptionEmail> emailAddress = new ArrayList<ReceptionEmail>();
+        ReceptionEmail mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("fdsdf@hsfpsf.sssm");
+        mail1.setSendType(SendType.TO);
+        emailAddress.add(mail1);
+        mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("sdag@163ddm");
+        mail1.setSendType(SendType.CC);
+        emailAddress.add(mail1);
+        mail1 = new ReceptionEmail();
+        mail1.setEmailAdress("sdsddsail.com");
+        mail1.setSendType(SendType.BCC);
+        emailAddress.add(mail1);
         return emailAddress;
     }
 
-    private Map<String, Object> createTemplate()
+    private static Map<String, Object> createTemplate()
     {
         Map<String, Object> template = new HashMap<String, Object>();
         template.put("nowDate", new Date());
