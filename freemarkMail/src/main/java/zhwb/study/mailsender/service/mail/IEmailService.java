@@ -44,4 +44,11 @@ public interface IEmailService
             String fromAddr,
             String localLanguageSubjectLineText);
 
+    /**
+     * Send mail.
+     *
+     * @param mailMessage the mail message
+     */
+    void sendMail(List<MimeMessage> mailMessage);
+
 }

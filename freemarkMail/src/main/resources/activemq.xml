@@ -22,7 +22,7 @@
 		<property name="brokerName" value="emailBroker" />
 		<property name="persistent" value="true" />
 		<property name="destinationPolicy" ref="destinationPolicy" />
-		<property name="dataDirectory" value="C:/activemq/data" />
+		<property name="dataDirectory" value="/activemq/data" />
 		<property name="transportConnectorURIs">
 			<list>
 				<value>tcp://localhost:61616</value>
@@ -39,7 +39,7 @@
 		<property name="sessionCacheSize" value="10" />
 	</bean>
 
-	<bean id="emailListener" class="com.hp.it.sbs.notification.service.jms.EmailJmsListener">
+	<bean id="emailListener" class="zhwb.study.mailsender.jms.EmailJmsListener">
 		<constructor-arg ref="emailService" />
 	</bean>
 
@@ -52,14 +52,8 @@
 		<property name="connectionFactory" ref="cachedConnectionFactory" />
 	</bean>
 	
-	<bean id="emailPublisher" class="com.hp.it.sbs.notification.service.jms.EmailJmsPublisher">
+	<bean id="emailPublisher" class="zhwb.study.mailsender.jms.EmailJmsPublisher">
 		<constructor-arg ref="jmsTemplate" />
-		<constructor-arg ref="destination" />
-		
-	</bean>
-	<bean id="emailJmsService" class="com.hp.it.sbs.notification.service.jms.EmailJmsService">
-		<constructor-arg ref="emailService" />
-		<constructor-arg ref="templateService" />
-		<constructor-arg ref="emailPublisher" />
+		<constructor-arg ref="emailDestination" />
 	</bean>
 </beans>

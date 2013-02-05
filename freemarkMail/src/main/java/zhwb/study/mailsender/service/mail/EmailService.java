@@ -167,4 +167,10 @@ public class EmailService implements IEmailService
 
     }
 
+    @Override
+    public void sendMail(final List<MimeMessage> mailMessage)
+    {
+        mailSender.send(mailMessage.toArray(new MimeMessage[mailMessage.size()]));
+    }
+
 }

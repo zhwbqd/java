@@ -7,10 +7,15 @@
 
 package zhwb.study.mailsender.bean;
 
-public class ReceptionEmail
+import java.io.Serializable;
+
+public class ReceptionEmail implements Serializable
 {
-private SendType sendType;
-private String emailAdress;
+    private static final long serialVersionUID = 1L;
+
+    private SendType sendType;
+
+    private String emailAdress;
 
     public SendType getSendType()
     {
@@ -48,8 +53,20 @@ private String emailAdress;
         {
             return typeCode;
         }
+
+        public static SendType valueOf(final int i)
+        {
+            switch (i)
+            {
+                case 1:
+                    return TO;
+                case 2:
+                    return CC;
+                case 3:
+                    return BCC;
+            }
+            return TO;
+        }
     }
 
 }
-
-

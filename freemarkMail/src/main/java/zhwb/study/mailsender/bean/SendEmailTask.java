@@ -40,12 +40,13 @@ public class SendEmailTask implements Callable<ResponseStatus>
         ResponseStatus status = new ResponseStatus();
         try
         {
-        mailSender.send(msg.toArray(new MimeMessage[msg.size()]));
+            mailSender.send(msg.toArray(new MimeMessage[msg.size()]));
         }
         catch (Exception ex)
         {
             status.setErrorMessage(ex.getMessage());
-            if(ex instanceof MailSendException){
+            if (ex instanceof MailSendException)
+            {
                 @SuppressWarnings("unchecked")
                 Map<Object, MessagingException> map = ((MailSendException)ex).getFailedMessages();
                 for (Entry<Object, MessagingException> entry : map.entrySet())
@@ -53,10 +54,10 @@ public class SendEmailTask implements Callable<ResponseStatus>
                     MessagingException me = entry.getValue();
                     handleException(me, status);
                 }
-                }
+            }
         }
         return status;
-}
+    }
 
     private void handleException(final Exception mex, final ResponseStatus status)
     {
