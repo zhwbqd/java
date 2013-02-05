@@ -5,7 +5,7 @@
  * Copyright (c) 2009   All rights reserved. ======================
  */
 
-package com.hp.sbs.freemarker;
+package zhwb.study.freemark;
 
 import java.io.BufferedWriter;
 import java.io.File;

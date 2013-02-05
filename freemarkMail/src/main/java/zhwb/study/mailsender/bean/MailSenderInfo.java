@@ -7,11 +7,19 @@
 
 package zhwb.study.mailsender.bean;
 
+import java.io.Serializable;
+import java.util.ArrayList;
+import java.util.LinkedHashMap;
 import java.util.List;
 import java.util.Map;
+import java.util.Map.Entry;
 
-public class MailSenderInfo
+import zhwb.study.mailsender.bean.ReceptionEmail.SendType;
+
+public class MailSenderInfo implements Serializable
 {
+    private static final long serialVersionUID = 1L;
+
     private String subject;
 
     private String fromAddress;
@@ -25,6 +33,41 @@ public class MailSenderInfo
     private String templateStr;
 
     private Map<String, Object> templateMapping;
+
+    private String emailBody;
+
+    public static Map<String, Integer> convertReceptionEmailToMap(final List<ReceptionEmail> sendAddress)
+    {
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        for (ReceptionEmail addr : sendAddress)
+        {
+            map.put(addr.getEmailAdress(), addr.getSendType().getTypeCode());
+        }
+        return map;
+    }
+
+    public static List<ReceptionEmail> convertReceptionEmailToMap(final Map<String, Integer> sendAddressMap)
+    {
+        List<ReceptionEmail> sendAddress = new ArrayList<ReceptionEmail>();
+        for (Entry<String, Integer> addr : sendAddressMap.entrySet())
+        {
+            ReceptionEmail email = new ReceptionEmail();
+            email.setEmailAdress(addr.getKey());
+            email.setSendType(SendType.valueOf(addr.getValue()));
+            sendAddress.add(email);
+        }
+        return sendAddress;
+    }
+
+    public Map<String, Integer> convertReceptionEmailToMap()
+    {
+        Map<String, Integer> map = new LinkedHashMap<String, Integer>();
+        for (ReceptionEmail addr : sendAddress)
+        {
+            map.put(addr.getEmailAdress(), addr.getSendType().getTypeCode());
+        }
+        return map;
+    }
 
     public List<ReceptionEmail> getSendAddress()
     {
@@ -94,6 +137,16 @@ public class MailSenderInfo
     public void setSendGroup(final boolean isSendGroup)
     {
         this.isSendGroup = isSendGroup;
+    }
+
+    public String getEmailBody()
+    {
+        return emailBody;
+    }
+
+    public void setEmailBody(final String emailBody)
+    {
+        this.emailBody = emailBody;
     }
 
 }

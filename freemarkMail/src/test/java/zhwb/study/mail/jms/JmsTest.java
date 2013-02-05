@@ -1,11 +1,4 @@
-/*
- * Copyright Notice ====================================================
- * This file contains proprietary information of Hewlett-Packard Co.
- * Copying or reproduction without prior written approval is prohibited.
- * Copyright (c) 2009   All rights reserved. ======================
- */
-
-package com.hp.sbs;
+package zhwb.study.mail.jms;
 
 import java.util.ArrayList;
 import java.util.Date;
@@ -21,17 +14,16 @@ import zhwb.study.mailsender.bean.MailSenderInfo;
 import zhwb.study.mailsender.bean.ReceptionEmail;
 import zhwb.study.mailsender.bean.ReceptionEmail.SendType;
 import zhwb.study.mailsender.bean.ResponseStatusCode;
-import zhwb.study.mailsender.service.MailSendBusiness;
+import zhwb.study.mailsender.service.JMSMailSendBusiness;
 
 
-public class EmailServiceTest
-{
-    private static MailSendBusiness service;
+public class JmsTest {
 
+    private static JMSMailSendBusiness service;
 
     public static void main(final String[] args)
     {
-        service = (MailSendBusiness)new ClassPathXmlApplicationContext("applicationContext.xml").getBean("businessService");
+        service = (JMSMailSendBusiness)new ClassPathXmlApplicationContext("jms-sender.xml").getBean("JMSbusinessService");
         testSendEmailOneByOne();
         testSendEmailInGroup();
         testSendInCorrectEmailInGroup();
@@ -119,6 +111,6 @@ public class EmailServiceTest
         template.put("telphone", "021-38898775");
         template.put("location", "ZhangJiang HighTech, Jinke Road #2517, Shanghai, China");
         return template;
-
     }
+
 }
