@@ -33,7 +33,7 @@ public class TemplateService implements ITemplateService
         String emailBody = null;
         try
         {
-            if (templateName != null && !templateName.isEmpty() && templateStr != null)
+            if (templateName != null && !(templateName.length() == 0) && templateStr != null)
             {
                 emailBody = getContentByTemplateStr(param, templateStr, templateName);
             }

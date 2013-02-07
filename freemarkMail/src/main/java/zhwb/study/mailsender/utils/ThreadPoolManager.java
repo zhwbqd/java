@@ -3,8 +3,10 @@ package zhwb.study.mailsender.utils;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.Callable;
+import java.util.concurrent.Executors;
 import java.util.concurrent.Future;
 import java.util.concurrent.RejectedExecutionException;
+import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
@@ -34,6 +36,8 @@ public final class ThreadPoolManager
     /** The Constant DEFAULT_WORK_QUEUE_SIZE. */
     private static final String DEFAULT_WORK_QUEUE_SIZE = "500";
 
+    private static final String DEFAULT_DELAY_TIME = "30";
+
     /** The Constant PROPERTIES_NAME. */
     private static final String PROPERTIES_NAME = "/poolConfig.properties";
 
@@ -49,6 +53,8 @@ public final class ThreadPoolManager
     /** The Constant WORK_QUEUE_SIZE_PROP. */
     private static final String WORK_QUEUE_SIZE_PROP = "work_queue_size";
 
+    private static final String DELAY_TIME_PROP = "delay_time";
+
     /** The Constant CORE_POOL_SIZE. */
     private static final int CORE_POOL_SIZE;
 
@@ -61,9 +67,13 @@ public final class ThreadPoolManager
     /** The Constant WORK_QUEUE_SIZE. */
     private static final int WORK_QUEUE_SIZE;
 
+    private static final long DELAY_TIME;
+
     /** The thread pool. */
-    private final ThreadPoolExecutor threadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME,
-            TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(WORK_QUEUE_SIZE));;
+    private final ThreadPoolExecutor onlineThreadPool = new ThreadPoolExecutor(CORE_POOL_SIZE, MAX_POOL_SIZE, KEEP_ALIVE_TIME,
+            TimeUnit.SECONDS, new ArrayBlockingQueue<Runnable>(WORK_QUEUE_SIZE));
+
+    private final ScheduledExecutorService batchThreadPool = Executors.newScheduledThreadPool(CORE_POOL_SIZE);
 
     /** The singleton of ThreadPoolManager. */
     private static ThreadPoolManager tpm;
@@ -71,6 +81,7 @@ public final class ThreadPoolManager
     static
     {
         NotificationProperties properties = new NotificationProperties(PROPERTIES_NAME);
+        DELAY_TIME = Long.parseLong(properties.getProperty(DELAY_TIME_PROP, DEFAULT_DELAY_TIME));
         CORE_POOL_SIZE = Integer.parseInt(properties.getProperty(CORE_POOL_SIZE_PROP, DEFAULT_CORE_POOL_SIZE));
         MAX_POOL_SIZE = Integer.parseInt(properties.getProperty(MAX_POOL_SIZE_PROP, DEFAULT_MAX_POOL_SIZE));
         KEEP_ALIVE_TIME = Integer.parseInt(properties.getProperty(KEEP_ALIVE_TIME_PROP, DEFAULT_KEEP_ALIVE_TIME));
@@ -104,11 +115,18 @@ public final class ThreadPoolManager
      * @param newTask the new task
      * @return true, if successful
      */
-    public boolean submitTask(final Callable<ResponseStatus> newTask)
+    public boolean submitTask(final Callable<ResponseStatus> newTask, final boolean isExecuteNow)
     {
         try
         {
-            Future<ResponseStatus> result = threadPool.submit(newTask);
+            if (isExecuteNow)
+            {
+                Future<ResponseStatus> result = onlineThreadPool.submit(newTask);
+            }
+            else
+            {
+                Future<ResponseStatus> result = batchThreadPool.schedule(newTask, DELAY_TIME, TimeUnit.SECONDS);
+            }
         }
         catch (RejectedExecutionException rex)
         {

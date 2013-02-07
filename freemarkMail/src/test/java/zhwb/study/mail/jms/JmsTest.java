@@ -24,12 +24,12 @@ public class JmsTest {
     public static void main(final String[] args)
     {
         service = (JMSMailSendBusiness)new ClassPathXmlApplicationContext("jms-sender.xml").getBean("JMSbusinessService");
-        testSendEmailOneByOne();
-        testSendEmailInGroup();
-        testSendInCorrectEmailInGroup();
+        testSendEmailOneByOneBatch();
+        testSendEmailInGroupOnline();
+        testSendInCorrectEmailInGroupOnline();
     }
 
-    private static void testSendEmailOneByOne()
+    private static void testSendEmailOneByOneBatch()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
         mailInfo.setSendGroup(false);
@@ -38,31 +38,31 @@ public class JmsTest {
         mailInfo.setSendAddress(createEmailList());
         mailInfo.setTemplateName("emailReminder.ftl");
         mailInfo.setTemplateMapping(createTemplate());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, false);
         Assert.assertEquals(1, status.getStatusCode());
     }
 
 
-    private static void testSendEmailInGroup()
+    private static void testSendEmailInGroupOnline()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
         mailInfo.setSendGroup(true);
         mailInfo.setFromAddress("zhwbqd@gmail.com");
         mailInfo.setSubject("Test Send Email In Group");
         mailInfo.setSendAddress(createEmailList());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, true);
         Assert.assertEquals(1, status.getStatusCode());
     }
 
 
-    private static void testSendInCorrectEmailInGroup()
+    private static void testSendInCorrectEmailInGroupOnline()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
         mailInfo.setSendGroup(true);
         mailInfo.setFromAddress("SBS@hp.com");
-        mailInfo.setSubject("Test Send Email In Group");
+        mailInfo.setSubject("Test Incorrect Send Email In Group");
         mailInfo.setSendAddress(createInCorrectEmailList());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, true);
         Assert.assertEquals(1, status.getStatusCode());
     }
 

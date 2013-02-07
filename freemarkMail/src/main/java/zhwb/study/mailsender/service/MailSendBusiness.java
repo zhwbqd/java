@@ -22,7 +22,7 @@ public class MailSendBusiness
         this.templateService = templateService;
     }
 
-    public ResponseStatusCode dispatchEmailByMailSenderInfo(final MailSenderInfo info)
+    public ResponseStatusCode dispatchEmailByMailSenderInfo(final MailSenderInfo info, final boolean isOnline)
     {
         ResponseStatusCode status = new ResponseStatusCode();
         if (info == null)
@@ -45,7 +45,7 @@ public class MailSendBusiness
                 info.getFromAddress(), info.getSubject());
 
         /* add task into the working queue, will return false if the queue is full. */
-        boolean success = ThreadPoolManager.getInstance().submitTask(sendTask);
+        boolean success = ThreadPoolManager.getInstance().submitTask(sendTask, isOnline);
         if (success)
         {
             status.setStatusCode(ResponseStatusCode.SUCCESS);

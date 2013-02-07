@@ -31,12 +31,12 @@ public class EmailServiceTest
     public static void main(final String[] args)
     {
         service = (MailSendBusiness)new ClassPathXmlApplicationContext("email-config.xml").getBean("businessService");
-        testSendEmailOneByOne();
-        testSendEmailInGroup();
+        testSendEmailOneByOneBatch();
+        testSendEmailInGroupOnline();
         testSendInCorrectEmailInGroup();
     }
 
-    private static void testSendEmailOneByOne()
+    private static void testSendEmailOneByOneBatch()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
         mailInfo.setSendGroup(false);
@@ -45,19 +45,19 @@ public class EmailServiceTest
         mailInfo.setSendAddress(createEmailList());
         mailInfo.setTemplateName("emailReminder.ftl");
         mailInfo.setTemplateMapping(createTemplate());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, false);
         Assert.assertEquals(1, status.getStatusCode());
     }
 
 
-    private static void testSendEmailInGroup()
+    private static void testSendEmailInGroupOnline()
     {
         MailSenderInfo mailInfo = new MailSenderInfo();
         mailInfo.setSendGroup(true);
         mailInfo.setFromAddress("zhwbqd@gmail.com");
         mailInfo.setSubject("Test Send Email In Group");
         mailInfo.setSendAddress(createEmailList());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, true);
         Assert.assertEquals(1, status.getStatusCode());
     }
 
@@ -69,7 +69,7 @@ public class EmailServiceTest
         mailInfo.setFromAddress("SBS@hp.com");
         mailInfo.setSubject("Test Send Email In Group");
         mailInfo.setSendAddress(createInCorrectEmailList());
-        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo);
+        ResponseStatusCode status = service.dispatchEmailByMailSenderInfo(mailInfo, false);
         Assert.assertEquals(1, status.getStatusCode());
     }
 
