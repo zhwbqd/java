@@ -1,34 +1,43 @@
 <?xml version="1.0" encoding="UTF-8"?>
-<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
-	xmlns:aop="http://www.springframework.org/schema/aop"
-	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.5.xsd">
-
-	<bean id="emailDestination" class="org.apache.activemq.command.ActiveMQQueue">
-		<constructor-arg value="email-Queue" />
-	</bean>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:amq="http://activemq.apache.org/schema/core"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans.xsd
+  http://activemq.apache.org/schema/core http://activemq.apache.org/schema/core/activemq-core.xsd">
 
 	<bean id="pendingQueuePolicy" class="org.apache.activemq.broker.region.policy.FilePendingQueueMessageStoragePolicy" />
-
 	<bean id="policyEntrie" class="org.apache.activemq.broker.region.policy.PolicyEntry">
 		<property name="pendingQueuePolicy" ref="pendingQueuePolicy"></property>
 		<property name="destination" ref="emailDestination"></property>
-		<property name="memoryLimit" value="1024" /><!-- byte for test -->
+		<property name="memoryLimit" value="1024" />
 		<property name="producerFlowControl" value="false" />
 	</bean>
 	<bean id="destinationPolicy" class="org.apache.activemq.broker.region.policy.PolicyMap">
-		<property name="policyEntries" ref="policyEntrie"></property>
+		<property name="policyEntries" ref="policyEntrie" />
 	</bean>
 	<bean id="broker" class="org.apache.activemq.broker.BrokerService" init-method="start" destroy-method="stop">
 		<property name="brokerName" value="emailBroker" />
 		<property name="persistent" value="true" />
 		<property name="destinationPolicy" ref="destinationPolicy" />
-		<property name="dataDirectory" value="/activemq/data" />
+		<property name="dataDirectory" value="activemq/data" />
 		<property name="transportConnectorURIs">
 			<list>
 				<value>tcp://localhost:61616</value>
 			</list>
 		</property>
 	</bean>
+
+	<!-- <broker xmlns="http://activemq.apache.org/schema/core" brokerName="emailBroker" dataDirectory="activemq/data"> <destinationPolicy> 
+		<policyMap> <policyEntries> <policyEntry queue="emailDestination" producerFlowControl="false" memoryLimit="1mb"> <pendingQueuePolicy> 
+		<fileQueueCursor /> </pendingQueuePolicy> </policyEntry> </policyEntries> </policyMap> </destinationPolicy> <systemUsage> 
+		<systemUsage> <memoryUsage> <memoryUsage limit="64 mb" /> </memoryUsage> <storeUsage> <storeUsage limit="100 gb" /> </storeUsage> 
+		<tempUsage> <tempUsage limit="50 gb" /> </tempUsage> </systemUsage> </systemUsage> <transportConnectors> <transportConnector 
+		name="openwire" uri="tcp://0.0.0.0:61616?maximumConnections=1000&amp;wireformat.maxFrameSize=104857600" /> </transportConnectors> 
+		</broker> -->
+
+	<bean id="emailDestination" class="org.apache.activemq.command.ActiveMQQueue">
+		<constructor-arg value="email-Queue" />
+	</bean>
+
 	<bean id="jmsConnectionFactory" class="org.apache.activemq.ActiveMQConnectionFactory">
 		<property name="brokerURL" value="tcp://localhost:61616" />
 	</bean>
@@ -47,11 +56,14 @@
 		<property name="connectionFactory" ref="cachedConnectionFactory" />
 		<property name="destination" ref="emailDestination" />
 		<property name="messageListener" ref="emailListener" />
+		<!-- <property name="concurrentConsumers" value="10"/> -->
+		<property name="maxConcurrentConsumers" value = "50" />
+		<property name="sessionTransacted" value="true"/><!-- remove the message from queue only when execute success -->
 	</bean>
 	<bean id="jmsTemplate" class="org.springframework.jms.core.JmsTemplate">
 		<property name="connectionFactory" ref="cachedConnectionFactory" />
 	</bean>
-	
+
 	<bean id="emailPublisher" class="zhwb.study.mailsender.jms.EmailJmsPublisher">
 		<constructor-arg ref="jmsTemplate" />
 		<constructor-arg ref="emailDestination" />

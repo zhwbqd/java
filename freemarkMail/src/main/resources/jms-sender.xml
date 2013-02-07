@@ -53,12 +53,8 @@
 		<constructor-arg ref="freeMarkerConfigurer" />
 	</bean>
 	
-	<bean id="businessService" class="zhwb.study.mailsender.service.MailSendBusiness">
-		<constructor-arg ref="emailService" />
-		<constructor-arg ref="templateService" />
-	</bean>
-	
 	<bean id="JMSbusinessService" class="zhwb.study.mailsender.service.JMSMailSendBusiness">
+		<constructor-arg ref="emailService" />
 		<constructor-arg ref="emailPublisher" />
 		<constructor-arg ref="templateService" />
 	</bean>
