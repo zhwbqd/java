@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans" xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xsi:schemaLocation="http://www.springframework.org/schema/beans
+       http://www.springframework.org/schema/beans/spring-beans.xsd">
+
+	<bean id="propertyConfigurer" class="org.springframework.beans.factory.config.PropertyPlaceholderConfigurer">
+		<property name="locations">
+			<list>
+				<value>classpath:email.properties</value>
+			</list>
+		</property>
+	</bean>
+
+
+	<!-- 配置MailSender -->
+	<bean id="mailSender" class="org.springframework.mail.javamail.JavaMailSenderImpl">
+		<property name="host" value="${mail.host}" />
+		<property name="port" value="${mail.port}" />
+		<property name="username" value="${mail.username}" />
+		<property name="password" value="${mail.password}" />
+		<property name="defaultEncoding" value="UTF-8" />
+		<property name="javaMailProperties">
+			<props>
+				<prop key="mail.smtp.auth">${mail.smtp.auth}</prop>
+				<prop key="mail.smtp.timeout">${mail.smtp.timeout}</prop>
+				<prop key="mail.smtp.sendpartial">${mail.sendpartial}</prop>
+				<prop key="mail.smtp.starttls.enable">${mail.starttls.enable}</prop>
+				<prop key="mail.smtp.socketFactory.class">javax.net.ssl.SSLSocketFactory</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 配置freeMarkerConfigurer进行属性值的注入 -->
+	<bean id="freeMarkerConfigurer" class="org.springframework.web.servlet.view.freemarker.FreeMarkerConfigurer">
+		<property name="templateLoaderPaths" value="classpath:mailTemplate" />
+		<property name="freemarkerSettings">
+			<props>
+				<prop key="template_update_delay">1800</prop><!-- 模板更新延时 -->
+				<prop key="default_encoding">UTF-8</prop>
+				<prop key="locale">en_US</prop>
+			</props>
+		</property>
+	</bean>
+
+	<!-- 定义自定义的类进行数据的注入 -->
+	<bean id="emailService" class="zhwb.study.mailsender.service.mail.EmailService">
+		<constructor-arg ref="mailSender" />
+	</bean>
+	
+	<bean id="templateService" class="zhwb.study.mailsender.service.template.TemplateService">
+		<constructor-arg ref="freeMarkerConfigurer" />
+	</bean>
+	
+	<bean id="businessService" class="zhwb.study.mailsender.service.MailSendBusiness">
+		<constructor-arg ref="emailService" />
+		<constructor-arg ref="templateService" />
+	</bean>
+	
+</beans>
