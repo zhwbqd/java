@@ -24,24 +24,37 @@ public class TestBean
     public static void main(final String[] args)
     {
         ApplicationContext context = new ClassPathXmlApplicationContext("ioc-beans.xml");
-        ExecutorService service = (ExecutorService)context.getBean("poolService");
-        service.submit(new Runnable()
-        {
-            public void run()
-            {
-                try
-                {
-                    TimeUnit.SECONDS.sleep(3);
-                }
-                catch (InterruptedException e)
-                {
-                    e.printStackTrace();
-                }
-                System.out.println("OK");
+		// ExecutorService service =
+		// (ExecutorService)context.getBean("poolService");
+		// service.submit(new Runnable()
+		// {
+		// public void run()
+		// {
+		// try
+		// {
+		// TimeUnit.SECONDS.sleep(3);
+		// }
+		// catch (InterruptedException e)
+		// {
+		// e.printStackTrace();
+		// }
+		// System.out.println("OK");
+		//
+		// }
+		// });
 
-            }
-        });
+		ExecutorService pool = (ExecutorService) context.getBean("pool");
+		pool.submit(new Runnable() {
+			public void run() {
+				try {
+					TimeUnit.SECONDS.sleep(3);
+				} catch (InterruptedException e) {
+					e.printStackTrace();
+				}
+				System.out.println("OK");
 
+			}
+		});
     }
 
 }
