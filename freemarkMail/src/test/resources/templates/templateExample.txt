@@ -1,0 +1,19 @@
+Today is : DATE:Mar 12, 2013 TIME:10:26:17 AM
+
+--list example--
+Sorted by name.last:
+  Alex
+  Jack
+  Rajesh
+	
+	
+--map example--
+orange = 5;
+apple = 3;
+berry = 10;
+	
+--set example--
+NotSorted:
+  Jack
+  Rajesh
+  Alex
