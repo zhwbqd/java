@@ -13,4 +13,9 @@
 	default-autowire="constructor">
 
 	<context:component-scan base-package="zhwb.spring.ioc.annotation" />
+	
+	<!-- <context:component-scan base-package="zhwb.spring.ioc.annotation">
+		<context:include-filter type="regex" expression="Notification.*" />
+	</context:component-scan> -->
+	
 </beans>
