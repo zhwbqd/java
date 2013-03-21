@@ -1,4 +1,4 @@
-package zhwb.study;
+package zhwb.study.juc;
 
 import static org.junit.Assert.assertEquals;
 

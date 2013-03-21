@@ -1,4 +1,4 @@
-package zhwb.study;
+package zhwb.study.juc;
 
 import java.io.DataOutputStream;
 import java.io.IOException;

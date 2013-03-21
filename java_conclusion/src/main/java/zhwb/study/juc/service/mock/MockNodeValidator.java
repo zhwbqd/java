@@ -1,4 +1,4 @@
-package service.mock;
+package zhwb.study.juc.service.mock;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -7,7 +7,7 @@ import java.util.Map;
 import java.util.concurrent.atomic.AtomicInteger;
 import java.util.logging.Logger;
 
-import service.Node;
+import zhwb.study.juc.service.Node;
 
 /**
  * 模拟执行节点验证的Mock类

@@ -1,4 +1,4 @@
-package zhwb.study;
+package zhwb.study.juc;
 
 import java.util.concurrent.Semaphore;
 

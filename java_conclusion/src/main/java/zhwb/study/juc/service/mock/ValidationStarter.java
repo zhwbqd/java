@@ -1,12 +1,12 @@
-package service.mock;
+package zhwb.study.juc.service.mock;
 
 import java.util.ArrayList;
 import java.util.List;
 import java.util.concurrent.CountDownLatch;
 
-import service.Node;
-import service.ThreadPoolService;
-import service.ValidationService;
+import zhwb.study.juc.service.Node;
+import zhwb.study.juc.service.ThreadPoolService;
+import zhwb.study.juc.service.ValidationService;
 
 /**
  * 模拟执行这个环境的验证
