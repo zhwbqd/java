@@ -1,10 +1,10 @@
-package service;
+package zhwb.study.juc.service;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.locks.Lock;
 import java.util.logging.Logger;
 
-import service.mock.MockNodeValidator;
+import zhwb.study.juc.service.mock.MockNodeValidator;
 
 /**
  * 执行验证的任务类

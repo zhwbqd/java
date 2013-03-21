@@ -1,4 +1,4 @@
-package zhwb.study;
+package zhwb.study.juc;
 
 public class TestJOIN {
 	public static void main(String[] args) {

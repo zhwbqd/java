@@ -1,4 +1,4 @@
-package service;
+package zhwb.study.juc.service;
 
 import java.util.ArrayList;
 import java.util.List;
