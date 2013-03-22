@@ -18,13 +18,12 @@ public class ProCus1 {
 		new Thread(new Producer()).start();
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		new ProCus1().start();
 	}
 
 	class Producer implements Runnable {
 
-		@Override
 		public void run() {
 			while (true) {
 				synchronized (queue) {
@@ -48,7 +47,6 @@ public class ProCus1 {
 
 	class Consumer implements Runnable {
 
-		@Override
 		public void run() {
 			while (true) {
 				synchronized (queue) {
