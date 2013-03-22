@@ -39,7 +39,6 @@ public class ThreadPoolManager
     // 重试策略调度线程
     final Runnable accessBufferThread = new Runnable()
     {
-        @Override
         public void run()
         {
             // 查看是否有待定请求，如果有，则创建一个新的AccessDBThread，并添加到线程池中 
@@ -54,7 +53,6 @@ public class ThreadPoolManager
 
     final RejectedExecutionHandler handler = new RejectedExecutionHandler()
     {
-        @Override
         public void rejectedExecution(final Runnable r, final ThreadPoolExecutor executor)
         {
             if (!executor.isShutdown())

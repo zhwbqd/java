@@ -31,7 +31,6 @@ public class AccessDBThread implements Runnable
         this.msg = msg;
     }
 
-    @Override
     public void run()
     {
         // 向数据库中添加Msg变量值 

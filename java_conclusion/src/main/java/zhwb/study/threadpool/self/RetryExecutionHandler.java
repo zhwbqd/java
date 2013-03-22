@@ -45,7 +45,6 @@ public final class RetryExecutionHandler implements RejectedExecutionHandler
     /** {@inheritDoc}
      *  @see java.util.concurrent.RejectedExecutionHandler#rejectedExecution(java.lang.Runnable, java.util.concurrent.ThreadPoolExecutor)
      */
-    @Override
     public void rejectedExecution(final Runnable r, final ThreadPoolExecutor executor)
     {
         if (!executor.isShutdown())
@@ -69,7 +68,6 @@ public final class RetryExecutionHandler implements RejectedExecutionHandler
         /** {@inheritDoc}
          *  @see java.lang.Runnable#run()
          */
-        @Override
         public void run()
         {
             if (!reoperateQueue.isEmpty())

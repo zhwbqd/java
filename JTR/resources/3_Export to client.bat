@@ -1,1 +1,0 @@
-keytool -export -keystore .\keystore -storepass secret -file clientimport.cer -alias wrox
