@@ -2,33 +2,52 @@ package zhwb.study.juc;
 
 public class ReorderingDemo {
 
-	static int x = 0, y = 0, a = 0, b = 0;
+    private static final String A = "A";
 
-	public static void main(String[] args) throws Exception {
+    private static final String B = "B";
 
-		for (int i = 0; i < 100; i++) {
-			x = y = a = b = 0;
-			Thread one = new Thread() {
-				public void run() {
-					// a = 1;
-					// x = b;
-					x = 1;
-					y = 2;
-				}
-			};
-			Thread two = new Thread() {
-				public void run() {
-					// b = 1;
-					// y = a;
-					x = 2;
-					y = 3;
-				}
-			};
+    private static final String C = "C";
+
+	public static void main(final String[] args) throws Exception {
+        Thread one = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                System.out.print(A);
+                }
+            }
+        };
+        Thread two = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                System.out.print(B);}
+            }
+        };
+        Thread three = new Thread()
+        {
+            @Override
+            public void run()
+            {
+                for (int i = 0; i < 10; i++)
+                {
+                System.out.print(C);}
+            }
+        };
+        for (int i = 0; i < 10; i++)
+        {
 			one.start();
-			two.start();
-			one.join();
-			two.join();
-			System.out.println(x + " " + y + " : " + i);
+            two.start();
+            three.start();
+            one.join();
+            two.join();
+            three.join();
 		}
 	}
 

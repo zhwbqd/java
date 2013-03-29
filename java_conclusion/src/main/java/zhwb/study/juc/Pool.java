@@ -2,7 +2,8 @@ package zhwb.study.juc;
 
 import java.util.concurrent.Semaphore;
 
-class Pool {
+public class Pool
+{
 	private static final int MAX_AVAILABLE = 100;
 	private final Semaphore available = new Semaphore(MAX_AVAILABLE, true);
 
@@ -11,9 +12,11 @@ class Pool {
 		return getNextAvailableItem();
 	}
 
-	public void putItem(Object x) {
+	public void putItem(final Object x) {
 		if (markAsUnused(x))
-			available.release();
+        {
+            available.release();
+        }
 	}
 
 	// Not a particularly efficient data structure; just for demo
@@ -31,20 +34,23 @@ class Pool {
 		return null; // not reached
 	}
 
-	protected synchronized boolean markAsUnused(Object item) {
+	protected synchronized boolean markAsUnused(final Object item) {
 		for (int i = 0; i < MAX_AVAILABLE; ++i) {
 			if (item == items[i]) {
 				if (used[i]) {
 					used[i] = false;
 					return true;
-				} else
-					return false;
+				}
+                else
+                {
+                    return false;
+                }
 			}
 		}
 		return false;
 	}
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 		try {
 			System.out.print(new Pool().getItem());
 		} catch (InterruptedException e) {
