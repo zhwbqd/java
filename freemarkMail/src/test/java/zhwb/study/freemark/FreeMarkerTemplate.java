@@ -50,6 +50,8 @@ public class FreeMarkerTemplate
         root.put("nameSet", nameSet);
 
         root.put("nowDate", new Date());
+
+        root.put("unknown", "unknown");
         BufferedWriter out = new BufferedWriter(new FileWriter(new File("src/test/resources/templates/templateExample.txt")));
         temp.process(root, out);
         out.flush();
