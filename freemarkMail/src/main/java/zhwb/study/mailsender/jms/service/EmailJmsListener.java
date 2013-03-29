@@ -11,8 +11,9 @@ import org.slf4j.LoggerFactory;
 import org.springframework.jms.listener.SessionAwareMessageListener;
 
 import com.hp.it.sbs.notification.beans.EmailTemplateParameterInfo;
-import com.hp.it.sbs.notification.service.email.EmailSendStatus;
-import com.hp.it.sbs.notification.service.email.IEmailService;
+
+import email.service.email.EmailSendStatus;
+import email.service.email.IEmailService;
 
 /**
  * The listener interface for receiving emailJms events.
