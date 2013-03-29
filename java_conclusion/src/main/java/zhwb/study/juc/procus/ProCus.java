@@ -1,4 +1,4 @@
-package zhwb.study.procus;
+package zhwb.study.juc.procus;
 
 import java.util.LinkedList;
 import java.util.concurrent.locks.Condition;

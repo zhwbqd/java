@@ -1,4 +1,4 @@
-package zhwb.study.procus;
+package zhwb.study.juc.procus;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.BlockingQueue;
