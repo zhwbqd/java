@@ -1,5 +1,7 @@
 package zhwb.study.juc;
 
+import java.util.concurrent.Semaphore;
+
 public class ReorderingDemo {
 
     private static final String A = "A";
@@ -8,7 +10,14 @@ public class ReorderingDemo {
 
     private static final String C = "C";
 
+    private final Semaphore a = new Semaphore(1);
+
+    private final Semaphore b = new Semaphore(1);
+
+    private final Semaphore c = new Semaphore(1);
+
 	public static void main(final String[] args) throws Exception {
+
         Thread one = new Thread()
         {
             @Override
@@ -16,6 +25,7 @@ public class ReorderingDemo {
             {
                 for (int i = 0; i < 10; i++)
                 {
+
                 System.out.print(A);
                 }
             }
@@ -40,15 +50,10 @@ public class ReorderingDemo {
                 System.out.print(C);}
             }
         };
-        for (int i = 0; i < 10; i++)
-        {
+
 			one.start();
             two.start();
             three.start();
-            one.join();
-            two.join();
-            three.join();
 		}
 	}
 
-}
