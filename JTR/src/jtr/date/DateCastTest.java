@@ -9,12 +9,24 @@ package jtr.date;
 
 import java.sql.Timestamp;
 import java.text.SimpleDateFormat;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.SimpleTimeZone;
 
 import org.junit.Test;
 
 public class DateCastTest
 {
+
+	public static void main(String[] args) {
+		Map map = new HashMap();
+		map.put("123", "4");
+		map.put("123", "5");
+
+		for (Object entry : map.entrySet()) {
+			System.out.println(entry.toString());
+		}
+	}
 
     @Test
     public void classCast()
