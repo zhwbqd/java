@@ -33,6 +33,7 @@ public class ProCus1 {
 						System.out.println("After Producer: " + queue.size());
 					} else {
 						try {
+                            System.out.println("warning: it's full!");
 							queue.wait();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block
@@ -56,6 +57,7 @@ public class ProCus1 {
 						System.out.println("After Consumer: " + queue.size());
 					} else {
 						try {
+                            System.out.println("warning: it's empty!");
 							queue.wait();
 						} catch (InterruptedException e) {
 							// TODO Auto-generated catch block

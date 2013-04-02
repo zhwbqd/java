@@ -2,7 +2,8 @@ package zhwb.study.juc;
 
 import java.util.concurrent.Semaphore;
 
-public class ReorderingDemo {
+public class ReorderingDemo
+{
 
     private static final String A = "A";
 
@@ -10,13 +11,15 @@ public class ReorderingDemo {
 
     private static final String C = "C";
 
-    private final Semaphore a = new Semaphore(1);
+    public static void main(final String[] args)
+        throws Exception
+    {
 
-    private final Semaphore b = new Semaphore(1);
+        final Semaphore a = new Semaphore(1);
 
-    private final Semaphore c = new Semaphore(1);
+        final Semaphore b = new Semaphore(1);
 
-	public static void main(final String[] args) throws Exception {
+        final Semaphore c = new Semaphore(1);
 
         Thread one = new Thread()
         {
@@ -25,8 +28,16 @@ public class ReorderingDemo {
             {
                 for (int i = 0; i < 10; i++)
                 {
-
-                System.out.print(A);
+                    try
+                    {
+                        a.acquire();
+                        System.out.print(A);
+                        b.release();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
                 }
             }
         };
@@ -37,7 +48,17 @@ public class ReorderingDemo {
             {
                 for (int i = 0; i < 10; i++)
                 {
-                System.out.print(B);}
+                    try
+                    {
+                        b.acquire();
+                        System.out.print(B);
+                        c.release();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         };
         Thread three = new Thread()
@@ -47,13 +68,24 @@ public class ReorderingDemo {
             {
                 for (int i = 0; i < 10; i++)
                 {
-                System.out.print(C);}
+                    try
+                    {
+                        c.acquire();
+                        System.out.print(C);
+                        a.release();
+                    }
+                    catch (InterruptedException e)
+                    {
+                        e.printStackTrace();
+                    }
+                }
             }
         };
 
-			one.start();
-            two.start();
-            three.start();
-		}
-	}
-
+        b.acquire();
+        c.acquire();
+        one.start();
+        two.start();
+        three.start();
+    }
+}
