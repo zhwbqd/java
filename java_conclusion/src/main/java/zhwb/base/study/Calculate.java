@@ -1,4 +1,4 @@
-package arithemtic.study;
+package zhwb.base.study;
 
 import java.math.BigInteger;
 
