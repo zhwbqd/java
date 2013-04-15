@@ -5,12 +5,21 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package com.hp.java.chapterI;
+package zhwb.stufy.javabase;
 
-public class Parent
+public class StackInvocation
 {
-    public Parent(final String name, final String age)
+    public void print(int i)
     {
-        System.out.println(name + ":" + age);
+        if (i >= 2)
+        {
+            print(--i); //i--,i-1
+        }
+        System.out.println(i);
+    }
+
+    public static void main(final String[] args)
+    {
+        new StackInvocation().print(6);
     }
 }
