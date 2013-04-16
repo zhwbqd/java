@@ -1,4 +1,4 @@
-package juc;
+package zhwb.study.juc;
 
 import java.security.SecureRandom;
 import java.util.ArrayList;

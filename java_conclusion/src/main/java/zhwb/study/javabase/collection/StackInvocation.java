@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.stufy.javabase;
+package zhwb.study.javabase.collection;
 
 public class StackInvocation
 {
