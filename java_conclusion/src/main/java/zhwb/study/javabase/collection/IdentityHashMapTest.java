@@ -1,4 +1,4 @@
-package zhwb.stufy.javabase;
+package zhwb.study.javabase.collection;
 import java.util.IdentityHashMap;
 
 /**

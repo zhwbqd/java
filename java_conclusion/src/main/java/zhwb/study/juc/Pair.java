@@ -1,4 +1,4 @@
-package juc;
+package zhwb.study.juc;
 
 public class Pair<K, V> {
 	public K first;
