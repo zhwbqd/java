@@ -5,7 +5,7 @@
  * Copyright (c) 2009   All rights reserved. ======================
  */
 
-package email.service.email;
+package email.service.email.notification;
 
 import java.util.LinkedHashSet;
 import java.util.Set;

@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package email.service.email;
+package email.service.email.notification;
 
 import java.util.ArrayList;
 import java.util.HashMap;
@@ -51,11 +51,17 @@ public final class EmailService implements IEmailService
     }
 
     /** {@inheritDoc}
-     *  @see email.service.email.IEmailService#buildMimeMessage(java.lang.String, com.hp.it.sbs.notification.beans.EmailTemplateParameterInfo, java.lang.String)
+     *  @see email.service.email.notification.IEmailService#buildMimeMessage(java.lang.String, java.util.List, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public List<MimeMessage> buildMimeMessage(final String emailText, final List<RecipientEmailAddr> recptEmailAddr,
-            final boolean isSendInGroup, final String fromAddr, final String subjectText, final String replyTo)
+            final boolean isSendInGroup, final String fromAddr, final String subjectText, final String replyTo, final String bounceAddr)
     {
+        new Verifier().isNotNull(emailText, IVerificationMessages.MSG_EML_BODY_NULL)
+                .isNotEmpty(recptEmailAddr, IVerificationMessages.MSG_RCPT_EML_EMPTY)
+                .isNotNull(fromAddr, IVerificationMessages.MSG_EML_FROM_NULL)
+                .isNotEmpty(subjectText, IVerificationMessages.MSG_EML_SUBJCT_EMPTY)
+                .throwIfError(IVerificationMessages.MSG_INVALID_INPUTS);
+
         List<MimeMessage> mimeMessages = new ArrayList<MimeMessage>();
         try
         {
@@ -63,7 +69,8 @@ public final class EmailService implements IEmailService
             {
                 LOG.info("Email will send in group.");
                 Map<String, RecipientType> recptEmailAddrMap = convertRecipientAddr(recptEmailAddr);
-                MimeMessage msg = mailSender.createMimeMessage(recptEmailAddrMap, subjectText, fromAddr, emailText, replyTo);
+                MimeMessage msg = mailSender.createMimeMessage(recptEmailAddrMap, subjectText, fromAddr, emailText, replyTo,
+                        bounceAddr);
                 mimeMessages.add(msg);
             }
             else
@@ -74,7 +81,8 @@ public final class EmailService implements IEmailService
                     List<RecipientEmailAddr> email = new ArrayList<RecipientEmailAddr>();
                     email.add(receptEmail);
                     Map<String, RecipientType> recptEmailAddrMap = convertRecipientAddr(email);
-                    MimeMessage msg = mailSender.createMimeMessage(recptEmailAddrMap, subjectText, fromAddr, emailText, replyTo);
+                    MimeMessage msg = mailSender.createMimeMessage(recptEmailAddrMap, subjectText, fromAddr, emailText, replyTo,
+                            bounceAddr);
                     mimeMessages.add(msg);
                 }
             }
@@ -102,28 +110,27 @@ public final class EmailService implements IEmailService
             int sendType = recipientEmailAddr.getSendType();
             switch (sendType)
             {
-                case 1:
+                case RecipientEmailAddr.SEND_TYPE_TO:
                     map.put(emailAddr, RecipientType.TO);
                     break;
-                case 2:
+                case RecipientEmailAddr.SEND_TYPE_CC:
                     map.put(emailAddr, RecipientType.CC);
                     break;
-                case 3:
+                case RecipientEmailAddr.SEND_TYPE_BCC:
                     map.put(emailAddr, RecipientType.BCC);
                     break;
                 default:
-                    map.put(emailAddr, RecipientType.TO);
-                    break;
+                    throw new IllegalArgumentException("Send type " + sendType + " is not invalid, email address is " + emailAddr);
             }
         }
         return map;
     }
 
     /** {@inheritDoc}
-     *  @see email.service.email.IEmailService#sendEmail(java.lang.String, java.util.List, boolean, java.lang.String, java.lang.String, String)
+     *  @see email.service.email.notification.IEmailService#sendEmail(java.lang.String, java.util.List, boolean, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public EmailSendStatus sendEmail(final String emailText, final List<RecipientEmailAddr> recptEmailAddr,
-            final boolean isSendInGroup, final String fromAddr, final String subjectText, final String replyTo)
+            final boolean isSendInGroup, final String fromAddr, final String subjectText, final String replyTo, final String bounceAddr)
     {
         new Verifier().isNotNull(emailText, IVerificationMessages.MSG_EML_BODY_NULL)
                 .isNotEmpty(recptEmailAddr, IVerificationMessages.MSG_RCPT_EML_EMPTY)
@@ -132,7 +139,8 @@ public final class EmailService implements IEmailService
                 .throwIfError(IVerificationMessages.MSG_INVALID_INPUTS);
 
         EmailSendStatus status = new EmailSendStatus();
-        List<MimeMessage> messages = buildMimeMessage(emailText, recptEmailAddr, isSendInGroup, fromAddr, subjectText, replyTo);
+        List<MimeMessage> messages = buildMimeMessage(emailText, recptEmailAddr, isSendInGroup, fromAddr, subjectText, replyTo,
+                bounceAddr);
         try
         {
             status = mailSender.send(messages.toArray(new MimeMessage[messages.size()]));
@@ -148,7 +156,7 @@ public final class EmailService implements IEmailService
     }
 
     /** {@inheritDoc}
-     *  @see email.service.email.IEmailService#sendMimeMessage(java.util.List)
+     *  @see email.service.email.notification.IEmailService#sendMimeMessage(java.util.List)
      */
     public EmailSendStatus sendMimeMessage(final List<MimeMessage> message)
     {
