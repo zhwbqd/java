@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package email.service.email;
+package email.service.email.notification;
 
 import java.util.Map;
 
@@ -26,12 +26,13 @@ public interface IEmailSender
      * @param subjectText the subject text
      * @param fromAddr the from addr
      * @param emailText the email text
-     * @param replyTo the reply to
+     * @param replyTo the reply to, optional field
+     * @param bounceAddr the bounce addr, optional field
      * @return the mime message
      * @throws MessagingException the messaging exception
      */
     MimeMessage createMimeMessage(final Map<String, RecipientType> recptEmailAddr, final String subjectText,
-            final String fromAddr, final String emailText, final String replyTo)
+            final String fromAddr, final String emailText, final String replyTo, String bounceAddr)
         throws MessagingException;
 
     /**

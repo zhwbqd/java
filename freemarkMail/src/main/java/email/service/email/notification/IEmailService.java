@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package email.service.email;
+package email.service.email.notification;
 
 import java.util.List;
 
@@ -28,10 +28,11 @@ public interface IEmailService
      * @param fromAddr the from addr
      * @param subjectText the subject text
      * @param replyTo replyTo email Address, it's optional
+     * @param bounceAddr the bounce addr, it's optional
      * @return the list
      */
     List<MimeMessage> buildMimeMessage(String emailText, List<RecipientEmailAddr> recptEmailAddr, boolean isSendInGroup,
-            String fromAddr, String subjectText, String replyTo);
+            String fromAddr, String subjectText, String replyTo, String bounceAddr);
 
     /**
      * Send email.
@@ -42,10 +43,11 @@ public interface IEmailService
      * @param fromAddr the from address
      * @param subjectText the subject text
      * @param replyTo replyTo email Address, it's optional
+     * @param bounceAddr the bounce addr, it's optional
      * @return the email send status
      */
     EmailSendStatus sendEmail(String emailText, List<RecipientEmailAddr> recptEmailAddr, boolean isSendInGroup, String fromAddr,
-            String subjectText, String replyTo);
+            String subjectText, String replyTo, String bounceAddr);
 
     /**
      * Send mime message.

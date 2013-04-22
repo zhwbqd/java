@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package email.service.email;
+package email.service.email.notification;
 
 import java.util.Date;
 import java.util.Map;
@@ -26,6 +26,7 @@ import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 
 import com.hp.it.sbs.notification.service.util.LoggingUtility;
+import com.sun.mail.smtp.SMTPMessage;
 
 /**
  * The Class EmailSender.
@@ -189,7 +190,7 @@ public final class EmailSender implements IEmailSender
     }
 
     /** {@inheritDoc}
-     *  @see email.service.email.IEmailSender#send(javax.mail.internet.MimeMessage[])
+     *  @see email.service.email.notification.IEmailSender#send(javax.mail.internet.MimeMessage[])
      */
     public EmailSendStatus send(final MimeMessage[] mimeMessages)
     {
@@ -199,7 +200,7 @@ public final class EmailSender implements IEmailSender
         try
         {
             /*check connection before sending*/
-            transport = session.getTransport(DEFAULT_PROTOCOL);
+            transport = getSession().getTransport(DEFAULT_PROTOCOL);
             transport.connect(getHost(), getPort(), getUsername(), getPassword());
         }
         catch (AuthenticationFailedException e)
@@ -293,14 +294,14 @@ public final class EmailSender implements IEmailSender
     }
 
     /** {@inheritDoc}
-     *  @see email.service.email.IEmailSender#createMimeMessage(java.util.Map, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
+     *  @see email.service.email.notification.IEmailSender#createMimeMessage(java.util.Map, java.lang.String, java.lang.String, java.lang.String, java.lang.String, java.lang.String)
      */
     public MimeMessage createMimeMessage(final Map<String, RecipientType> recptEmailAddr, final String subjectText,
-            final String fromAddr, final String emailText, final String replyTo)
+            final String fromAddr, final String emailText, final String replyTo, final String bounceAddr)
         throws MessagingException
     {
         getSession().setDebug(LOG.isDebugEnabled());
-        MimeMessage msg = new MimeMessage(getSession());
+        SMTPMessage msg = new SMTPMessage(getSession());
 
         /*set FROM addr*/
         if ((null != fromAddr) && (fromAddr.length() > 0))
@@ -316,6 +317,12 @@ public final class EmailSender implements IEmailSender
         if ((null != replyTo) && (replyTo.length() > 0))
         {
             msg.setReplyTo(InternetAddress.parse(replyTo, true));
+        }
+
+        /*set Bounce addr*/
+        if ((null != bounceAddr) && (bounceAddr.length() > 0))
+        {
+            msg.setEnvelopeFrom(bounceAddr);
         }
 
         /*set subject*/
