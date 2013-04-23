@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.threadpool.self;
+package zhwb.study.juc.threadpool.self;
 
 import java.util.Queue;
 import java.util.concurrent.ConcurrentLinkedQueue;
@@ -16,7 +16,7 @@ import java.util.concurrent.ScheduledExecutorService;
 import java.util.concurrent.ThreadPoolExecutor;
 import java.util.concurrent.TimeUnit;
 
-import zhwb.study.threadpool.AccessDBThread;
+import zhwb.study.juc.threadpool.AccessDBThread;
 
 
 /**

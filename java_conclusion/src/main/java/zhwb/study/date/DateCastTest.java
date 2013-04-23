@@ -1,5 +1,5 @@
 
-package jtr.date;
+package zhwb.study.date;
 
 import java.text.ParseException;
 import java.text.SimpleDateFormat;

@@ -1,4 +1,4 @@
-package zhwb.study.barrier;
+package zhwb.study.juc.barrier;
 
 import java.util.concurrent.Callable;
 import java.util.concurrent.ExecutionException;
@@ -16,10 +16,10 @@ public class TestFutureTask {
 			}
 		};
 		Future<String> task = exec.submit(call);
-		// �?�?的事情
+		// �?�?的事情
 		// Thread.sleep(1000 * 3);
 		System.out.println("Let’s do important things.");
-		// 其他�?�?�?的事情
+		// 其他�?�?�?的事情
 		String obj = task.get();
 		System.out.println(obj);
 		// 关闭线程池

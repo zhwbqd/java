@@ -1,5 +1,5 @@
 
-package zhwb.study.threadpool.self;
+package zhwb.study.juc.threadpool.self;
 
 import java.util.concurrent.ArrayBlockingQueue;
 import java.util.concurrent.ThreadPoolExecutor;

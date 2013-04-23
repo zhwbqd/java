@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.arraycopy;
+package zhwb.study.javabase.collection;
 
 
 public class CloneVsCopy
