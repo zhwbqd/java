@@ -1,4 +1,4 @@
-package zhwb.study.barrier;
+package zhwb.study.juc.barrier;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
@@ -8,7 +8,7 @@ import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 
 public class TestCyclicBarrier {
-	// 徒步需�?的时间: Shenzhen, Guangzhou, Shaoguan, Changsha, Wuhan
+	// 徒步需�?的时间: Shenzhen, Guangzhou, Shaoguan, Changsha, Wuhan
 	private static int[] timeWalk = { 5, 8, 15, 15, 10 };
 	// 自驾游
 	private static int[] timeSelf = { 1, 3, 4, 4, 5 };

@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.threadpool;
+package zhwb.study.juc.threadpool;
 
 public class AccessDBThread implements Runnable
 {

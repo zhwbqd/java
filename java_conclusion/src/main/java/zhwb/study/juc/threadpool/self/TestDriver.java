@@ -5,9 +5,9 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.threadpool.self;
+package zhwb.study.juc.threadpool.self;
 
-import zhwb.study.threadpool.AccessDBThread;
+import zhwb.study.juc.threadpool.AccessDBThread;
 
 public class TestDriver
 {

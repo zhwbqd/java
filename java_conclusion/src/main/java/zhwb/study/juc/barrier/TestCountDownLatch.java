@@ -1,4 +1,4 @@
-package zhwb.study.barrier;
+package zhwb.study.juc.barrier;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
@@ -6,11 +6,11 @@ import java.util.concurrent.Executors;
 
 public class TestCountDownLatch {
 	public static void main(String[] args) throws InterruptedException {
-		// 开始的倒数�?
+		// 开始的倒数�?
 		final CountDownLatch begin = new CountDownLatch(1);
-		// 结�?�的倒数�?
+		// 结�?�的倒数�?
 		final CountDownLatch end = new CountDownLatch(10);
-		// �??�??选手
+		// �??�??选手
 		final ExecutorService exec = Executors.newFixedThreadPool(10);
 		for (int index = 0; index < 10; index++) {
 			final int NO = index + 1;

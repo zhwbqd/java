@@ -1,4 +1,4 @@
-package zhwb.study.barrier;
+package zhwb.study.juc.barrier;
 
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
