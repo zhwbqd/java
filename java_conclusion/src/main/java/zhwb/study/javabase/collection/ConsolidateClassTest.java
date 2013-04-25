@@ -8,15 +8,10 @@
 package zhwb.study.javabase.collection;
 
 import java.util.ArrayList;
-import java.util.LinkedHashMap;
 import java.util.List;
-import java.util.Map;
-import java.util.Map.Entry;
 
 public class ConsolidateClassTest
 {
-
-
 
     public static void main(final String[] args)
     {
@@ -32,30 +27,52 @@ public class ConsolidateClassTest
 
     private List<ServiceInfo> constructRawServiceInfo(final List<ServiceInfo> prepareRawInfo)
     {
-        Map<ServiceInfo, Float> map = new LinkedHashMap<ServiceInfo, Float>();
+        /*fast but complex*/
+
+        //                Map<ServiceInfo, Float> map = new LinkedHashMap<ServiceInfo, Float>();
+        //                for (ServiceInfo rawServiceInfo : prepareRawInfo)
+        //                {
+        //                    if (!map.containsKey(rawServiceInfo))
+        //                    {
+        //                        map.put(rawServiceInfo, rawServiceInfo.getPurchaseCredits());
+        //                    }
+        //                    else
+        //                    {
+        //                        float oldValue = map.get(rawServiceInfo).floatValue();
+        //                        float newValue = oldValue + rawServiceInfo.getPurchaseCredits();
+        //                        map.put(rawServiceInfo, newValue);
+        //                    }
+        //                }
+        //        
+        //                List<ServiceInfo> infos = new ArrayList<ServiceInfo>(map.size());
+        //                for (Entry<ServiceInfo, Float> set : map.entrySet())
+        //                {
+        //                    ServiceInfo serviceInfo = set.getKey();
+        //                    float sum = set.getValue().floatValue();
+        //                    serviceInfo.setPurchaseCredits(sum);
+        //                    infos.add(serviceInfo);
+        //                }
+        //        
+        //                return infos;
+
+        /*slowly but easy */
+
+        List<ServiceInfo> infos = new ArrayList<ServiceInfo>();
         for (ServiceInfo rawServiceInfo : prepareRawInfo)
         {
-            if (!map.containsKey(rawServiceInfo))
+            if (infos.contains(rawServiceInfo))
             {
-                map.put(rawServiceInfo, rawServiceInfo.getPurchaseCredits());
+                int index = infos.indexOf(rawServiceInfo);
+                ServiceInfo serviceInfo = infos.get(index);
+                infos.remove(index);
+                serviceInfo.setPurchaseCredits(serviceInfo.getPurchaseCredits() + rawServiceInfo.getPurchaseCredits());
+                infos.add(index, serviceInfo);
             }
             else
             {
-                float oldValue = map.get(rawServiceInfo).floatValue();
-                float newValue = oldValue + rawServiceInfo.getPurchaseCredits();
-                map.put(rawServiceInfo, newValue);
+                infos.add(rawServiceInfo);
             }
         }
-
-        List<ServiceInfo> infos = new ArrayList<ServiceInfo>(map.size());
-        for (Entry<ServiceInfo, Float> set : map.entrySet())
-        {
-            ServiceInfo serviceInfo = set.getKey();
-            float sum = set.getValue().floatValue();
-            serviceInfo.setPurchaseCredits(sum);
-            infos.add(serviceInfo);
-        }
-
         return infos;
     }
 
@@ -138,7 +155,6 @@ class ServiceInfo
     {
         this.serviceName = serviceName;
     }
-
 
     /**
      * Get the property purchaseCredits
