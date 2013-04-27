@@ -15,11 +15,12 @@ public class TreeSetModifier
 {
     public static void main(final String[] args)
     {
-        Map<String, Person> map = new TreeMap<String, Person>();
-        map.put("tom", new Person(16));
-        map.put("jtie", new Person(25));
-        map.put("zzla", new Person(17));
-        for (Entry<String, Person> set : map.entrySet())
+        Map<String, Person1> map = new TreeMap<String, Person1>();
+        //        Map<String, Person> map = new ConcurrentSkipListMap<String, Person>();
+        map.put("tom", new Person1(16));
+        map.put("jtie", new Person1(25));
+        map.put("zzla", new Person1(17));
+        for (Entry<String, Person1> set : map.entrySet())
         {
             if (set.getKey().equals("tom"))
             {
@@ -35,7 +36,7 @@ public class TreeSetModifier
     }
 }
 
-class Person
+class Person1
 {
     private int age;
 
@@ -62,7 +63,7 @@ class Person
     /**
      * @param age
      */
-    public Person(final int age)
+    public Person1(final int age)
     {
         super();
         this.age = age;
