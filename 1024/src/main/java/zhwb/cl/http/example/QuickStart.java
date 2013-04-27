@@ -36,7 +36,6 @@ import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
-import org.apache.http.protocol.HTTP;
 import org.apache.http.util.EntityUtils;
 
 public class QuickStart {
@@ -66,11 +65,16 @@ public class QuickStart {
         //            httpGet.releaseConnection();
         //        }
 
-        HttpPost httpPost = new HttpPost("http://likui/account/login/");
+		HttpPost httpPost = new HttpPost("http://184.154.128.246/register.php?");
         List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-        nvps.add(new BasicNameValuePair("username", "admin"));
-        nvps.add(new BasicNameValuePair("password", "secret"));
-        httpPost.setEntity(new UrlEncodedFormEntity(nvps, HTTP.DEF_CONTENT_CHARSET));
+		nvps.add(new BasicNameValuePair("regname", "LongCock"));
+		nvps.add(new BasicNameValuePair("regpwd", "longcock"));
+		nvps.add(new BasicNameValuePair("regpwdrepeat", "longcock"));
+		nvps.add(new BasicNameValuePair("regemail", "kid_zhwb@163.com"));
+		nvps.add(new BasicNameValuePair("invcode", "ddsdf23fdfdsfasfg"));
+		nvps.add(new BasicNameValuePair("forward", ""));
+		nvps.add(new BasicNameValuePair("step", "2"));
+		httpPost.setEntity(new UrlEncodedFormEntity(nvps, "GBK"));
         HttpResponse response2 = httpclient.execute(httpPost);
 
         try {
@@ -78,9 +82,10 @@ public class QuickStart {
             HttpEntity entity2 = response2.getEntity();
             // do something useful with the response body
             // and ensure it is fully consumed
-            System.out.println(EntityUtils.toString(entity2));
-            EntityUtils.consume(entity2);
-
+			if (EntityUtils.toString(entity2, "GBK").contains("邀請碼錯誤!")) {
+				System.out.println("Fail");
+			}
+			EntityUtils.consume(entity2);
         } finally {
             httpPost.releaseConnection();
         }
