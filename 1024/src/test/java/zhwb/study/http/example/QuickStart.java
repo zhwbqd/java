@@ -24,24 +24,29 @@
  *
  */
 
-package zhwb.cl.http.example;
+package zhwb.study.http.example;
 
 import java.util.ArrayList;
 import java.util.List;
 
+import org.apache.http.Header;
 import org.apache.http.HttpEntity;
+import org.apache.http.HttpHost;
 import org.apache.http.HttpResponse;
 import org.apache.http.NameValuePair;
 import org.apache.http.client.entity.UrlEncodedFormEntity;
 import org.apache.http.client.methods.HttpPost;
+import org.apache.http.conn.params.ConnRoutePNames;
 import org.apache.http.impl.client.DefaultHttpClient;
 import org.apache.http.message.BasicNameValuePair;
 import org.apache.http.util.EntityUtils;
 
-public class QuickStart {
+public class QuickStart
+{
 
-    public static void main(final String[] args) throws Exception {
-        DefaultHttpClient httpclient = new DefaultHttpClient();
+    public static void main(final String[] args)
+        throws Exception
+    {
         //        HttpGet httpGet = new HttpGet("http://hc.apache.org/httpcomponents-client-ga/");
         //
         //        HttpResponse response1 = httpclient.execute(httpGet);
@@ -64,29 +69,43 @@ public class QuickStart {
         //        {
         //            httpGet.releaseConnection();
         //        }
+        DefaultHttpClient httpclient = new DefaultHttpClient();
+        HttpHost proxy = new HttpHost("web-proxy.rose.hp.com", 8080, "http");
+        httpclient.getParams().setParameter(ConnRoutePNames.DEFAULT_PROXY, proxy);
 
-		HttpPost httpPost = new HttpPost("http://184.154.128.246/register.php?");
-        List <NameValuePair> nvps = new ArrayList <NameValuePair>();
-		nvps.add(new BasicNameValuePair("regname", "LongCock"));
-		nvps.add(new BasicNameValuePair("regpwd", "longcock"));
-		nvps.add(new BasicNameValuePair("regpwdrepeat", "longcock"));
-		nvps.add(new BasicNameValuePair("regemail", "kid_zhwb@163.com"));
-		nvps.add(new BasicNameValuePair("invcode", "ddsdf23fdfdsfasfg"));
-		nvps.add(new BasicNameValuePair("forward", ""));
-		nvps.add(new BasicNameValuePair("step", "2"));
-		httpPost.setEntity(new UrlEncodedFormEntity(nvps, "GBK"));
-        HttpResponse response2 = httpclient.execute(httpPost);
+        HttpPost httpPost = new HttpPost("http://184.154.128.246/register.php?");
+        List<NameValuePair> nvps = new ArrayList<NameValuePair>();
+        nvps.add(new BasicNameValuePair("regname", "LongCock"));
+        nvps.add(new BasicNameValuePair("regpwd", "longcock"));
+        nvps.add(new BasicNameValuePair("regpwdrepeat", "longcock"));
+        nvps.add(new BasicNameValuePair("regemail", "kid_zhwb@163.com"));
+        nvps.add(new BasicNameValuePair("invcode", "ddsdf23fdfdsfasfg"));
+        nvps.add(new BasicNameValuePair("forward", ""));
+        nvps.add(new BasicNameValuePair("step", "2"));
+        httpPost.setEntity(new UrlEncodedFormEntity(nvps, "gbk"));
 
-        try {
-            System.out.println(response2.getStatusLine());
-            HttpEntity entity2 = response2.getEntity();
-            // do something useful with the response body
-            // and ensure it is fully consumed
-			if (EntityUtils.toString(entity2, "GBK").contains("邀請碼錯誤!")) {
-				System.out.println("Fail");
-			}
-			EntityUtils.consume(entity2);
-        } finally {
+        try
+        {
+            HttpResponse response = httpclient.execute(httpPost);
+            Header[] headers = response.getAllHeaders();
+            for (Header header : headers)
+            {
+                System.out.println(header.getName() + ": " + header.getValue());
+            }
+            HttpEntity entity = response.getEntity();
+            if (EntityUtils.toString(entity, "gbk").contains("邀請碼錯誤!"))
+            {
+                System.out.println("Fail");
+            }
+            else
+            {
+                System.out.println("Success");
+            }
+            EntityUtils.consume(entity);
+        }
+        finally
+        {
+
             httpPost.releaseConnection();
         }
     }
