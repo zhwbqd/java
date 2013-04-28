@@ -1,4 +1,4 @@
-package zhwb.caoliu.register;
+package zhwb.study.greenguava.broken.service;
 
 import java.util.ArrayList;
 import java.util.Deque;
@@ -6,7 +6,7 @@ import java.util.LinkedHashSet;
 import java.util.LinkedList;
 import java.util.List;
 
-public class NewRegister {
+public class Register {
 	private static final String PATTERN = "[a-f0-9*]{16}";
 	private static final char PLACE_HOLDER = '*';
 	private static final char[] WORDS = new char[] { 'a', 'b', 'c', 'd', 'e',
@@ -14,7 +14,7 @@ public class NewRegister {
 	private static final char[] NUMBERS = new char[] { '0', '1', '2', '3', '4',
 			'5', '6', '7', '8', '9' };
 
-	public static void main(String[] args) {
+	public static void main(final String[] args) {
 
 		List<String> list2 = getResultFromInput("abc*de*f", Type.MIX); // 100+36+120
 		int count = 0;
@@ -25,7 +25,7 @@ public class NewRegister {
 		System.out.println(count);
 	}
 
-	public static List<String> getResultFromInput(String code, Type type) {
+	public static List<String> getResultFromInput(final String code, final Type type) {
 		Deque<String> queue = new LinkedList<String>();
 		queue.addLast(code);
 		switch (type) {
@@ -83,9 +83,7 @@ public class NewRegister {
 			}
 			break;
 		}
-
 		return new ArrayList<String>(new LinkedHashSet<String>(queue));
-
 	}
 
 }
