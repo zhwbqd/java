@@ -4,7 +4,6 @@ Client -> ServiceCreditsAutomationImpl: maintainNotificationConfigurationByNotif
 activate ServiceCreditsAutomationImpl
 ServiceCreditsAutomationImpl -> ServiceCreditsAutomationImpl: verify input parameter
 alt verification success case
-
     ServiceCreditsAutomationImpl -> ServiceCreditServiceBusinessService: maintainNotificationConfigurationByNotificationConfiguration
     alt insert success
     	activate ServiceCreditServiceBusinessService
@@ -42,6 +41,5 @@ else verification failure
 else any exception
    ServiceCreditsAutomationImpl -> Client: return FAILURE
 end
-
 deactivate ServiceCreditsAutomationImpl
 @enduml
