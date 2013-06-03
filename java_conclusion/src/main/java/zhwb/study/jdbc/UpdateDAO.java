@@ -19,12 +19,12 @@ public class UpdateDAO
     {
         Class.forName("oracle.jdbc.driver.OracleDriver");
         Connection dataSource = DriverManager.getConnection("jdbc:oracle:thin:@localhost:1521:XE", "system", "password");
-        dataSource.setAutoCommit(false);
+        //        dataSource.setAutoCommit(false);
         Statement statement = dataSource.createStatement();
         boolean result = statement.execute("select * from test where status ='new' for update");
         System.out.println(result);
         Thread.sleep(10000);
-        dataSource.commit();
+        //        dataSource.commit();
         return statement.getResultSet();
     }
 }
