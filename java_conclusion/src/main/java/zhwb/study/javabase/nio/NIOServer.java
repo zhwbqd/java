@@ -48,9 +48,9 @@ public class NIOServer {
 			//当注册的事件到达时，方法返回；否则,该方法会一直阻塞
 			selector.select();
 			// 获得selector中选中的项的迭代器，选中的项为注册的事件
-			Iterator ite = this.selector.selectedKeys().iterator();
+            Iterator<SelectionKey> ite = this.selector.selectedKeys().iterator();
 			while (ite.hasNext()) {
-				SelectionKey key = (SelectionKey) ite.next();
+                SelectionKey key = ite.next();
 				// 删除已选的key,以防重复处理
 				ite.remove();
 				// 客户端请求连接事件
@@ -63,7 +63,7 @@ public class NIOServer {
 					channel.configureBlocking(false);
 
 					//在这里可以给客户端发送信息哦
-					channel.write(ByteBuffer.wrap(new String("向客户端发送了一条信息").getBytes()));
+                    channel.write(ByteBuffer.wrap(new String("向客户端发送了一条信息").getBytes("GBK")));
 					//在和客户端连接成功之后，为了可以接收到客户端的信息，需要给通道设置读的权限。
 					channel.register(this.selector, SelectionKey.OP_READ);
 					
@@ -88,9 +88,9 @@ public class NIOServer {
 		ByteBuffer buffer = ByteBuffer.allocate(10);
 		channel.read(buffer);
 		byte[] data = buffer.array();
-		String msg = new String(data).trim();
+        String msg = new String(data, "GBK").trim();
 		System.out.println("服务端收到信息："+msg);
-		ByteBuffer outBuffer = ByteBuffer.wrap(msg.getBytes());
+        ByteBuffer outBuffer = ByteBuffer.wrap(msg.getBytes("GBK"));
 		channel.write(outBuffer);// 将消息回送给客户端
 	}
 	
