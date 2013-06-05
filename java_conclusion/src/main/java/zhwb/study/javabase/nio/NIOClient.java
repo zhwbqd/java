@@ -41,15 +41,14 @@ public class NIOClient {
 	 * 采用轮询的方式监听selector上是否有需要处理的事件，如果有，则进行处理
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
 	public void listen() throws IOException {
 		// 轮询访问selector
 		while (true) {
 			selector.select();
 			// 获得selector中选中的项的迭代器
-			Iterator ite = this.selector.selectedKeys().iterator();
+            Iterator<SelectionKey> ite = this.selector.selectedKeys().iterator();
 			while (ite.hasNext()) {
-				SelectionKey key = (SelectionKey) ite.next();
+                SelectionKey key = ite.next();
 				// 删除已选的key,以防重复处理
 				ite.remove();
 				// 连接事件发生
@@ -65,7 +64,7 @@ public class NIOClient {
 					channel.configureBlocking(false);
 
 					//在这里可以给服务端发送信息哦
-					channel.write(ByteBuffer.wrap(new String("向服务端发送了一条信息").getBytes()));
+                    channel.write(ByteBuffer.wrap(new String("向服务端发送了一条信息").getBytes("GBK")));
 					//在和服务端连接成功之后，为了可以接收到服务端的信息，需要给通道设置读的权限。
 					channel.register(this.selector, SelectionKey.OP_READ);
 					
@@ -84,7 +83,16 @@ public class NIOClient {
 	 * @throws IOException 
 	 */
 	public void read(final SelectionKey key) throws IOException{
-		//和服务端的read方法一样
+        // 服务器可读取消息:得到事件发生的Socket通道
+        SocketChannel channel = (SocketChannel)key.channel();
+        // 创建读取的缓冲区
+        ByteBuffer buffer = ByteBuffer.allocate(10);
+        channel.read(buffer);
+        byte[] data = buffer.array();
+        String msg = new String(data, "GBK").trim();
+        System.out.println("客户端收到信息：" + msg);
+        ByteBuffer outBuffer = ByteBuffer.wrap(msg.getBytes("GBK"));
+        channel.write(outBuffer);// 将消息回送给客户端
 	}
 	
 	
