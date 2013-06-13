@@ -11,7 +11,6 @@ import java.util.Iterator;
 
 /**
  * NIO服务端
- * @author 小路
  */
 public class NIOServer {
 	//通道管理器
@@ -40,7 +39,6 @@ public class NIOServer {
 	 * 采用轮询的方式监听selector上是否有需要处理的事件，如果有，则进行处理
 	 * @throws IOException
 	 */
-	@SuppressWarnings("unchecked")
 	public void listen() throws IOException {
 		System.out.println("服务端启动成功！");
 		// 轮询访问selector
@@ -61,7 +59,6 @@ public class NIOServer {
 					SocketChannel channel = server.accept();
 					// 设置成非阻塞
 					channel.configureBlocking(false);
-
 					//在这里可以给客户端发送信息哦
                     channel.write(ByteBuffer.wrap(new String("向客户端发送了一条信息").getBytes("GBK")));
 					//在和客户端连接成功之后，为了可以接收到客户端的信息，需要给通道设置读的权限。
