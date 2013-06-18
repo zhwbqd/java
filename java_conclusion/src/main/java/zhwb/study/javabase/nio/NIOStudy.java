@@ -7,15 +7,18 @@
 
 package zhwb.study.javabase.nio;
 
+import java.nio.Buffer;
 import java.nio.ByteBuffer;
+import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 
 public class NIOStudy
 {
     public static void main(final String[] args)
     {
-        byteBuffer();
+		// byteBuffer();
         //        charBuffer();
+		byteView();
     }
 
     private static void charBuffer()
@@ -84,4 +87,29 @@ public class NIOStudy
         /*多字节数值被存储在内存中的方式一般被称为endian-ness（字节顺序）。如果数字数值的最高字节——big end（大端），位于低位地址，那么系统就是大端字节顺序.*/
         System.out.println(bf.order());
     }
+
+	public static void byteView() {
+		ByteBuffer byteBuffer = ByteBuffer.allocate(7).order(
+				ByteOrder.BIG_ENDIAN);
+		CharBuffer charBuffer = byteBuffer.asCharBuffer();
+		// Load the ByteBuffer with some bytes
+		byteBuffer.put(0, (byte) 0);
+		byteBuffer.put(1, (byte) 'H');
+		byteBuffer.put(2, (byte) 0);
+		byteBuffer.put(3, (byte) 'i');
+		byteBuffer.put(4, (byte) 0);
+		byteBuffer.put(5, (byte) '!');
+		byteBuffer.put(6, (byte) 0);
+		println(byteBuffer);
+		println(charBuffer);
+
+		System.out.println(byteBuffer.order(ByteOrder.LITTLE_ENDIAN).getInt());
+		// System.out.println(byteBuffer.getInt());
+	}
+
+	private static void println(Buffer buffer) {
+		System.out.println("pos=" + buffer.position() + ", limit="
+				+ buffer.limit() + ", capacity=" + buffer.capacity() + ": '"
+				+ buffer.toString() + "'");
+	}
 }
