@@ -22,17 +22,17 @@ public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao
         return getSqlMapClientTemplate().queryForList("queryAll");
     }
 
-    public Person getPersonById(String id)
+    public Person getPersonById(final String id)
     {
         return (Person)getSqlMapClientTemplate().queryForObject("queryById", id);
     }
 
-    public void updatePerson(Person person)
+    public void updatePerson(final Person person)
     {
         getSqlMapClientTemplate().update("updatePerson", person);
     }
 
-    public void insertPerson(Person person)
+    public void insertPerson(final Person person)
     {
         getSqlMapClientTemplate().insert("insertPerson", person);
     }
@@ -43,13 +43,13 @@ public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao
         {
             getSqlMapClientTemplate().execute(new SqlMapClientCallback()
             {
-                public Object doInSqlMapClient(SqlMapExecutor executor)
+                public Object doInSqlMapClient(final SqlMapExecutor executor)
                     throws SQLException
                 {
                     executor.startBatch();
                     for (Person person : updateList)
                     {
-                        executor.insert("updatePerson", person);
+                        executor.update("updatePerson", person);
                     }
                     executor.executeBatch();
 
@@ -65,7 +65,7 @@ public class PersonDaoImp extends SqlMapClientDaoSupport implements PersonDao
         {
             getSqlMapClientTemplate().execute(new SqlMapClientCallback()
             {
-                public Object doInSqlMapClient(SqlMapExecutor executor)
+                public Object doInSqlMapClient(final SqlMapExecutor executor)
                     throws SQLException
                 {
                     executor.startBatch();
