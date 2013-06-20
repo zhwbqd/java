@@ -12,13 +12,13 @@ import java.nio.ByteBuffer;
 import java.nio.ByteOrder;
 import java.nio.CharBuffer;
 
-public class NIOStudy
+public class BufferStudy
 {
     public static void main(final String[] args)
     {
-		// byteBuffer();
-        //        charBuffer();
-		byteView();
+        byteBuffer();
+        //                charBuffer();
+        //		byteView();
     }
 
     private static void charBuffer()
@@ -44,10 +44,7 @@ public class NIOStudy
         }
         bf.clear(); //逻辑清空
         System.out.println("");
-        for (char c : array)
-        {
-            System.out.print(c + " ");
-        }
+
     }
 
     private static void byteBuffer()
@@ -62,13 +59,20 @@ public class NIOStudy
         bf.putInt(1); //一个Int  4个byte
         bf.putLong(1000L); //一个long 8个byte, 默认使用大端存贮策略，即高位在后
         bf.put((byte)'H').put((byte)'e').put((byte)'l').put((byte)'l').put((byte)'o');
-        System.out.println("position: " + bf.position());
-        System.out.println("limit: " + bf.limit());
+        System.out.println("position: " + bf.position() + " " + "limit: " + bf.limit());
 
         /*取得*/
         bf.flip();//翻转，设置position为0 limit为position
-        System.out.println("position: " + bf.position());
-        System.out.println("limit: " + bf.limit());
+        System.out.println("position: " + bf.position() + " " + "limit: " + bf.limit());
+
+        /*compact set new position = limit - old position, limit = capacity*/
+        bf.position(10);
+        bf.compact();
+        System.out.println("position: " + bf.position() + " " + "limit: " + bf.limit());
+
+        bf.flip();//翻转，设置position为0 limit为position
+        System.out.println("position: " + bf.position() + " " + "limit: " + bf.limit());
+
         byte[] outp = new byte[bf.limit()];
         for (int i = 0; bf.hasRemaining(); i++)
         {
@@ -76,8 +80,7 @@ public class NIOStudy
         }
 
         bf.rewind(); //重新置position 为0， 重读
-        System.out.println("position: " + bf.position());
-        System.out.println("limit: " + bf.limit());
+        System.out.println("position: " + bf.position() + " " + "limit: " + bf.limit());
         for (byte b : outp)
         {
             System.out.print(b);
@@ -107,7 +110,7 @@ public class NIOStudy
 		// System.out.println(byteBuffer.getInt());
 	}
 
-	private static void println(Buffer buffer) {
+	private static void println(final Buffer buffer) {
 		System.out.println("pos=" + buffer.position() + ", limit="
 				+ buffer.limit() + ", capacity=" + buffer.capacity() + ": '"
 				+ buffer.toString() + "'");
