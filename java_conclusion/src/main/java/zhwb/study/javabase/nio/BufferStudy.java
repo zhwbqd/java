@@ -91,7 +91,8 @@ public class BufferStudy
         System.out.println(bf.order());
     }
 
-	public static void byteView() {
+    private static void byteView()
+    {
 		ByteBuffer byteBuffer = ByteBuffer.allocate(7).order(
 				ByteOrder.BIG_ENDIAN);
 		CharBuffer charBuffer = byteBuffer.asCharBuffer();

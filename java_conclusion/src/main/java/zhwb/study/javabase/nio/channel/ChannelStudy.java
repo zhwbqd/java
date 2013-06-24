@@ -5,8 +5,10 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.javabase.nio;
+package zhwb.study.javabase.nio.channel;
 
+import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.nio.ByteBuffer;
 import java.nio.channels.Channels;
@@ -18,8 +20,8 @@ public class ChannelStudy
     public static void main(final String[] args)
         throws IOException
     {
-        ReadableByteChannel source = Channels.newChannel(System.in);
-        WritableByteChannel dest = Channels.newChannel(System.out);
+        ReadableByteChannel source = Channels.newChannel(new FileInputStream("pom.xml"));
+        WritableByteChannel dest = Channels.newChannel(new FileOutputStream("test.txt"));
         channelCopy1(source, dest);
         source.close();
         dest.close();
