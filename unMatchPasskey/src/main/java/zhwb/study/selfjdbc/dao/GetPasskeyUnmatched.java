@@ -35,20 +35,21 @@ public class GetPasskeyUnmatched
             List<String> oralceList = future_Oracle.get();
             List<String> sqlserverList = future_SQLServer.get();
 
-            System.out.println("begin to compare......." + oralceList.size() + " " + sqlserverList.size());
+            System.out.println("begin to compare......." + "oracle: " + oralceList.size() + "; sqlserver:  "
+                    + sqlserverList.size());
 
-            List<String> oralceList1 = new ArrayList<String>(oralceList);
-            List<String> sqlserverList1 = new ArrayList<String>(sqlserverList);
+            List<String> oralceNotMatch = new ArrayList<String>(oralceList);
+            List<String> sqlserverNotMatch = new ArrayList<String>(sqlserverList);
 
             /*Passkey unmatched*/
-            sqlserverList1.removeAll(oralceList);
+            sqlserverNotMatch.removeAll(oralceList);
 
             /*Oracle unmatched*/
-            oralceList1.removeAll(sqlserverList);
+            oralceNotMatch.removeAll(sqlserverList);
 
             BufferedWriter passkey_f = new BufferedWriter(new FileWriter("passkey_unmatch_lowCode.txt"));
 
-            for (String string : sqlserverList1)
+            for (String string : sqlserverNotMatch)
             {
                 passkey_f.write(string);
                 passkey_f.newLine();
@@ -57,7 +58,7 @@ public class GetPasskeyUnmatched
             passkey_f.close();
 
             BufferedWriter isda_f = new BufferedWriter(new FileWriter("isda_unmatch_lowCode.txt"));
-            for (String string : oralceList1)
+            for (String string : oralceNotMatch)
             {
                 isda_f.write(string);
                 isda_f.newLine();
@@ -65,7 +66,8 @@ public class GetPasskeyUnmatched
             isda_f.flush();
             isda_f.close();
 
-            System.out.println("finished........");
+            System.out.println("finished........" + "oracle: " + oralceNotMatch.size() + "; sqlserver:  "
+                    + sqlserverNotMatch.size());
         }
         catch (InterruptedException e)
         {
@@ -109,7 +111,7 @@ public class GetPasskeyUnmatched
             rs = statement.executeQuery(sql);
             while (rs.next())
             {
-                result.add(rs.getString(1));
+                result.add(rs.getString(1).trim());
             }
             System.out.println("retrieving ending......");
         }
