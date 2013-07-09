@@ -37,5 +37,10 @@ public class SimpleDateFormatIssue
         df.setTimeZone(TimeZone.getTimeZone("UTC"));
         sdate = df.parse("2013-04-25 21:19:42.999999999999999999999");
         System.out.println(sdate);
+
+        DateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss.SSS", Locale.US);
+        sdf.setTimeZone(TimeZone.getTimeZone("UTC"));
+        Date newDate = sdf.parse("2013-07-09 02:46:52.763");
+        System.out.println(sdf.format(newDate));
     }
 }
