@@ -9,6 +9,7 @@ package zhwb.pongo.test;
 public class StringRating {
 	public static void main(String[] args) {
 		System.out.println(perfect("BabCdZ  "));
+		System.out.println(perfect("AAA ##"));
 	}
 
 	public static int perfect(String s) {
@@ -19,7 +20,10 @@ public class StringRating {
 		s = s.trim().toLowerCase();
 		char[] charArray = s.toCharArray();
 		for (char c : charArray) {
-			sum += c - 96;
+			if (c >= 97 && c <= 121) {
+				sum += c - 96;
+			}
+
 		}
 		return sum;
 	}
