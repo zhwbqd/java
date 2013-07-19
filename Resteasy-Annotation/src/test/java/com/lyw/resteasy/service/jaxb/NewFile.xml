@@ -1,0 +1,25 @@
+<?xml version="1.0" encoding="UTF-8" standalone="yes"?>
+<map>
+	<entry key="2">
+		<customer id="2">
+			<address>
+				<city>ShangHai</city>
+				<state>Not Married too</state>
+				<street>jinke road</street>
+				<zip>12345</zip>
+			</address>
+			<name>john</name>
+		</customer>
+	</entry>
+	<entry key="1">
+		<customer id="1">
+			<address>
+				<city>ShangHai</city>
+				<state>Not Married</state>
+				<street>jinke road</street>
+				<zip>12345</zip>
+			</address>
+			<name>michael</name>
+		</customer>
+	</entry>
+</map>
