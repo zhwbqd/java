@@ -1,3 +1,3 @@
-Java
+h1. Java
 
-StudyCode
+h2. StudyCode for java
