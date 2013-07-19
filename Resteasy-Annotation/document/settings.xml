@@ -1,0 +1,92 @@
+<?xml version="1.0" encoding="utf-8"?>
+<settings>
+  <proxies>
+    <proxy>
+      <active>true</active>
+      <protocol>HTTP</protocol>
+      <username/>
+      <password/>
+      <port>8088</port>
+      <host>web-proxy.rose.hp.com</host>
+      <nonProxyHosts>hp.com;hpqcorp.net;</nonProxyHosts>
+      <id>rose-proxy</id>
+    </proxy>
+	  <proxy>
+      <active>false</active>
+      <protocol>HTTP</protocol>
+      <username/>
+      <password/>
+      <port>8088</port>
+      <host>web-proxy.sgp.hp.com</host>
+      <nonProxyHosts>hp.com;hpqcorp.net;</nonProxyHosts>
+      <id>sg-proxy</id>
+    </proxy>
+  </proxies>
+  <profiles>
+    <profile>
+      <id>sbs-nexus-profile</id>
+      <repositories>
+        <repository>
+          <id>HP Central</id>
+          <name>HP Central</name>
+          <releases>
+            <enabled>true</enabled>
+            <updatePolicy>never</updatePolicy>
+            <checksumPolicy>warn</checksumPolicy>
+          </releases>
+          <snapshots>
+            <enabled>true</enabled>
+            <updatePolicy>interval:15</updatePolicy>
+            <checksumPolicy>fail</checksumPolicy>
+          </snapshots>
+          <url>http://repo1.corp.hp.com/nexus/content/groups/public</url>
+          <layout>default</layout>
+        </repository>
+        <repository>
+          <id>Maven2 Central</id>
+          <name>Apache Maven2 Repository</name>
+          <url>http://repo1.maven.org/maven2</url>
+        </repository>
+        <repository>
+          <id>Maven2 Central</id>
+          <name>Maven2 Central</name>
+          <url>http://repo1.maven.org/maven2/</url>
+        </repository>
+        <repository>
+          <id>Java Net Central 2</id>
+          <name>Java Net Central 2</name>
+          <url>http://download.java.net/maven/2</url>
+        </repository>
+		 <repository>
+          <id>jboss repository</id>
+          <name>jboss repository</name>
+          <url> https://repository.jboss.org/nexus/content/repositories/</url>
+        </repository>
+		<repository>
+			<id>jboss</id>
+			<url>http://repository.jboss.org/nexus/content/groups/public/</url>
+		</repository>
+      </repositories>
+      <pluginRepositories>
+        <pluginRepository>
+          <id>HP Central</id>
+          <name>HP Central</name>
+          <url>http://repo1.corp.hp.com/nexus/content/groups/public</url>
+        </pluginRepository>
+        <pluginRepository>
+          <id>Maven2 Central</id>
+          <name>Maven2 Central</name>
+          <url>http://repo1.maven.org/maven2/</url>
+        </pluginRepository>
+        <pluginRepository>
+          <id>Java Net Central 2</id>
+          <name>Java Net Central 2</name>
+          <url>http://download.java.net/maven/2</url>
+        </pluginRepository>
+      </pluginRepositories>
+    </profile>
+  </profiles>
+  <activeProfiles>
+    <activeProfile>sbs-nexus-profile</activeProfile>
+  </activeProfiles>
+</settings>
