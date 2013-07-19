@@ -1,3 +1,3 @@
-h1. Java
+# Java
 
-h2. StudyCode for java
+## StudyCode for java
