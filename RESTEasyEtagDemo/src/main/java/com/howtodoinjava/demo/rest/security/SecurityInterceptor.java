@@ -33,7 +33,7 @@ public class SecurityInterceptor implements javax.ws.rs.container.ContainerReque
 	private static final ServerResponse ACCESS_FORBIDDEN = new ServerResponse("Nobody can access this resource", 403, new Headers<Object>());;
 	private static final ServerResponse SERVER_ERROR = new ServerResponse("INTERNAL SERVER ERROR", 500, new Headers<Object>());;
 	
-	@Override
+    @Override
 	public void filter(ContainerRequestContext requestContext)
 	{
 		ResourceMethodInvoker methodInvoker = (ResourceMethodInvoker) requestContext.getProperty("org.jboss.resteasy.core.ResourceMethodInvoker");
