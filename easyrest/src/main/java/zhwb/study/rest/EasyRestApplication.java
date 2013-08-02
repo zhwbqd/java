@@ -1,4 +1,4 @@
-package com.hp.rest;
+package zhwb.study.rest;
 
 import java.util.HashSet;
 import java.util.Set;
@@ -18,6 +18,7 @@ public class EasyRestApplication extends Application {
 	public Set<Class<?>> getClasses() {
 		HashSet<Class<?>> set = new HashSet<Class<?>>();
 		// set.add(Library.class);
+		// set.add(Book.class);
 		return set;
 	}
 
