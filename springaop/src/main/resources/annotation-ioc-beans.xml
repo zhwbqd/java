@@ -12,7 +12,8 @@
     http://ehcache-spring-annotations.googlecode.com/svn/schema/ehcache-spring/ehcache-spring-1.1.xsd"
 	default-autowire="constructor">
 
-	<context:component-scan base-package="zhwb.spring.ioc.annotation" />
+    <context:annotation-config />
+	<context:component-scan base-package="zhwb.spring.ioc.annotation,zhwb.study.spring.prototype" />
 	
 	<!-- <context:component-scan base-package="zhwb.spring.ioc.annotation">
 		<context:include-filter type="regex" expression="Notification.*" />
