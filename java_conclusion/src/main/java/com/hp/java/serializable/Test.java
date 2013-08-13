@@ -26,19 +26,19 @@ public class Test implements Serializable
     {
         try
         {
-            //初始时staticVar为5
-            ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("result.obj"));
+            //鍒濆鏃秙taticVar涓�            
+        	ObjectOutputStream out = new ObjectOutputStream(new FileOutputStream("result.obj"));
             out.writeObject(new Test());
             out.close();
 
-            //序列化后修改为10
+            //搴忓垪鍖栧悗淇敼涓�
             Test.staticVar = 10;
 
             ObjectInputStream oin = new ObjectInputStream(new FileInputStream("result.obj"));
             Test t = (Test)oin.readObject();
             oin.close();
 
-            //再读取，通过t.staticVar打印新的值
+            //鍐嶈鍙栵紝閫氳繃t.staticVar鎵撳嵃鏂扮殑鍊�
             System.out.println(t.staticVar);
 
         }
