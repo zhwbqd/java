@@ -1,30 +1,25 @@
 package service.client;
 
- import org.apache.thrift.async.AsyncMethodCallback;
+import org.apache.thrift.async.AsyncMethodCallback;
 
- public class MethodCallback implements AsyncMethodCallback { 
-    Object response = null; 
+import service.demo.Hello.AsyncClient.helloString_call;
 
-    public Object getResult() { 
-        // 返回结果值
-        return this.response; 
-    } 
+public class MethodCallback implements AsyncMethodCallback<helloString_call> {
 
-    // 处理服务返回的结果值
-    @Override 
-    public void onComplete(Object response) { 
-        this.response = response; 
-    } 
+    private helloString_call response;
 
-    /*
-     * (non-Javadoc)
-     * 
-     * @see
-     * org.apache.thrift.async.AsyncMethodCallback#onError(java.lang.Exception)
-     */
+    public Object getResult() {
+        return this.response;
+    }
+
     @Override
     public void onError(Exception exception) {
-        // TODO Auto-generated method stub
+        throw new RuntimeException(exception);
+    }
 
-    } 
- } 
+    @Override
+    public void onComplete(helloString_call response) {
+        this.response = response;
+
+    }
+}
