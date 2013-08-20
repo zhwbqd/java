@@ -8,7 +8,7 @@ public class MethodCallback implements AsyncMethodCallback<helloString_call> {
 
     private helloString_call response;
 
-    public Object getResult() {
+    public helloString_call getResult() {
         return this.response;
     }
 
