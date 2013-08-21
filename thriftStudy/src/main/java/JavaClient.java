@@ -18,16 +18,19 @@
  */
 
 // Generated code
-import tutorial.*;
-import shared.*;
-
 import org.apache.thrift.TException;
-import org.apache.thrift.transport.TSSLTransportFactory;
-import org.apache.thrift.transport.TTransport;
-import org.apache.thrift.transport.TSocket;
-import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters;
 import org.apache.thrift.protocol.TBinaryProtocol;
 import org.apache.thrift.protocol.TProtocol;
+import org.apache.thrift.transport.TSSLTransportFactory;
+import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters;
+import org.apache.thrift.transport.TSocket;
+import org.apache.thrift.transport.TTransport;
+
+import shared.SharedStruct;
+import tutorial.Calculator;
+import tutorial.InvalidOperation;
+import tutorial.Operation;
+import tutorial.Work;
 
 public class JavaClient {
   public static void main(String [] args) {
@@ -51,7 +54,7 @@ public class JavaClient {
          * For this example it's a self-signed cert. 
          */
         TSSLTransportParameters params = new TSSLTransportParameters();
-        params.setTrustStore("../../lib/java/test/.truststore", "thrift", "SunX509", "JKS");
+        params.setTrustStore("src/main/resources/.truststore", "thrift", "SunX509", "JKS");
         /*
          * Get a client transport instead of a server transport. The connection is opened on
          * invocation of the factory method, no need to specifically call open()

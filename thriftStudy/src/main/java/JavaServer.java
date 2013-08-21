@@ -20,17 +20,13 @@
 import org.apache.thrift.server.TServer;
 import org.apache.thrift.server.TServer.Args;
 import org.apache.thrift.server.TSimpleServer;
-import org.apache.thrift.server.TThreadPoolServer;
 import org.apache.thrift.transport.TSSLTransportFactory;
+import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters;
 import org.apache.thrift.transport.TServerSocket;
 import org.apache.thrift.transport.TServerTransport;
-import org.apache.thrift.transport.TSSLTransportFactory.TSSLTransportParameters;
 
 // Generated code
-import tutorial.*;
-import shared.*;
-
-import java.util.HashMap;
+import tutorial.Calculator;
 
 public class JavaServer {
 
@@ -44,11 +40,13 @@ public class JavaServer {
       processor = new Calculator.Processor(handler);
 
       Runnable simple = new Runnable() {
+        @Override
         public void run() {
           simple(processor);
         }
       };      
       Runnable secure = new Runnable() {
+        @Override
         public void run() {
           secure(processor);
         }
@@ -85,7 +83,7 @@ public class JavaServer {
        */
       TSSLTransportParameters params = new TSSLTransportParameters();
       // The Keystore contains the private key
-      params.setKeyStore("../../lib/java/test/.keystore", "thrift", null, null);
+      params.setKeyStore("src/main/resources/.keystore", "thrift", null, null);
 
       /*
        * Use any of the TSSLTransportFactory to get a server transport with the appropriate
