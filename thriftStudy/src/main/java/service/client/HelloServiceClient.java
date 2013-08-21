@@ -23,6 +23,7 @@ import service.demo.Hello;
             Hello.Client client = new Hello.Client(protocol); 
             // 调用服务的 helloVoid 方法
             client.helloVoid(); 
+            System.out.println(client.helloString("hello"));
             transport.close(); 
         } catch (TTransportException e) { 
             e.printStackTrace(); 

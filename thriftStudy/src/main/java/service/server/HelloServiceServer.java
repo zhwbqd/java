@@ -27,6 +27,7 @@ import service.demo.HelloServiceImpl;
 
             Args arg = new Args(serverTransport);
             arg.processor(processor);
+            //默认就是BinaryProtocal
             arg.protocolFactory(proFactory);
 
             TServer server = new TThreadPoolServer(arg);
