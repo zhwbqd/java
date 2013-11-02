@@ -9,4 +9,5 @@ bin/
 .loadpath
 .svn/
 */.project
-
+*.iml
+.idea

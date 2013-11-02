@@ -1,0 +1,26 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:aop="http://www.springframework.org/schema/aop"
+	xsi:schemaLocation="  
+        http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-2.0.xsd  
+        http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-2.0.xsd">
+
+	<bean name="poolService" class="zhwb.ioc.threadpool.NotificationThreadPoolExecutor">
+		<constructor-arg value="1" />
+		<constructor-arg value="20" />
+		<constructor-arg value="60" />
+		<constructor-arg value="1000" />
+	</bean>
+
+	<bean name="pool" class="zhwb.ioc.threadpool.ThreadPoolExecutorFactory">
+		<property name="corePoolSize" value="1" />
+		<property name="maximumPoolSize" value="5" />
+		<property name="keepAliveTime" value="60" />
+		<property name="unit">
+			<bean class="java.util.concurrent.TimeUnit" factory-method="valueOf">
+				<constructor-arg value="SECONDS"/>
+			</bean>
+		</property>
+		<property name="queueSize" value="1000" />
+	</bean>
+</beans>
