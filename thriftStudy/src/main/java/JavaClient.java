@@ -54,7 +54,7 @@ public class JavaClient {
          * For this example it's a self-signed cert. 
          */
         TSSLTransportParameters params = new TSSLTransportParameters();
-        params.setTrustStore("src/main/resources/.truststore", "thrift", "SunX509", "JKS");
+        params.setTrustStore("src/main/resources/.truststore", "thrift");
         /*
          * Get a client transport instead of a server transport. The connection is opened on
          * invocation of the factory method, no need to specifically call open()
@@ -88,6 +88,7 @@ public class JavaClient {
     work.num2 = 0;
     try {
       int quotient = client.calculate(1, work);
+        client.recv_ping();
       System.out.println("Whoa we can divide by 0");
     } catch (InvalidOperation io) {
       System.out.println("Invalid operation: " + io.why);

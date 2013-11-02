@@ -17,13 +17,13 @@
  * under the License.
  */
 
-import org.apache.thrift.TException;
-
-// Generated code
-import tutorial.*;
-import shared.*;
-
 import java.util.HashMap;
+
+import shared.SharedStruct;
+// Generated code
+import tutorial.Calculator;
+import tutorial.InvalidOperation;
+import tutorial.Work;
 
 public class CalculatorHandler implements Calculator.Iface {
 
