@@ -1,0 +1,32 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:rabbit="http://www.springframework.org/schema/rabbit"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans
+                http://www.springframework.org/schema/beans/spring-beans-3.0.xsd
+                http://www.springframework.org/schema/rabbit
+                http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
+
+    <rabbit:connection-factory id="connectionFactory" channel-cache-size="" addresses="" virtual-host="/user" executor="这个默认5个的fix应该够了" username="guest" password="guest" />
+
+    <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
+                     exchange="myExchange" routing-key="foo.bar"/>
+
+    <rabbit:admin connection-factory="connectionFactory"/>
+
+    <rabbit:queue name="myQueue_1" auto-delete="true"/>
+
+    <rabbit:topic-exchange name="myExchange">
+        <rabbit:bindings>
+            <rabbit:binding queue="myQueue_1" pattern="foo.*"/>
+        </rabbit:bindings>
+    </rabbit:topic-exchange>
+
+
+    <rabbit:listener-container connection-factory="connectionFactory">
+        <rabbit:listener ref="foo" method="listen" queue-names="myQueue_1"/>
+    </rabbit:listener-container>
+
+    <bean id="foo" class="zhwb.study.amqp.spring.Foo"/>
+
+</beans>
