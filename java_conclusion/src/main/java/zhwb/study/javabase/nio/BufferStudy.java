@@ -49,8 +49,8 @@ public class BufferStudy
 
     private static void byteBuffer()
     {
-        ByteBuffer bf = ByteBuffer.allocate(100);
         /*填充*/
+        ByteBuffer bf = ByteBuffer.allocate(100);
         bf.put((byte)'a');
         bf.put((byte)(0 >> 3));
         bf.putShort((short)(2 << 3)); //一个short 2个byte

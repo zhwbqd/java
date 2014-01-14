@@ -1,3 +1,4 @@
+/*
 package zhwb.study.juc.forkjoin.jsr166;
 
 import java.util.concurrent.ExecutionException;
@@ -91,4 +92,4 @@ public class TestForkJoinRecursiveTask {
 		// do something
 		System.out.println("Fibonacci(" + num + ") = " + result.get());
 	}
-}
+}*/
