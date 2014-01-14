@@ -1,6 +1,17 @@
-HTTP/1.0 404 Not Found
+HTTP/1.0 200 OK
 Server: Ronsoft Dummy Server
-Content-Length: 74
-Content-Type: text/plain
+Content-Length: 438
+Content-Type: application/xml
 
-Could not open file: java.io.FileNotFoundException: po.xml (???????????)
+<?xml version="1.0" encoding="UTF-8"?>
+<project xmlns="http://maven.apache.org/POM/4.0.0"
+         xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+         xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
+    <modelVersion>4.0.0</modelVersion>
+
+    <groupId>java_conclusion</groupId>
+    <artifactId>java_conclusion</artifactId>
+    <version>1.0-SNAPSHOT</version>
+
+    
+</project>
