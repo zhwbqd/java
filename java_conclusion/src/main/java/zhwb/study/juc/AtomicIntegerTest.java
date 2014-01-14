@@ -1,3 +1,4 @@
+/*
 package zhwb.study.juc;
 
 import static org.junit.Assert.assertEquals;
@@ -45,4 +46,4 @@ public class AtomicIntegerTest {
 		assertEquals(value.get(), 5 + threadSize);
 	}
 
-}
+}*/
