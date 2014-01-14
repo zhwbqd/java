@@ -1,3 +1,4 @@
+/*
 package zhwb.study.juc;
 
 import static org.junit.Assert.assertEquals;
@@ -32,4 +33,4 @@ public class AtomicIntegerFieldUpdaterDemo {
 		AtomicIntegerFieldUpdaterDemo demo = new AtomicIntegerFieldUpdaterDemo();
 		demo.doit();
 	}
-}
+}*/
