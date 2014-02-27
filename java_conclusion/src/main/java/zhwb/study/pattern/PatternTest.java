@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.pattern;
+package zhwb.study.pattern;
 
 import java.util.HashMap;
 import java.util.Map;
