@@ -8,6 +8,7 @@ import java.io.FileOutputStream;
 import javax.imageio.ImageIO;
 
 import com.sun.image.codec.jpeg.JPEGCodec;
+import com.sun.image.codec.jpeg.JPEGEncodeParam;
 import com.sun.image.codec.jpeg.JPEGImageEncoder;
 
 public class ImageZipEnhancement {
@@ -55,7 +56,10 @@ public class ImageZipEnhancement {
 
             FileOutputStream os = new FileOutputStream(dist);
             JPEGImageEncoder encoder = JPEGCodec.createJPEGEncoder(os);
-            encoder.encode(bfImage);
+            JPEGEncodeParam jep = JPEGCodec.getDefaultJPEGEncodeParam(bfImage);
+            /** 压缩质量 */
+//            jep.setQuality(1.0F, true);
+            encoder.encode(bfImage,jep);
             os.close();
             System.out.println("创建缩略图成功");
         } catch (Exception e) {
