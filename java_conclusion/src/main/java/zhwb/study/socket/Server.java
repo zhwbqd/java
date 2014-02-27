@@ -1,4 +1,4 @@
-package zhwb.socket;
+package zhwb.study.socket;
 
 import java.io.BufferedReader;
 import java.io.IOException;

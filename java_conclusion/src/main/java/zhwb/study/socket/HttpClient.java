@@ -1,4 +1,4 @@
-package zhwb.socket;
+package zhwb.study.socket;
 
 // This example is from _Java Examples in a Nutshell_. (http://www.oreilly.com)
 // Copyright (c) 1997 by David Flanagan

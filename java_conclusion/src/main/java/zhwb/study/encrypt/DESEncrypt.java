@@ -11,7 +11,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.util.Scanner;
 
-public class trial {
+public class DESEncrypt {
    public static void main(String[] arg) throws Exception {
 
    // Scanner to read the user's password. The Java cryptography
