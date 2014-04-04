@@ -5,7 +5,7 @@
  * Copyright (c) 2012 All rights reserved. =============================
  */
 
-package zhwb.study.juc;
+package zhwb.study.juc.deadlock;
 
 public class DeadLockTest
 {
