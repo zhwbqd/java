@@ -1,4 +1,3 @@
-/*
 package zhwb.study.juc.forkjoin;
 
 import static org.junit.Assert.assertEquals;
@@ -51,4 +50,4 @@ public class CalculatorTest {
 
 		assertEquals(new Integer(49995000), result.get());
 	}
-}*/
+}

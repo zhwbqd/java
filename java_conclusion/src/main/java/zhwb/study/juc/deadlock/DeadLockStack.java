@@ -1,4 +1,4 @@
-package zhwb.study.juc;
+package zhwb.study.juc.deadlock;
 
 import java.util.LinkedList;
 import java.util.concurrent.ExecutorService;

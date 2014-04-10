@@ -1,4 +1,3 @@
-/*
 package zhwb.study.juc.forkjoin;
 
 import static org.junit.Assert.assertTrue;
@@ -84,4 +83,4 @@ public class SortTaskTest {
             assertTrue(array[i - 1] < array[i]);
         }
     }
-}*/
+}
