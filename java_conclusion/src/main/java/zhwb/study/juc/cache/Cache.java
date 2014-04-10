@@ -1,4 +1,4 @@
-package zhwb.study.juc;
+package zhwb.study.juc.cache;
 
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.ConcurrentMap;
@@ -69,7 +69,7 @@ public class Cache<K, V> {
 
 	public static void main(String[] args) throws Exception {
 		Cache<Integer, String> cache = new Cache<Integer, String>();
-		cache.put(1, "aaaa", 10, TimeUnit.SECONDS);
+		cache.put(1, "aaaa", 4, TimeUnit.SECONDS);
 
 		Thread.sleep(1000 * 2);
 		{

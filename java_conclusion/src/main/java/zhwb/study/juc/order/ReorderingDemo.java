@@ -1,4 +1,4 @@
-package zhwb.study.juc;
+package zhwb.study.juc.order;
 
 import java.util.concurrent.Semaphore;
 
