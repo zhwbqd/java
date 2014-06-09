@@ -16,5 +16,6 @@ public class ClassLoaderTest{
         System.out.println(System.getProperty("user.dir"));
         System.out.println(Thread.currentThread().getContextClassLoader().getResource("").getPath());
         System.out.println(Thread.currentThread().getContextClassLoader().getResource("test.props"));
+        System.out.println(ClassLoader.getSystemClassLoader().getResource("").getPath());
     }
 }
