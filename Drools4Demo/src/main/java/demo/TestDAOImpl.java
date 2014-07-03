@@ -16,7 +16,7 @@ public class TestDAOImpl implements TestDAO {
 				"Description for Test4", "Description for Test5" };
 		for (int i = 0; i < ids.length; i++) {
 			Test test = new Test();
-			Integer id = new Integer(ids[i]);
+			Integer id = ids[i];
 			test.setId(id);
 			test.setName(names[i]);
 			test.setDescription(descriptions[i]);
