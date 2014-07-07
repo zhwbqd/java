@@ -1,4 +1,4 @@
-package com.vipshop.encrypt;
+package zhwb.encrypt.encrypt;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

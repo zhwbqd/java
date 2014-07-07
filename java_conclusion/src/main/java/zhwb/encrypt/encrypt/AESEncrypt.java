@@ -1,4 +1,4 @@
-package com.vipshop.encrypt;
+package zhwb.encrypt.encrypt;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;
