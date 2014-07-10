@@ -1,4 +1,4 @@
-package zhwb.encrypt.encrypt;
+package zhwb.encrypt;
 
 
 /**
