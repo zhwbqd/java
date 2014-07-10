@@ -3,7 +3,7 @@
          xsi:schemaLocation="http://maven.apache.org/POM/4.0.0 http://maven.apache.org/xsd/maven-4.0.0.xsd">
     <modelVersion>4.0.0</modelVersion>
     <parent>
-        <groupId>com.vipshop</groupId>
+        <groupId>com.zhwb</groupId>
         <artifactId>drools</artifactId>
         <version>1.0-SNAPSHOT</version>
     </parent>
@@ -12,156 +12,7 @@
     <url>http://maven.apache.org</url>
 
     <dependencies>
-        <dependency>
-            <groupId>mysql</groupId>
-            <artifactId>mysql-connector-java</artifactId>
-            <version>5.1.22</version>
-            <scope>runtime</scope>
-        </dependency>
-        <dependency>
-            <groupId>javax.servlet</groupId>
-            <artifactId>servlet-api</artifactId>
-            <version>2.5</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.h2database</groupId>
-            <artifactId>h2</artifactId>
-            <version>1.3.173</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.slf4j</groupId>
-            <artifactId>slf4j-log4j12</artifactId>
-            <version>1.5.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.projectlombok</groupId>
-            <artifactId>lombok</artifactId>
-            <version>1.12.2</version>
-            <scope>compile</scope>
-        </dependency>
-        <dependency>
-            <groupId>com.alibaba</groupId>
-            <artifactId>fastjson</artifactId>
-            <version>1.1.39</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-test</artifactId>
-            <version>${spring.version}</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.testng</groupId>
-            <artifactId>testng</artifactId>
-            <version>6.8.8</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.mockito</groupId>
-            <artifactId>mockito-all</artifactId>
-            <version>1.9.5</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.kubek2k</groupId>
-            <artifactId>springockito</artifactId>
-            <version>1.0.9</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <groupId>org.kubek2k</groupId>
-            <artifactId>springockito-annotations</artifactId>
-            <version>1.0.9</version>
-            <scope>test</scope>
-        </dependency>
-        <dependency>
-            <!--rabbit mq -->
-            <groupId>org.springframework.amqp</groupId>
-            <artifactId>spring-rabbit</artifactId>
-            <version>1.2.0.RELEASE</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-webmvc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.commons</groupId>
-            <artifactId>commons-lang3</artifactId>
-            <version>3.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.hibernate</groupId>
-            <artifactId>hibernate-validator</artifactId>
-            <version>4.3.1.Final</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-aop</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-web</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>org.springframework</groupId>
-            <artifactId>spring-jdbc</artifactId>
-            <version>${spring.version}</version>
-        </dependency>
-        <dependency>
-            <groupId>redis.clients</groupId>
-            <artifactId>jedis</artifactId>
-            <version>2.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-runtime</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-core</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>com.dyuproject.protostuff</groupId>
-            <artifactId>protostuff-api</artifactId>
-            <version>1.0.6</version>
-        </dependency>
-        <dependency>
-            <groupId>org.apache.thrift</groupId>
-            <artifactId>libthrift</artifactId>
-            <version>0.9.0</version>
-        </dependency>
-        <dependency>
-            <groupId>log4j</groupId>
-            <artifactId>log4j</artifactId>
-            <version>1.2.17</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vipshop.user</groupId>
-            <artifactId>framework</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>com.vipshop.user</groupId>
-            <artifactId>util</artifactId>
-            <version>0.0.1-SNAPSHOT</version>
-        </dependency>
-        <dependency>
-            <groupId>commons-collections</groupId>
-            <artifactId>commons-collections</artifactId>
-            <version>3.2.1</version>
-        </dependency>
-        <dependency>
-            <groupId>org.aspectj</groupId>
-            <artifactId>aspectjweaver</artifactId>
-            <version>1.7.4</version>
-        </dependency>
+
         <dependency>
             <groupId>aspectj</groupId>
             <artifactId>aspectjrt</artifactId>
@@ -185,22 +36,9 @@
         </dependency>
 
     </dependencies>
-    <packaging>war</packaging>
-    <description>http://gitlab.tools.vip.com/passport/drools</description>
-    <scm>
-        <url>http://gitlab.tools.vip.com/passport/drools</url>
-        <developerConnection>sam.yang@vipshop.com</developerConnection>
-    </scm>
-    <properties>
-        <spring.version>3.2.2.RELEASE</spring.version>
-        <buildtimestamp>${maven.build.timestamp}</buildtimestamp>
-        <maven.build.timestamp.format>yyyyMMddHHmmss</maven.build.timestamp.format>
-        <project.build.finalname>oauth-api</project.build.finalname>
-    </properties>
-    <build>
+    <packaging>jar</packaging>
 
-        <finalName>${project.build.finalname}</finalName>
-
+<build>
         <plugins>
             <!-- 指定项目的JDK版本 -->
             <plugin>
@@ -215,17 +53,4 @@
             </plugin>
         </plugins>
     </build>
-
-    <reporting>
-        <plugins>
-            <!-- emma report configuration -->
-            <plugin>
-                <groupId>org.codehaus.mojo</groupId>
-                <artifactId>emma-maven-plugin</artifactId>
-                <version>1.0-alpha-3</version>
-                <inherited>true</inherited>
-            </plugin>
-
-        </plugins>
-    </reporting>
 </project>
