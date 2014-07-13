@@ -17,7 +17,7 @@ public class TimerTask {
             public void run() {
                 while (true) {
                     try {
-                        sleep(2 * 1000);
+                        sleep(1 * 1000);
                         try {
                             // 每次都创建出一个新的类加载器
                             HotswapCL cl = new HotswapCL("target/classes/swap", new String[]{"Foo"});

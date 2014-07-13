@@ -3,18 +3,18 @@ package zhwb.drools.domain;
 import org.drools.KnowledgeBase;
 import org.drools.KnowledgeBaseConfiguration;
 import org.drools.KnowledgeBaseFactory;
-import org.drools.builder.KnowledgeBuilder;
-import org.drools.builder.KnowledgeBuilderError;
-import org.drools.builder.KnowledgeBuilderErrors;
-import org.drools.builder.KnowledgeBuilderFactory;
-import org.drools.builder.ResourceType;
-import org.drools.cdi.KBase;
+import org.drools.builder.*;
+import org.drools.command.CommandFactory;
 import org.drools.io.ResourceFactory;
 import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.StatelessKnowledgeSession;
 import org.drools.runtime.rule.QueryResults;
 import org.drools.runtime.rule.QueryResultsRow;
 
-public class EmployeeTest {
+import java.util.ArrayList;
+import java.util.List;
+
+public class EmployeeStateLessTest {
 
     /**
      * @param args
@@ -41,9 +41,9 @@ public class EmployeeTest {
         kbase.addKnowledgePackages(kb.getKnowledgePackages());
 //        KnowledgeBase kbase = kb.newKnowledgeBase(); //无法设置knowledgeBaseConf
 
-        StatefulKnowledgeSession kSession = kbase.newStatefulKnowledgeSession();
+        StatelessKnowledgeSession kSession = kbase.newStatelessKnowledgeSession();
 
-
+        List<Object> list = new ArrayList<Object>();
         Employee e = new Employee();
         e.setAge(20);
         e.setService(5);
@@ -66,30 +66,12 @@ public class EmployeeTest {
         manager1.setName("xu");
         manager1.addEmployee(e1);
 
-        kSession.insert(e);
-        kSession.insert(e1);
-        kSession.insert(e2);
-        kSession.insert(manager);
-//		kSession.insert(manager1);
+        list.add(e);
+        list.add(e1);
+        list.add(e2);
+        list.add(manager);
 
-        kSession.fireAllRules();
-
-        QueryResults qrs = kSession.getQueryResults("query employee days");
-        for (QueryResultsRow qrr : qrs) {
-            Employee etmp = (Employee) qrr.get("e");
-            System.out.println("vacation days(age>18): " + etmp.getDays());
-        }
-        QueryResults qrs2 = kSession.getQueryResults("manager");
-        for (QueryResultsRow qrr : qrs2) {
-            Employer mtmp = (Employer) qrr.get("m");
-            System.out.println("employee count of manager: " + mtmp.count() + ", manager name :" + mtmp.getName() + " ");
-            for (Employee ee : mtmp.getEmployees()) {
-                System.out.println(ee.getName() + ",");
-            }
-        }
-        kSession.dispose();
-
+        kSession.execute(CommandFactory.newInsert(list));
     }
-
 }
 
