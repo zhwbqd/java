@@ -1,0 +1,25 @@
+package test
+import java.util.List
+import drools.study.Customer;
+
+query "query fact count" Customer();
+end
+
+rule "rule1"
+    salience 2
+    when
+        eval(true);
+    then
+        Customer cus=new Customer(); cus.setName("张三"); cus.setAge(1);
+        insert(cus);
+end
+
+rule "rule2"
+    salience 1
+    when
+        $customer:Customer(name=="张三",age<10);
+    then
+        $customer.setAge($customer.getAge()+1);
+        update($customer);
+        System.out.println("----------"+$customer.getName());
+end

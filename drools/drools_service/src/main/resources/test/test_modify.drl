@@ -1,0 +1,20 @@
+package test
+import java.util.List;
+import drools.study.Customer;
+
+rule "rule1"
+salience 2
+    when
+        $customer:Customer(name=="张三",age==20);
+    then
+        System.out.println("modify before customer id:"+$customer.getId()+";age:"+$customer.getAge());
+        modify($customer){setId("super man"),setAge(30)}
+end
+
+rule "rule2"
+salience 1
+    when
+        $customer:Customer(name=="张三");
+    then
+        System.out.println("modify after customer id:"+$customer.getId()+";age:"+$customer.getAge());
+end
