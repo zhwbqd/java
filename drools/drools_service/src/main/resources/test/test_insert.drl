@@ -19,7 +19,8 @@ rule "rule2"
     when
         $customer:Customer(name=="张三",age<10);
     then
-        $customer.setAge($customer.getAge()+1);
-        update($customer);
+//        $customer.setAge($customer.getAge()+1);
+//        update($customer);
+        modify($customer){setAge($customer.getAge()+1)}
         System.out.println("----------"+$customer.getName());
 end
