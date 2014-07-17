@@ -1,0 +1,9 @@
+package test
+import java.util.Map
+
+rule "Low BMI"
+    when
+         $map:Map(get("fuck")==1 && get("fuck1") == "fuck")
+    then
+        System.out.println("You have a fuck"+$map);
+end
