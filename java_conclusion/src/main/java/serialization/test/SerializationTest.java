@@ -7,6 +7,9 @@
 
 package serialization.test;
 
+import java.io.ByteArrayOutputStream;
+import java.io.IOException;
+import java.io.ObjectOutputStream;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Map.Entry;
@@ -19,8 +22,7 @@ public class SerializationTest
      *
      * @param args
      */
-    public static void main(final String[] args)
-    {
+    public static void main(final String[] args) throws IOException {
         Map<Object, Object> map = new HashMap<Object, Object>();
 
         Person p1 = new Person("jack", 1);
@@ -34,6 +36,10 @@ public class SerializationTest
             System.out.println(entry.getKey());
             System.out.println(entry.getValue());
         }
+
+
+        ByteArrayOutputStream out = new ByteArrayOutputStream();
+        ObjectOutputStream stream = new ObjectOutputStream(out);
 
     }
 
