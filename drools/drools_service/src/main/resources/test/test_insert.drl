@@ -5,6 +5,13 @@ import drools.study.Customer;
 query "query fact count" Customer();
 end
 
+
+declare fuck
+    @business(cid)
+    name:String
+    age:int
+end
+
 rule "rule1"
     salience 2
     when
