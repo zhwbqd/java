@@ -20,6 +20,7 @@ public class TestInsert {
         KnowledgeBase knowledgeBase = kb.newKnowledgeBase();
         FactType factType = knowledgeBase.getFactType("test", "fuck");
         System.out.println(factType.getMetaData());
+        factType.getFields();
         StatefulKnowledgeSession statefulSession = knowledgeBase.newStatefulKnowledgeSession();
         statefulSession.fireAllRules();
         QueryResults qr = statefulSession.getQueryResults("query fact count");
