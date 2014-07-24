@@ -23,7 +23,7 @@ public class Twproxy {
         poolConfig.setMaxActive(1000);
         poolConfig.setMaxWait(2000);
         poolConfig.setTestOnBorrow(true);
-        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.16", 11111, 2000);
+        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.17", 11111, 2000);
 
         final String fuck = "qunye";
         Jedis resource = jedisPool.getResource();
@@ -43,18 +43,39 @@ public class Twproxy {
                         begin.await();
                         resource = jedisPool.getResource();
                         System.out.println("---------running----------" + resource.incr(fuck));
+
+                        jedisPool.returnResource(resource);
                     } catch (Exception e) {
                         System.out.println("---------error----------" + getStackTrace(e));
+                        jedisPool.returnBrokenResource(resource);
+
+                        //retry(jedisPool);
                     } finally {
-                        jedisPool.returnResource(resource);
                         latch.countDown();
+                    }
+                }
+
+                private void retry(JedisPool jedisPool) {
+                    Jedis resource = null;
+                    try {
+                        resource = jedisPool.getResource();
+                        System.out.println("---------retry----------" + resource.incr(fuck));
+
+                        jedisPool.returnResource(resource);
+                    } catch (Exception e) {
+                        System.out.println("---------retry-error----------" + getStackTrace(e));
+                        jedisPool.returnBrokenResource(resource);
+                    } finally {
                     }
                 }
             });
         }
         begin.countDown();
         latch.await();
-        System.out.println("total time" + String.valueOf(System.currentTimeMillis() - start) + "ms");
+        System.out.println("result"+jedisPool.getResource().get(fuck)+" total time" + String.valueOf(System.currentTimeMillis() - start) + "ms");
+
+        executorService.shutdown();
+        System.exit(0);
     }
 
     private static String getStackTrace(Throwable t) {

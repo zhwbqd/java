@@ -44,11 +44,11 @@ public class JedisPool extends Pool<Jedis> {
     public void returnBrokenResource(final BinaryJedis resource) {
     	returnBrokenResourceObject(resource);
     }
-    
+
     public void returnResource(final BinaryJedis resource) {
     	returnResourceObject(resource);
     }
-    
+
     /**
      * PoolableObjectFactory custom impl.
      */
@@ -79,7 +79,7 @@ public class JedisPool extends Pool<Jedis> {
             if( database != 0 ) {
                 jedis.select(database);
             }
-            
+
             return jedis;
         }
 
@@ -89,12 +89,11 @@ public class JedisPool extends Pool<Jedis> {
                 if (jedis.isConnected()) {
                     try {
                         try {
-                            jedis.quit();
+                            jedis.disconnect();
                         } catch (Exception e) {
                         }
-                        jedis.disconnect();
                     } catch (Exception e) {
-
+                        System.out.println("fuck");
                     }
                 }
             }
