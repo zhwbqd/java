@@ -1,7 +1,9 @@
 package zhwb.test.twproxy;
 
 import redis.clients.jedis.Jedis;
+import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.JedisPoolConfig;
+import redis.clients.jedis.exceptions.JedisException;
 
 import java.io.PrintWriter;
 import java.io.StringWriter;
@@ -22,8 +24,9 @@ public class Twproxy {
         poolConfig.setMaxIdle(20);
         poolConfig.setMaxActive(1000);
         poolConfig.setMaxWait(2000);
-        poolConfig.setTestOnBorrow(true);
-        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.17", 11111, 2000);
+        poolConfig.setTestOnBorrow(false);
+        poolConfig.setTestWhileIdle(false);
+        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.19", 9999, 2000);
 
         final String fuck = "qunye";
         Jedis resource = jedisPool.getResource();
@@ -45,11 +48,12 @@ public class Twproxy {
                         System.out.println("---------running----------" + resource.incr(fuck));
 
                         jedisPool.returnResource(resource);
-                    } catch (Exception e) {
+                    } catch (JedisException e) {
                         System.out.println("---------error----------" + getStackTrace(e));
                         jedisPool.returnBrokenResource(resource);
-
                         //retry(jedisPool);
+                    } catch (InterruptedException e) {
+                        jedisPool.returnBrokenResource(resource);
                     } finally {
                         latch.countDown();
                     }
@@ -72,7 +76,7 @@ public class Twproxy {
         }
         begin.countDown();
         latch.await();
-        System.out.println("result"+jedisPool.getResource().get(fuck)+" total time" + String.valueOf(System.currentTimeMillis() - start) + "ms");
+        System.out.println("result" + jedisPool.getResource().get(fuck) + " total time" + String.valueOf(System.currentTimeMillis() - start) + "ms");
 
         executorService.shutdown();
         System.exit(0);
