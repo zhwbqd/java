@@ -1,0 +1,61 @@
+package test
+import java.util.Map
+
+/*
+ * 定义rule中使用到的fact属性信息
+ * column_family
+ * aliase： column别名
+ */
+declare cod
+    is_black:boolean
+    uid:int
+    cid:int
+    contactPhone:int
+end
+
+declare RuleExecResult
+    level:int
+    reason:String
+end
+
+
+rule "black_list"
+    salience 1000
+    lock-on-active true
+    when
+         $result : RuleExecResult(level==0)
+         cod(is_black==true);
+    then
+        modify($result){setLevel(10),setReason("black_list")}
+end
+
+rule "cid_count_overflow"
+    salience 999
+    lock-on-active true
+    when
+         $result : RuleExecResult(level==0)
+         cod(cid>=5);
+    then
+        modify($result){setLevel(10),setReason("cid_count_overflow")}
+end
+
+rule "uid_count_overflow"
+    salience 998
+    lock-on-active true
+    when
+         $result : RuleExecResult(level==0)
+         cod(uid>=5);
+    then
+        modify($result){setLevel(10),setReason("uid_count_overflow")}
+end
+
+rule "contactPhone_count_overflow"
+    salience 997
+    lock-on-active true
+    when
+         $result : RuleExecResult(level==0)
+         cod(contactPhone>=5);
+    then
+        modify($result){setLevel(10),setReason("contactPhone_count_overflow")}
+end
+
