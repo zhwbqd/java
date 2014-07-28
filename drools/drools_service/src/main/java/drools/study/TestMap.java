@@ -1,6 +1,5 @@
-package drools.testmap;
+package drools.study;
 
-import org.antlr.analysis.StateCluster;
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;

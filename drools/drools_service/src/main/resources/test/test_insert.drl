@@ -1,6 +1,5 @@
 package test
 import java.util.List
-import drools.study.Customer;
 
 query "query fact count" Customer();
 end
@@ -12,12 +11,18 @@ declare fuck
     age:int
 end
 
+declare Customer
+    id:int
+    name:String
+    age:int
+end
+
 rule "rule1"
     salience 2
     when
         eval(true);
     then
-        Customer cus=new Customer(); cus.setName("张三"); cus.setAge(1);
+        Customer cus= new Customer(); cus.setName("张三"); cus.setAge(1);
         insert(cus);
 end
 
@@ -26,8 +31,6 @@ rule "rule2"
     when
         $customer:Customer(name=="张三",age<10);
     then
-//        $customer.setAge($customer.getAge()+1);
-//        update($customer);
         modify($customer){setAge($customer.getAge()+1)}
         System.out.println("----------"+$customer.getName());
 end
