@@ -7,7 +7,6 @@ import org.drools.builder.ResourceType;
 import org.drools.definition.type.FactType;
 import org.drools.io.impl.ClassPathResource;
 import org.drools.runtime.StatefulKnowledgeSession;
-import org.drools.runtime.rule.QueryResults;
 
 public class TestInsert {
     public static void main(String[] args) throws IllegalAccessException, InstantiationException {
@@ -26,6 +25,8 @@ public class TestInsert {
 
         StatefulKnowledgeSession statefulSession = knowledgeBase.newStatefulKnowledgeSession();
         statefulSession.insert(o);
+        statefulSession.addEventListener(new FuckListener());
+
         statefulSession.fireAllRules();
         statefulSession.dispose();
         System.out.println("end.....");
