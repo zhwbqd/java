@@ -10,44 +10,15 @@ import org.drools.event.rule.*;
  */
 public class FuckListener extends org.drools.event.rule.DefaultAgendaEventListener {
 
-    public void activationCancelled(ActivationCancelledEvent event) {
-        System.out.println("activationCancelled");
-    }
-
     public void activationCreated(ActivationCreatedEvent event) {
-        System.out.println("activationCreated");
+        System.out.println("fact match"+event.getActivation().getRule().getName());
     }
 
     public void afterActivationFired(AfterActivationFiredEvent event) {
-        System.out.println("afterActivationFired");
-    }
-
-    public void agendaGroupPopped(AgendaGroupPoppedEvent event) {
-        System.out.println("agendaGroupPopped");
-    }
-
-    public void agendaGroupPushed(AgendaGroupPushedEvent event) {
-        System.out.println("agendaGroupPushed");
+        System.out.println("after rule fire");
     }
 
     public void beforeActivationFired(BeforeActivationFiredEvent event) {
-        System.out.println("beforeActivationFired");
+        System.out.println("before rule fire");
     }
-
-    public void beforeRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
-        System.out.println("beforeRuleFlowGroupActivated");
-    }
-
-    public void afterRuleFlowGroupActivated(RuleFlowGroupActivatedEvent event) {
-        System.out.println("afterRuleFlowGroupActivated");
-    }
-
-    public void beforeRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-        System.out.println("beforeRuleFlowGroupDeactivated");
-    }
-
-    public void afterRuleFlowGroupDeactivated(RuleFlowGroupDeactivatedEvent event) {
-        System.out.println("afterRuleFlowGroupDeactivated");
-    }
-   
 }

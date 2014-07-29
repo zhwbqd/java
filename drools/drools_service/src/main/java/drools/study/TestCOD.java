@@ -28,14 +28,12 @@ public class TestCOD {
 
         StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
         statefulKnowledgeSession.insert(getData(knowledgeBase));
-
+        statefulKnowledgeSession.addEventListener(new FuckListener());
 
         FactType factType = knowledgeBase.getFactType("test", "RuleExecResult");
         Object data = factType.newInstance();
         FactHandle resultHandler = statefulKnowledgeSession.insert(data);
-        statefulKnowledgeSession.addEventListener(new DebugAgendaEventListener());
-        statefulKnowledgeSession.addEventListener(new DebugWorkingMemoryEventListener());
-        statefulKnowledgeSession.fireAllRules();
+        statefulKnowledgeSession.fireAllRules(1);
 
         Object object = statefulKnowledgeSession.getObject(resultHandler);
 
@@ -44,13 +42,12 @@ public class TestCOD {
         statefulKnowledgeSession.dispose();
     }
 
-
     private static Object getData(KnowledgeBase knowledgeBase) throws InstantiationException, IllegalAccessException {
         FactType factType = knowledgeBase.getFactType("test", "cod");
         Object data = factType.newInstance();
         factType.set(data, "is_black", false);
-        factType.set(data, "uid", 3);
-        factType.set(data, "cid", 3);
+        factType.set(data, "uid", 6);
+        factType.set(data, "cid", 6);
         factType.set(data, "contactPhone", 6);
         return data;
     }
