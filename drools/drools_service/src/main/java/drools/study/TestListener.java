@@ -48,7 +48,7 @@ public class TestListener {
             }
             for (Rule rule : knowledgePackage.getRules()) {
 
-                System.out.println("-------------------" + JSON.toJSONString(((SalienceInteger)(((RuleImpl)rule).getRule().getSalience()))));
+                System.out.println("-------------------" + JSON.toJSONString(((SalienceInteger)(((RuleImpl)rule).getRule().getSalience())).toString()));
             }
             return knowledgePackage.getRules();
         }
