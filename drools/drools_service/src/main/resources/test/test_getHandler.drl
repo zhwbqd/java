@@ -1,0 +1,14 @@
+package test
+import zhwb.drools.domain.Vip;
+
+rule test_getHandler
+    when
+        eval(true)
+    then
+        Vip vip = new Vip();
+        vip.setName("test");
+        insert(vip);
+end
+
+
+
