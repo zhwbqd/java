@@ -23,7 +23,7 @@ rule "black_list"
     salience 1000
     lock-on-active true
     when
-         $result : RuleExecResult(level==0)
+         $result : RuleExecResult()
          cod(is_black==true);
     then
         modify($result){setLevel(10),setReason("black_list")}
@@ -33,29 +33,29 @@ rule "cid_count_overflow"
     salience 999
     lock-on-active true
     when
-         $result : RuleExecResult(level==0)
+         $result : RuleExecResult()
          cod(cid>=5);
     then
-        modify($result){setLevel(10),setReason("cid_count_overflow")}
+        modify($result){setLevel(9),setReason("cid_count_overflow")}
 end
 
 rule "uid_count_overflow"
     salience 998
     lock-on-active true
     when
-         $result : RuleExecResult(level==0)
+         $result : RuleExecResult()
          cod(uid>=5);
     then
-        modify($result){setLevel(10),setReason("uid_count_overflow")}
+        modify($result){setLevel(8),setReason("uid_count_overflow")}
 end
 
 rule "contactPhone_count_overflow"
     salience 997
     lock-on-active true
     when
-         $result : RuleExecResult(level==0)
+         $result : RuleExecResult()
          cod(contactPhone>=5);
     then
-        modify($result){setLevel(10),setReason("contactPhone_count_overflow")}
+        modify($result){setLevel(7),setReason("contactPhone_count_overflow")}
 end
 
