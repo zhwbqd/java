@@ -1,4 +1,4 @@
-package zhwb.encrypt;
+package util.encrypt;
 
 import java.io.UnsupportedEncodingException;
 import java.security.MessageDigest;

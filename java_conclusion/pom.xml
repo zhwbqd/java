@@ -87,9 +87,20 @@
             <artifactId>disruptor</artifactId>
             <version>3.3.0</version>
         </dependency>
-
-
+        <!-- Storm Dependency -->
+        <dependency>
+            <groupId>storm</groupId>
+            <artifactId>storm</artifactId>
+            <version>0.7.1</version>
+        </dependency>
     </dependencies>
 
+    <repositories>
+        <!-- Repository where we can found the storm dependencies  -->
+        <repository>
+            <id>clojars.org</id>
+            <url>http://clojars.org/repo</url>
+        </repository>
+    </repositories>
 
 </project>
