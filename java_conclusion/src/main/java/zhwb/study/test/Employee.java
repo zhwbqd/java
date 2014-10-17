@@ -5,7 +5,7 @@
  * Copyright (c) 2009   All rights reserved. ======================
  */
 
-package serialization.test;
+package zhwb.study.test;
 
 import java.io.Serializable;
 

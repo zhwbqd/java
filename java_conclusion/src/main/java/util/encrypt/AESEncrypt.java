@@ -1,4 +1,4 @@
-package zhwb.encrypt;
+package util.encrypt;
 
 import javax.crypto.Cipher;
 import javax.crypto.KeyGenerator;

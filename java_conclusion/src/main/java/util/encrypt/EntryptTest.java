@@ -1,4 +1,4 @@
-package zhwb.encrypt;
+package util.encrypt;
 
 import java.io.FileInputStream;
 import java.io.IOException;
