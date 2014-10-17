@@ -7,7 +7,7 @@
                 http://www.springframework.org/schema/rabbit
                 http://www.springframework.org/schema/rabbit/spring-rabbit.xsd">
 
-    <rabbit:connection-factory id="connectionFactory" channel-cache-size="" addresses="" virtual-host="/user" executor="这个默认5个的fix应该够了" username="guest" password="guest" />
+    <rabbit:connection-factory id="connectionFactory"  virtual-host="/user" username="guest" password="guest" />
 
     <rabbit:template id="amqpTemplate" connection-factory="connectionFactory"
                      exchange="myExchange" routing-key="foo.bar"/>
