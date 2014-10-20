@@ -1,0 +1,14 @@
+package test
+
+import drools.study.From;
+import java.util.List;
+
+rule test_and
+    when
+
+      From(clientIp: ips) and From(clientIp != null) and From(clientNums:nums) and From(clientNums!=null)
+
+    then
+        System.out.println("找到想要的值从数据中:" + clientIp + ", "+clientNums);
+end
+
