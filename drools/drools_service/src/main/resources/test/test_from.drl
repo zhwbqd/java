@@ -1,0 +1,23 @@
+package test
+
+import drools.study.From;
+import java.util.List;
+
+rule test_for
+lock-on-active true
+    when
+        f:From()
+        val: Integer() from f.nums
+        sum:Double() from accumulate (i:Integer(i==1) from f.nums, sum(i))
+        sums:Double() from accumulate (i:Integer() from f.nums, sum(i))
+        ip:List() from collect (str:String() from f.ips.split(","))
+        newIp:List() from collect(str:String(str == "1") from f.ips.split(","))
+    then
+        System.out.println("找到想要的值从数据中:" + val);
+        System.out.println("sum:" + sum);
+        System.out.println("sums:" + sums);
+        System.out.println("string split to collection:" + ip);
+        System.out.println("符合条件的集合:" + newIp);
+        System.out.println("符合条件的个数:" + newIp.size());
+end
+
