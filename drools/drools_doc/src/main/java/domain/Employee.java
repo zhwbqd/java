@@ -1,4 +1,4 @@
-package zhwb.drools.domain;
+package domain;
 
 import java.util.ArrayList;
 import java.util.List;

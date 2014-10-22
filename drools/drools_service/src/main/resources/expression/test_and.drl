@@ -6,11 +6,10 @@ import java.util.List;
 rule test_and
     when
         /*如何将判断和赋值放在一起*/
-//      From(clientIp: ips) and From(clientIp != null) and From(clientNums:nums) and From(clientNums!=null)
- ((From(clientIp: ips) and From(clientIp != null))
+//        From(clientIp: ips) and From(clientIp != null) and From(clientNums:nums) and From(clientNums!=null)
+        ((From(clientIp: ips) and From(clientIp != null))
  and
- (From(clientNums:nums) and From(clientNums!=null)))
-
+        (From(clientNums:nums) and From(clientNums!=null)))
     then
         System.out.println("找到想要的值从数据中:" + clientIp + ", "+clientNums);
 end

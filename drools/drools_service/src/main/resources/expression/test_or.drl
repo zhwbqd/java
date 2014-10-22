@@ -1,0 +1,20 @@
+package test
+
+import zhwb.drools.domain.Employee;
+import java.util.List;
+
+rule "employee female age > 60, or male age > 65"
+    when
+        $pensioner : ( Employee( sex == "f", age > 60 ) or Employee( sex == "m", age > 65 ) )
+    then
+        System.out.println("有人男大于65,女大于60么" + $pensioner.getName());
+end
+
+rule "again employee female age > 60, or male age > 65"
+    when
+        (or pensioner : Employee( sex == "f", age > 60 )
+            pensioner : Employee( sex == "m", age > 65 ) )
+    then
+        System.out.println("有人男大于65,女大于60么" + pensioner.getName());
+end
+
