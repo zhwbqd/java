@@ -1,0 +1,30 @@
+package test
+
+import domain.Employee;
+import domain.Employer;
+
+rule "all male employee age > 65"
+when
+    forall( $emp : Employee( sex == "m")
+                   Employee( this == $emp, age > 65 ) )
+then
+    System.out.println("all matched");
+end
+
+rule "not all male employee age > 80"
+when
+    not (forall( $emp : Employee( sex == "m")
+                   Employee( this == $emp, age > 80 ) )
+                   )
+then
+    System.out.println("not all matched");
+end
+
+rule "all employee in the employer's list"
+when
+    forall( $emp : Employee()
+            Employer( employees.contains($emp)))
+then
+    System.out.println("all employee in the employer's list");
+end
+

@@ -1,6 +1,6 @@
 package test
 
-import drools.study.From;
+import domain.From;
 import java.util.List;
 
 rule test_for
