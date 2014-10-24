@@ -6,7 +6,6 @@ import java.util.List;
 
 rule "Assign people in North Carolina (NC) to sales region 1"
 ruleflow-group "test"
-auto-focus true
 lock-on-active true
 when
     $p : Person()
@@ -20,7 +19,6 @@ end
 
 rule "Apply a discount to people in the city of Raleigh"
 ruleflow-group "test"
-auto-focus true
 lock-on-active true
 when
     $p : Person()
@@ -34,7 +32,6 @@ end
 
 rule "Assign people in North Carolina (NC) to sales region 1 1"
 ruleflow-group "test"
-auto-focus true
 lock-on-active true
 when
     $p : Person(address.state == "ShanDong" )
@@ -47,7 +44,6 @@ end
 
 rule "Apply a discount to people in the city of Raleigh 1"
 ruleflow-group "test"
-auto-focus true
 lock-on-active true
 when
     $p : Person(address.city == "Qingdao" )

@@ -34,6 +34,9 @@ public class TestFromAdv {
 
         FactHandle personHandle = statefulKnowledgeSession.insert(person);
 
+        statefulKnowledgeSession.startProcess("test");
+
+        System.out.println();
 
         statefulKnowledgeSession.fireAllRules();
 
