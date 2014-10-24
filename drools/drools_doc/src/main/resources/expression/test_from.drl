@@ -7,12 +7,15 @@ rule test_for
 lock-on-active true
     when
         f:From()
+        singleIp: String() from f.ips
         val: Integer() from f.nums
         sum:Double() from accumulate (i:Integer(i==1) from f.nums, sum(i))
         sums:Double() from accumulate (i:Integer() from f.nums, sum(i))
         ip:List() from collect (str:String() from f.ips.split(","))
         newIp:List() from collect(str:String(str == "1") from f.ips.split(","))
     then
+        System.out.println("singleIp:" + f.getIps());
+        System.out.println("singleIp:" + singleIp);
         System.out.println("找到想要的值从数据中:" + val);
         System.out.println("sum:" + sum);
         System.out.println("sums:" + sums);

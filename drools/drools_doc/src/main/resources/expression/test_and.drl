@@ -14,3 +14,27 @@ rule test_and
         System.out.println("找到想要的值从数据中:" + clientIp + ", "+clientNums);
 end
 
+/*rule test_and_0
+    when
+        From(ips!=null)
+        From(ips.length>0)
+    then
+        System.out.println("非空则报错");
+end*/
+
+rule test_and_1
+    when
+        From(notnullIP:ips!=null)
+        From(notnullIP.length>0)
+    then
+        System.out.println("非空则报错");
+end
+
+rule test_and_2
+    when
+        f:From(ips!=null)
+        From(f.ips.length>0)
+    then
+        System.out.println("非空则报错");
+end
+
