@@ -26,6 +26,7 @@ rule test_and_1
     when
         From(notnullIP:ips!=null)
         From(notnullIP.length>0)
+        /*不能使用 eval(notnullIP.length>0)*/
     then
         System.out.println("非空则报错");
 end
@@ -34,6 +35,7 @@ rule test_and_2
     when
         f:From(ips!=null)
         From(f.ips.length>0)
+        /*不能使用 eval(f.ips.length>0)*/
     then
         System.out.println("非空则报错");
 end

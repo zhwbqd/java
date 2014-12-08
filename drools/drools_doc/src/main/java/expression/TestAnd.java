@@ -30,7 +30,7 @@ public class TestAnd {
         f.setNums(new ArrayList(){{
             add(1);
         }});
-//        f.setIps("1,2,3,4");
+        f.setIps("1,2,3,4");
         statefulKnowledgeSession.insert(f);
 
         statefulKnowledgeSession.fireAllRules();
