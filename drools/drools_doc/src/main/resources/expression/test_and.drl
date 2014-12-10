@@ -2,6 +2,7 @@ package test
 
 import domain.From;
 import java.util.List;
+import org.apache.commons.lang3.StringUtils
 
 rule test_and
     when
@@ -24,18 +25,17 @@ end*/
 
 rule test_and_1
     when
-        From(notnullIP:ips!=null)
-        From(notnullIP.length>0)
-        /*不能使用 eval(notnullIP.length>0)*/
+        From(notnullIP:ips!=null,notnullIP.length>0,!StringUtils.isBlank(ips))
     then
         System.out.println("非空则报错");
 end
 
 rule test_and_2
+    dialect "mvel"
     when
         f:From(ips!=null)
         From(f.ips.length>0)
-        /*不能使用 eval(f.ips.length>0)*/
+        eval(f.ips.length>0)
     then
         System.out.println("非空则报错");
 end
