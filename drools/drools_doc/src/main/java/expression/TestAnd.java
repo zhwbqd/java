@@ -1,5 +1,6 @@
 package expression;
 
+import domain.Employer;
 import domain.From;
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
@@ -27,11 +28,13 @@ public class TestAnd {
         StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
 
         From f = new From();
+        Employer employer = new Employer();
         f.setNums(new ArrayList(){{
             add(1);
         }});
         f.setIps("1,2,3,4");
         statefulKnowledgeSession.insert(f);
+        statefulKnowledgeSession.insert(employer);
 
         statefulKnowledgeSession.fireAllRules();
         statefulKnowledgeSession.dispose();
