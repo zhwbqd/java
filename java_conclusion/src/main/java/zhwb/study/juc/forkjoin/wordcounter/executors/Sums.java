@@ -33,7 +33,7 @@ public class Sums {
         
         ExecutorService executor = Executors.newFixedThreadPool(2);
         List<Future<Long>> results = executor.invokeAll(asList(
-            new Sum(0, 10), new Sum(100, 1_000), new Sum(10_000, 1_000_000)
+            new Sum(0, 10), new Sum(100, 1000), new Sum(10000, 1000000)
         ));
         executor.shutdown();
         

@@ -25,7 +25,7 @@ public class Twproxy {
         poolConfig.setMaxActive(1000);
         poolConfig.setMaxWait(2000);
         poolConfig.setTestOnBorrow(false);
-        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.19", 9999, 2000);
+        final JedisPool jedisPool = new JedisPool(poolConfig, "192.168.44.19", 9001, 2000);
 
         final String fuck = "qunye";
         Jedis resource = jedisPool.getResource();
