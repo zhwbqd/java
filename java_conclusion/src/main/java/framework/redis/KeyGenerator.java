@@ -62,5 +62,20 @@ public abstract class KeyGenerator {
         sb.append(metaData);
         return sb.toString();
     }
+
+    public static String buildKey(Dimension dimension, String metaData, Duration duration, String... fields) {
+        Verifier.create()
+                .isNotNull(dimension, "dimension" + VerifierMessages.POSTFIX_NO_NULLS_ALLOWED)
+                .isNotEmpty(Arrays.asList(fields), "fields" + VerifierMessages.POSTFIX_EMPTY_NOT_ALLOWED)
+                .isNotEmpty(metaData, "metaData" + VerifierMessages.POSTFIX_EMPTY_NOT_ALLOWED)
+                .isNotNull(duration, "duration" + VerifierMessages.POSTFIX_NO_NULLS_ALLOWED)
+                .throwIfError();
+        StringBuilder sb = new StringBuilder(dimension.getValue() + SPLIT_CHAR);
+        for (String field : fields) {
+            sb.append(field).append(SPLIT_CHAR);
+        }
+        sb.append(metaData).append(SPLIT_CHAR).append(duration.);
+        return sb.toString();
+    }
 }
 
