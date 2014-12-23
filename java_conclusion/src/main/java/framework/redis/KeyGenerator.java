@@ -74,7 +74,9 @@ public abstract class KeyGenerator {
         for (String field : fields) {
             sb.append(field).append(SPLIT_CHAR);
         }
-        sb.append(metaData).append(SPLIT_CHAR).append(duration.generateKeyPostfix());
+        sb.append(metaData)
+                .append(SPLIT_CHAR)
+                .append(duration.generateKeyPostfix());
         return sb.toString();
     }
 }

@@ -14,7 +14,7 @@ public interface RedisService {
     /**
      * 对key进行叠加, 如果key没有过期时间, 则初始化其过期时间
      *
-     * @param counter the counter
+     * @param counter  the counter
      * @param duration the duration
      * @return the long
      */
@@ -29,18 +29,20 @@ public interface RedisService {
      */
     void incrAndExpBatch(List<KeyDurationPair> keyDurationMap);
 
+    void incrAndExpBatchContinuous(List<KeyDurationPair> keyDurationPairs);
+
     /**
      * 删除指定类型的key
      *
      * @param redisKeyType the redis key type
-     * @param key the key
+     * @param key          the key
      */
     void delete(RedisKeyType redisKeyType, String key);
 
     /**
      * Set string.
      *
-     * @param key the key
+     * @param key   the key
      * @param value the value
      * @return the string
      */
@@ -49,8 +51,8 @@ public interface RedisService {
     /**
      * Set string.
      *
-     * @param key the key
-     * @param value the value
+     * @param key       the key
+     * @param value     the value
      * @param expiresIn the expires in
      * @return the string
      */
@@ -60,8 +62,8 @@ public interface RedisService {
      * 设置key的过期时间
      *
      * @param redisKeyType the redis key type
-     * @param key the key
-     * @param expiresIn the expires in
+     * @param key          the key
+     * @param expiresIn    the expires in
      * @return the long
      */
     Long expires(RedisKeyType redisKeyType, String key, int expiresIn);
@@ -70,7 +72,7 @@ public interface RedisService {
      * 获取key的过期时间
      *
      * @param redisKeyType the redis key type
-     * @param key the key
+     * @param key          the key
      * @return the long
      */
     long ttl(RedisKeyType redisKeyType, String key);
@@ -97,7 +99,7 @@ public interface RedisService {
      * 计数器加指定值.
      *
      * @param counter the counter
-     * @param incrBy the incr by
+     * @param incrBy  the incr by
      * @return the long
      * @author sam.yang
      */
@@ -116,7 +118,7 @@ public interface RedisService {
      * 计数器减指定值.
      *
      * @param counter the counter
-     * @param decrBy the decr by
+     * @param decrBy  the decr by
      * @return the long
      * @author sam.yang
      */
@@ -141,7 +143,7 @@ public interface RedisService {
     /**
      * Execute t.
      *
-     * @param <T>             the type parameter
+     * @param <T>           the type parameter
      * @param redisCallBack the redis call back
      * @return the t
      */
@@ -150,7 +152,7 @@ public interface RedisService {
     /**
      * The type Key duration pair.
      */
-    public static class KeyDurationPair{
+    public static class KeyDurationPair {
         private String key;
         private Duration duration;
         private long incrValue = 1;
@@ -158,8 +160,8 @@ public interface RedisService {
         /**
          * Instantiates a new Key duration pair.
          *
-         * @param cacheKey the cache key
-         * @param duration the duration
+         * @param cacheKey  the cache key
+         * @param duration  the duration
          * @param incrValue the incr value
          */
         public KeyDurationPair(String cacheKey, Duration duration, long incrValue) {
@@ -265,5 +267,10 @@ public interface RedisService {
         public void setKey(String key) {
             this.key = key;
         }
+
+        public int getSeconds() {
+            return duration.getSeconds();
+        }
+
     }
 }

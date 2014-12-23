@@ -144,6 +144,37 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
+    public void incrAndExpBatchContinuous(final List<KeyCapsule> keyDurationPairs) {
+        if (CollectionUtils.isEmpty(keyDurationPairs)) {
+            return;
+        }
+        execute(new RedisCallBack() {
+            @Override
+            public Object execute(Jedis jedis) {
+                Pipeline pipelined = jedis.pipelined();
+                List<KeyDurationPair> keys = new ArrayList<KeyDurationPair>(keyDurationPairs.size());
+                for (KeyDurationPair keyDuration : keyDurationPairs) {
+                    /*将key进行拼装, 获取ttl*/
+                    String cacheKey = KeyGenerator.generateCacheKey(RedisKeyType.STR, keyDuration.getKey());
+                    pipelined.ttl(cacheKey);
+                    keys.add(new KeyDurationPair(cacheKey, keyDuration.getDuration(), keyDuration.getIncrValue()));
+                }
+                List<Object> objects = pipelined.syncAndReturnAll();
+                int i = 0;
+                for (KeyDurationPair keyDurationPair : keys) {
+                    pipelined.incrBy(keyDurationPair.getKey(), keyDurationPair.getIncrValue());//key进行累加
+                    if ((Long) objects.get(i) < 0L) {//如果key对应的ttl<0, 表示key是无过期时间或不存在,进行expire操作
+                        pipelined.expire(keyDurationPair.getKey(), keyDurationPair.getSeconds());
+                    }
+                    i++;
+                }
+                pipelined.sync();
+                return null;
+            }
+        });
+    }
+
+    @Override
     public void delete(final RedisKeyType redisKeyType, final String key) {
         execute(new RedisCallBack() {
             @Override
