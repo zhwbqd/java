@@ -9,3 +9,4 @@ bin/
 .svn/
 *.iml
 .idea
+out/
