@@ -29,7 +29,7 @@ public interface RedisService {
      */
     void incrAndExpBatch(List<KeyDurationPair> keyDurationMap);
 
-    void incrAndExpBatchContinuous(List<KeyDurationPair> keyDurationPairs);
+    void incrAndExpBatchTimeSeries(List<KeyCapsule> keyCapsules);
 
     /**
      * 删除指定类型的key
@@ -149,6 +149,8 @@ public interface RedisService {
      */
     <T> T execute(RedisCallBack<T> redisCallBack);
 
+    long sum(List<String> keys);
+
     /**
      * The type Key duration pair.
      */
@@ -267,10 +269,5 @@ public interface RedisService {
         public void setKey(String key) {
             this.key = key;
         }
-
-        public int getSeconds() {
-            return duration.getSeconds();
-        }
-
     }
 }

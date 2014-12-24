@@ -15,7 +15,7 @@ import java.util.Arrays;
  */
 public abstract class KeyGenerator {
 
-    private static final String SPLIT_CHAR = "_";
+    public static final String SPLIT_CHAR = "_";
 
     private static final String PREFIX = "fds";
 
@@ -34,7 +34,7 @@ public abstract class KeyGenerator {
         return PREFIX + SPLIT_CHAR + redisKeyType.getType() + SPLIT_CHAR + word;
     }
 
-    public static String buildKey(String... fields){
+    public static String buildKey(String... fields) {
         Verifier.create()
                 .isNotEmpty(Arrays.asList(fields), "fields" + VerifierMessages.POSTFIX_EMPTY_NOT_ALLOWED)
                 .throwIfError();
@@ -46,7 +46,7 @@ public abstract class KeyGenerator {
             }
             sb.append(field).append(SPLIT_CHAR);
         }
-        return sb.substring(0,sb.lastIndexOf(SPLIT_CHAR));
+        return sb.substring(0, sb.lastIndexOf(SPLIT_CHAR));
     }
 
     public static String buildKey(Dimension dimension, String metaData, String... fields) {
@@ -63,21 +63,12 @@ public abstract class KeyGenerator {
         return sb.toString();
     }
 
-    public static String buildKey(Dimension dimension, String metaData, Duration duration, String... fields) {
+    public static String buildKeyTimeSeries(Dimension dimension, String metaData, Duration duration, String... fields) {
         Verifier.create()
-                .isNotNull(dimension, "dimension" + VerifierMessages.POSTFIX_NO_NULLS_ALLOWED)
-                .isNotEmpty(Arrays.asList(fields), "fields" + VerifierMessages.POSTFIX_EMPTY_NOT_ALLOWED)
-                .isNotEmpty(metaData, "metaData" + VerifierMessages.POSTFIX_EMPTY_NOT_ALLOWED)
                 .isNotNull(duration, "duration" + VerifierMessages.POSTFIX_NO_NULLS_ALLOWED)
                 .throwIfError();
-        StringBuilder sb = new StringBuilder(dimension.getValue() + SPLIT_CHAR);
-        for (String field : fields) {
-            sb.append(field).append(SPLIT_CHAR);
-        }
-        sb.append(metaData)
-                .append(SPLIT_CHAR)
-                .append(duration.generateKeyPostfix());
-        return sb.toString();
+        String buildKey = buildKey(dimension, metaData, fields);
+        return buildKey + SPLIT_CHAR + duration.generateKeySuffix();
     }
 }
 

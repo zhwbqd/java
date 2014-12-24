@@ -2,9 +2,13 @@ package framework.redis;
 
 import com.google.common.collect.Lists;
 import com.google.common.collect.Maps;
+import framework.redis.KeyGenerator;
+import framework.redis.RedisCallBack;
+import framework.redis.RedisKeyType;
+import framework.redis.RedisService;
 import org.apache.commons.collections.CollectionUtils;
 import org.apache.commons.collections.MapUtils;
-import org.apache.commons.lang.StringUtils;
+import org.apache.commons.lang3.math.NumberUtils;
 import redis.clients.jedis.Jedis;
 import redis.clients.jedis.JedisPool;
 import redis.clients.jedis.Pipeline;
@@ -144,27 +148,24 @@ public class RedisServiceImpl implements RedisService {
     }
 
     @Override
-    public void incrAndExpBatchContinuous(final List<KeyCapsule> keyDurationPairs) {
-        if (CollectionUtils.isEmpty(keyDurationPairs)) {
+    public void incrAndExpBatchTimeSeries(final List<KeyCapsule> keyCapsules) {
+        if (CollectionUtils.isEmpty(keyCapsules)) {
             return;
         }
         execute(new RedisCallBack() {
             @Override
             public Object execute(Jedis jedis) {
                 Pipeline pipelined = jedis.pipelined();
-                List<KeyDurationPair> keys = new ArrayList<KeyDurationPair>(keyDurationPairs.size());
-                for (KeyDurationPair keyDuration : keyDurationPairs) {
+                for (KeyCapsule keyCapsule : keyCapsules) {
                     /*将key进行拼装, 获取ttl*/
-                    String cacheKey = KeyGenerator.generateCacheKey(RedisKeyType.STR, keyDuration.getKey());
-                    pipelined.ttl(cacheKey);
-                    keys.add(new KeyDurationPair(cacheKey, keyDuration.getDuration(), keyDuration.getIncrValue()));
+                    pipelined.ttl(keyCapsule.getKey());
                 }
                 List<Object> objects = pipelined.syncAndReturnAll();
                 int i = 0;
-                for (KeyDurationPair keyDurationPair : keys) {
-                    pipelined.incrBy(keyDurationPair.getKey(), keyDurationPair.getIncrValue());//key进行累加
-                    if ((Long) objects.get(i) < 0L) {//如果key对应的ttl<0, 表示key是无过期时间或不存在,进行expire操作
-                        pipelined.expire(keyDurationPair.getKey(), keyDurationPair.getSeconds());
+                for (KeyCapsule keyCapsule : keyCapsules) {
+                    pipelined.incr(keyCapsule.getKey());
+                    if ((Long) objects.get(i) < 0L) {
+                        pipelined.expire(keyCapsule.getKey(), keyCapsule.getExpireSeconds());
                     }
                     i++;
                 }
@@ -209,52 +210,62 @@ public class RedisServiceImpl implements RedisService {
     public Map<String, Object> getBatch(final Map<String, Class> keyMap) {
         return execute(
                 new RedisCallBack<Map<String, Object>>() {
+                    @Override
+                    public Map<String, Object> execute(Jedis jedis) {
+                        Map<String, Object> result = Maps.newHashMap();
+                        if (MapUtils.isEmpty(keyMap)) {
+                            return result;
+                        }
+                        List<String> keys = Lists.newArrayList();
+                        Pipeline pipelined = jedis.pipelined();
+                        for (Map.Entry<String, Class> entry : keyMap.entrySet()) {
+                            String key = entry.getKey();
+                            keys.add(key);
+                            pipelined.get(KeyGenerator.generateCacheKey(RedisKeyType.STR, key));
+                        }
+
+                        List<Object> objects = pipelined.syncAndReturnAll();
+                        for (int i = 0; i < objects.size(); i++) {
+                            String key = keys.get(i);
+                            Object value = objects.get(i);
+                            result.put(key, value == null ? null : RedisUtils.convertResult(value, keyMap.get(key)));
+                        }
+                        return result;
+                    }
+                });
+    }
+
+    @Override
+    public long sum(final List<String> keys) {
+        return execute(new RedisCallBack<Long>() {
             @Override
-            public Map<String, Object> execute(Jedis jedis) {
-                Map<String, Object> result = Maps.newHashMap();
-                if (MapUtils.isEmpty(keyMap)) {
-                    return result;
-                }
-                List<String> keys = Lists.newArrayList();
+            public Long execute(Jedis jedis) {
                 Pipeline pipelined = jedis.pipelined();
-                for (Map.Entry<String, Class> entry : keyMap.entrySet()) {
-                    String key = entry.getKey();
-                    keys.add(key);
+                for (String key : keys) {
                     pipelined.get(KeyGenerator.generateCacheKey(RedisKeyType.STR, key));
                 }
+                List<Object> values = pipelined.syncAndReturnAll();
 
-                List<Object> objects = pipelined.syncAndReturnAll();
-                for (int i = 0; i < objects.size(); i++) {
-                    String key = keys.get(i);
-                    Object value = objects.get(i);
-                    result.put(key, value == null ? null : RedisUtils.convertResult(value, keyMap.get(key)));
+                long sum = 0L;
+                for (int i = 0; i < values.size(); i++) {
+                    String val = keys.get(i);
+                    if (val != null && NumberUtils.isDigits(val)) {
+                        sum += Long.valueOf(val);
+                    }
                 }
-                return result;
+                return sum;
             }
         });
     }
 
     @Override
-    public String get(String key) {
-        if (StringUtils.isBlank(key)) {
-            throw new IllegalArgumentException();
-        }
-        key = KeyGenerator.generateCacheKey(RedisKeyType.STR, key);
-        Jedis jedis = null;
-        try {
-            jedis = jedisPool.getResource();
-            return jedis.get(key);
-        } catch (Exception e) {
-            if (jedis != null) {
-                this.jedisPool.returnBrokenResource(jedis);
+    public String get(final String key) {
+        return execute(new RedisCallBack<String>() {
+            @Override
+            public String execute(Jedis jedis) {
+                return jedis.get(KeyGenerator.generateCacheKey(RedisKeyType.STR, key));
             }
-            throw new IllegalStateException("failed execute jedis commands", e);
-        } finally {
-            //如果exception, isConnection=false, 不进行还操作
-            if (jedis != null && jedis.isConnected()) {
-                this.jedisPool.returnResource(jedis);
-            }
-        }
+        });
     }
 
     @Override
@@ -275,4 +286,5 @@ public class RedisServiceImpl implements RedisService {
             }
         }
     }
+
 }
