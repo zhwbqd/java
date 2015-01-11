@@ -1,6 +1,8 @@
 package arithemtic.perls.ch8;
 
 /**
+ * 找出连续最大的整数和
+ *
  * Date: 15/1/10
  * Time: 下午10:28
  *
