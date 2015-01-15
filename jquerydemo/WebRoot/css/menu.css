@@ -1,9 +1,0 @@
-li{
-	list-style: none;/*使li前面的圆点消失*/
-	margin-left: 18px;
-	display: none;
-}
-
-a{
-	text-decoration: none;
-}
