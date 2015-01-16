@@ -1,4 +1,4 @@
-package zhwb.study.netty;
+package framework.netty;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

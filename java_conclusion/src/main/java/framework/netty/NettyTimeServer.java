@@ -1,4 +1,4 @@
-package zhwb.study.netty;
+package framework.netty;
 
 import io.netty.bootstrap.ServerBootstrap;
 import io.netty.buffer.ByteBuf;

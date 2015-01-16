@@ -1,4 +1,4 @@
-package zhwb.study.guava;
+package framework.guava;
 
 import com.google.common.cache.Cache;
 import com.google.common.cache.CacheBuilder;

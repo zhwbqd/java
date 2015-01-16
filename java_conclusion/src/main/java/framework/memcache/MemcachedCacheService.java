@@ -1,4 +1,4 @@
-package zhwb.study.memcache;
+package framework.memcache;
 
 import net.spy.memcached.CASResponse;
 import net.spy.memcached.CASValue;

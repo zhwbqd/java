@@ -1,9 +1,9 @@
-package zhwb.study.memcache;
+package framework.memcache;
 
 import net.spy.memcached.CASResponse;
 import net.spy.memcached.CASValue;
 import net.spy.memcached.MemcachedClient;
-import zhwb.study.memcache.serialize.JsonProtocol;
+import framework.memcache.serialize.JsonProtocol;
 
 import java.io.IOException;
 import java.net.InetSocketAddress;

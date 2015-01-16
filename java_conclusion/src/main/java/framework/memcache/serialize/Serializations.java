@@ -1,4 +1,4 @@
-package zhwb.study.memcache.serialize;
+package framework.memcache.serialize;
 
 import java.util.HashMap;
 import java.util.Map;

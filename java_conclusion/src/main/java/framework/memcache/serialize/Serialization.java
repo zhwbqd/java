@@ -1,4 +1,4 @@
-package zhwb.study.memcache.serialize;
+package framework.memcache.serialize;
 
 /****
  * 序列化接口

@@ -1,4 +1,4 @@
-package zhwb.study.memcache;
+package framework.memcache;
 
 import java.util.*;
 import java.util.concurrent.ConcurrentHashMap;

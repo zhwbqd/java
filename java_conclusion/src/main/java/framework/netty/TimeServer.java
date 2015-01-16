@@ -1,4 +1,4 @@
-package zhwb.study.netty;
+package framework.netty;
 
 /**
  * Date: 14-6-30

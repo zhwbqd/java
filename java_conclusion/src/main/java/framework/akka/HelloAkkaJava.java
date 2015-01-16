@@ -1,4 +1,4 @@
-package zhwb.study.akka;
+package framework.akka;
 
 /**
  * @author jack.zhang
