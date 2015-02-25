@@ -1,4 +1,4 @@
-package zhwb.ognl;
+package zhwb.study.ognl;
 
 import ognl.Ognl;
 import ognl.OgnlContext;

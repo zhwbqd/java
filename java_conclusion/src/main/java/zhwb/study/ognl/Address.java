@@ -1,4 +1,4 @@
-package zhwb.ognl;
+package zhwb.study.ognl;
 
 public class Address {
     private String country;
