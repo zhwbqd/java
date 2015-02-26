@@ -1,16 +1,18 @@
 package zhwb.study.unsafe;
 
 /**
+ * 通过allocateInstance进行内存分配, 不进行对象的初始化及构造器
+ *
  * @author jack.zhang
  * @since 2015/2/25
  */
-public class AvoidInitTest {
+public class AvoidInit {
 
     private static final sun.misc.Unsafe UNSAFE = UnSafeFactory.getInstance();
 
-    private int a;
+    private int a = -1;
 
-    public AvoidInitTest() {
+    public AvoidInit() {
         this.a = 1;
     }
 
@@ -19,13 +21,13 @@ public class AvoidInitTest {
     }
 
     public static void main(String[] args) throws IllegalAccessException, InstantiationException {
-        AvoidInitTest o1 = new AvoidInitTest(); // constructor
+        AvoidInit o1 = new AvoidInit(); // constructor
         System.out.println(o1.getA()); // prints 1
 
-        AvoidInitTest o2 = AvoidInitTest.class.newInstance(); // reflection
+        AvoidInit o2 = AvoidInit.class.newInstance(); // reflection
         System.out.println(o2.getA()); // prints 1
 
-        AvoidInitTest o3 = (AvoidInitTest) UNSAFE.allocateInstance(AvoidInitTest.class); // unsafe
+        AvoidInit o3 = (AvoidInit) UNSAFE.allocateInstance(AvoidInit.class); // unsafe
         System.out.println(o3.getA()); // prints 0
     }
 

@@ -1,6 +1,8 @@
 package zhwb.study.unsafe;
 
 /**
+ * 利用CPU底层的CAS机制, 实现无锁并发
+ *
  * @author jack.zhang
  * @since 2015/2/25
  */

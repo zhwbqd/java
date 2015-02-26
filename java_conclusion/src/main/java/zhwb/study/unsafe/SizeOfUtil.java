@@ -37,17 +37,35 @@ public class SizeOfUtil {
             }
         }
 
-        return ((maxSize/8) + 1) * 8;   // padding
+        return ((maxSize / 8) + 1) * 8;   // padding
     }
 
-    private static long normalize(int value) {
-        if(value >= 0) return value;
+    public static long normalize(int value) {
+        if (value >= 0) return value;
         return (~0L >>> 32) & value;
     }
 
-    public static long sizeOfSimply(Object object){
+    public static long sizeOfSimply(Object object) {
         return UNSAFE.getAddress(
                 normalize(UNSAFE.getInt(object, 4L)) + 12L);
     }
+
+
+    public static void main(String[] args) {
+        System.out.println(sizeOf(1));
+        System.out.println(sizeOf("1"));
+        System.out.println(sizeOf(new ObjSize()));
+
+        System.out.println(sizeOfSimply(1));
+        System.out.println(sizeOfSimply("1"));
+        System.out.println(sizeOfSimply(new ObjSize()));
+    }
+}
+
+class ObjSize {
+    int a;
+    long b;
+    long c;
+    long d;
 
 }
