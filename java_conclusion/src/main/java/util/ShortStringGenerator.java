@@ -1,5 +1,7 @@
-package util.encrypt;
+package util;
 
+
+import util.encrypt.MD5Encrypt;
 
 /**
  * Date: 14-3-5
