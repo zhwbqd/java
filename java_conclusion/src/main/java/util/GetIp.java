@@ -26,6 +26,7 @@ public class GetIp {
 
             for (String s : list) {
                 writer.write(s);
+                writer.newLine();
             }
             System.out.println("fromIp: " + ips.get(0) + ", toIp: " + ips.get(1));
             writer.flush();
