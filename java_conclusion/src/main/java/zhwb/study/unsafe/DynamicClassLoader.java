@@ -19,9 +19,8 @@ public class DynamicClassLoader {
 
     private static Object getObject(String file) throws Exception {
         byte[] classContents = getClassContent(file);
-        Class c = UnSafeFactory.getInstance().defineClass(
-                null, classContents, 0, classContents.length);
-        return c.newInstance();
+//        Class c = UnSafeFactory.getInstance().defineClass(null, classContents, 0, classContents.length, DynamicClassLoader.class.getClassLoader(), ProtectionDomain);
+        return null;
     }
 
     private static byte[] getClassContent(String file) throws Exception {
