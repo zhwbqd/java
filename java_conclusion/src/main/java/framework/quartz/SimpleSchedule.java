@@ -6,13 +6,14 @@ import org.quartz.impl.matchers.KeyMatcher;
 import org.quartz.listeners.JobListenerSupport;
 import org.quartz.listeners.TriggerListenerSupport;
 
+import static org.quartz.CronScheduleBuilder.cronSchedule;
 import static org.quartz.SimpleScheduleBuilder.simpleSchedule;
 
 /**
  * @author jack.zhang
  * @since 2015/4/16
  */
-public class SimpleTrigger {
+public class SimpleSchedule {
 
 
     public static void main(String[] args) {
@@ -52,11 +53,6 @@ public class SimpleTrigger {
                 }
 
                 @Override
-                public void jobExecutionVetoed(JobExecutionContext context) {
-                    System.out.println("job was deny");
-                }
-
-                @Override
                 public void jobWasExecuted(JobExecutionContext context, JobExecutionException jobException) {
                     System.out.println("job was exec");
                 }
@@ -71,7 +67,7 @@ public class SimpleTrigger {
 
                 @Override
                 public void triggerFired(Trigger trigger, JobExecutionContext context) {
-                    System.out.println("trigger fired");
+                    System.out.println("trigger fired, trigger next time: " + context.getTrigger().getNextFireTime());
                 }
 
                 @Override
@@ -82,6 +78,13 @@ public class SimpleTrigger {
 
             // Tell quartz to schedule the job using our trigger
             scheduler.scheduleJob(job, trigger);
+
+            //reschedule job
+            scheduler.rescheduleJob(TriggerKey.triggerKey("trigger1", "group1"), TriggerBuilder.newTrigger()
+                    .withIdentity("trigger1", "group1")
+                    .withSchedule(cronSchedule("0/10 * * * * ?"))
+                    .build());
+
             Thread.sleep(60000);
             scheduler.shutdown();
 
@@ -90,6 +93,8 @@ public class SimpleTrigger {
         }
     }
 
+    @DisallowConcurrentExecution
+    @PersistJobDataAfterExecution
     public static class HelloJob implements Job {
         @Override
         public void execute(JobExecutionContext jobExecutionContext) throws JobExecutionException {
