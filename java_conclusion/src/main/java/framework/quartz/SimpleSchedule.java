@@ -49,7 +49,7 @@ public class SimpleSchedule {
 
                 @Override
                 public void jobToBeExecuted(JobExecutionContext context) {
-                    System.out.println("job to be exec");
+                    System.out.println("job to be exec" + context.getFireTime());
                 }
 
                 @Override
