@@ -16,17 +16,15 @@
 
 package framework.json2java;
 
+import com.sun.codemodel.CodeWriter;
 import com.sun.codemodel.JCodeModel;
-import framework.json2java.generated.Product;
-import framework.json2java.generated.ProductTypes;
-import org.codehaus.jackson.map.ObjectMapper;
+import com.sun.codemodel.writer.SingleStreamCodeWriter;
 import org.jsonschema2pojo.SchemaMapper;
 
-import java.io.File;
+import java.io.ByteArrayOutputStream;
 import java.io.IOException;
 import java.net.URI;
 import java.net.URISyntaxException;
-import java.util.ArrayList;
 
 public class Example {
 
@@ -34,33 +32,33 @@ public class Example {
 
         // BEGIN EXAMPLE
 
-//        JCodeModel codeModel = generate("address.json", "Address", "com.example");
-//        output(codeModel);
-//
-//        codeModel = generate("array.json", "Array", "com.example");
-//        output(codeModel);
-//
-//        codeModel = generate("enum.json", "SomeEnum", "com.example");
-//        output(codeModel);
+        JCodeModel codeModel = generate("address.json", "Address", "com.example");
+        output(codeModel);
+
+        codeModel = generate("array.json", "Array", "com.example");
+        output(codeModel);
+
+        codeModel = generate("enum.json", "SomeEnum", "com.example");
+        output(codeModel);
 
         // END EXAMPLE
 
-        final Product product = new Product();
-        product.setId("1");
-        product.setTitleSortName("name");
-        product.setAdditionalProperty("key", "value");
-        product.setProductType(new ArrayList<ProductTypes>() {{
-            ProductTypes productTypes = new ProductTypes();
-            productTypes.setId("1-1");
-            productTypes.setType("type");
-            productTypes.setAdditionalProperty("key", "value");
-            add(productTypes);
-        }});
-
-        ObjectMapper objectMapper = new ObjectMapper();
-        String string = objectMapper.writeValueAsString(product);
-
-        System.out.println(string);
+//        final Product product = new Product();
+//        product.setId("1");
+//        product.setTitleSortName("name");
+//        product.setAdditionalProperty("key", "value");
+//        product.setProductType(new ArrayList<ProductTypes>() {{
+//            ProductTypes productTypes = new ProductTypes();
+//            productTypes.setId("1-1");
+//            productTypes.setType("type");
+//            productTypes.setAdditionalProperty("key", "value");
+//            add(productTypes);
+//        }});
+//
+//        ObjectMapper objectMapper = new ObjectMapper();
+//        String string = objectMapper.writeValueAsString(product);
+//
+//        System.out.println(string);
     }
 
     private static JCodeModel generate(String fileName, String className, String packageName) throws URISyntaxException, IOException {
@@ -71,9 +69,13 @@ public class Example {
     }
 
     private static void output(JCodeModel codeModel) throws IOException {
-        File output = new File("output");
-        boolean mkdirs = output.mkdirs();
-        codeModel.build(output);
+        ByteArrayOutputStream outputStream = new ByteArrayOutputStream();
+        CodeWriter codeWriter = new SingleStreamCodeWriter(outputStream);
+        codeModel.build(codeWriter);
+        codeWriter.close();
+        outputStream.close();
+        String string = outputStream.toString("utf-8");
+        System.out.println(string);
     }
 
 }
