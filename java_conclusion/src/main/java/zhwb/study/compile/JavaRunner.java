@@ -211,8 +211,7 @@ class ClassFileManager extends ForwardingJavaFileManager<StandardJavaFileManager
             protected Class<?> findClass(String name)
                     throws ClassNotFoundException {
                 byte[] b = jclassObject.getBytes();
-                return super.defineClass(name, jclassObject
-                        .getBytes(), 0, b.length);
+                return super.defineClass(name, b, 0, b.length);
             }
         };
     }
