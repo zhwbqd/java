@@ -15,13 +15,13 @@ import java.util.concurrent.*;
 
 public class JavaRunner {
 
-    public static void main(String[] args) {
+    public static void main(String[] args) throws IOException {
         String name = "Main";
         String code = "public class Main { public static void main(String[] args) {System.out.println(\"Hello World!\");} }";
         compile(name, code);
     }
 
-    public static void compile(String name, String code) {
+    public static void compile(String name, String code) throws IOException {
         compile(name, code, 5000);
     }
 
@@ -32,7 +32,7 @@ public class JavaRunner {
      * @param code      String to compile
      * @param timeLimit (otional) limit for code to run, default to 5 seconds
      */
-    public static void compile(final String name, String code, int timeLimit) {
+    public static void compile(final String name, String code, int timeLimit) throws IOException {
 
         /*Creating dynamic java source code file object*/
         final SimpleJavaFileObject fileObject = new DynamicJavaSourceCodeObject(name, code);
@@ -78,6 +78,9 @@ public class JavaRunner {
             }
         } else {
             ExecutorService service = Executors.newSingleThreadExecutor();
+
+            JavaFileObject javaFileForOutput = fileManager.getJavaFileForOutput(null, null, null, null);
+            System.out.println(javaFileForOutput.openOutputStream());
 
             try {
                 Runnable r = new Runnable() {
@@ -246,7 +249,9 @@ class ClassFileManager extends ForwardingJavaFileManager<StandardJavaFileManager
     public JavaFileObject getJavaFileForOutput(Location location,
                                                String className, JavaFileObject.Kind kind, FileObject sibling)
             throws IOException {
-        jclassObject = new JavaClassObject(className, kind);
+        if (jclassObject == null) {
+            jclassObject = new JavaClassObject(className, kind);
+        }
         return jclassObject;
     }
 }
