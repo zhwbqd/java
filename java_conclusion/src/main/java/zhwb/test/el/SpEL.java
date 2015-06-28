@@ -41,5 +41,6 @@ public class SpEL {
         System.out.println(result1);
         System.out.println(result6.getValue(context,boolean.class));
         System.out.println(result7.getValue(context,boolean.class));
+        System.out.println(result7.getValue(context,boolean.class));
     }
 }
