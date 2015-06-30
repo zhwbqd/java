@@ -21,6 +21,7 @@ import java.util.jar.JarInputStream;
  */
 public class CustomClassLoader extends SecureClassLoader {
 
+    private static final String CLASS = ".class";
     private final Map<String, byte[]> classAsBytes;
 
     private final Map<String, Class> loadedClass;
@@ -55,7 +56,8 @@ public class CustomClassLoader extends SecureClassLoader {
 
             JarEntry jarEntry = null;
             while ((jarEntry = jis.getNextJarEntry()) != null) {
-                if (jarEntry.isDirectory()) {
+                String fileName = jarEntry.getName();
+                if (jarEntry.isDirectory() || !fileName.endsWith(CLASS)) {
                     continue;
                 }
 
@@ -66,7 +68,7 @@ public class CustomClassLoader extends SecureClassLoader {
                 while ((len = jis.read(b)) > 0) {
                     out.write(b, 0, len);
                 }
-                String className = jarEntry.getName().substring(0, jarEntry.getName().indexOf(".class")).replace("/", ".");
+                String className = fileName.substring(0, fileName.indexOf(CLASS)).replace("/", ".");
                 classAsBytes.put(className, out.toByteArray());
 
                 out.close();
