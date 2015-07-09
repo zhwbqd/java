@@ -5,6 +5,8 @@ import org.apache.http.client.methods.CloseableHttpResponse;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.CloseableHttpClient;
 import org.apache.http.impl.client.HttpClientBuilder;
+import org.apache.http.impl.client.HttpClients;
+import org.apache.http.impl.conn.PoolingHttpClientConnectionManager;
 import org.apache.http.util.EntityUtils;
 
 import java.io.IOException;
@@ -28,5 +30,12 @@ public class BuilderHttpClient {
     public static void main(String[] args) throws IOException {
         CloseableHttpResponse response = new BuilderHttpClient().client.execute(new HttpGet("http://www.baidu.com"));
         System.out.println(EntityUtils.toString(response.getEntity()));
+
+        PoolingHttpClientConnectionManager manager = new PoolingHttpClientConnectionManager();
+        manager.setDefaultMaxPerRoute(50);
+        manager.setMaxTotal(50);
+
+        CloseableHttpClient httpClient = HttpClients.createMinimal(manager);
+
     }
 }
