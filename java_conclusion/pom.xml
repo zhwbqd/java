@@ -89,18 +89,11 @@
             <artifactId>disruptor</artifactId>
             <version>3.3.0</version>
         </dependency>
-        <!-- Storm Dependency -->
-        <dependency>
-            <groupId>storm</groupId>
-            <artifactId>storm</artifactId>
-            <version>0.7.1</version>
-        </dependency>
         <dependency>
             <groupId>commons-collections</groupId>
             <artifactId>commons-collections</artifactId>
             <version>3.2.1</version>
         </dependency>
-
         <dependency>
             <groupId>com.typesafe.akka</groupId>
             <artifactId>akka-actor_2.10</artifactId>
@@ -127,11 +120,6 @@
             <version>2.2.1</version>
         </dependency>
         <dependency>
-            <groupId>org.eclipse.jdt</groupId>
-            <artifactId>core</artifactId>
-            <version>3.3.0-v_771</version>
-        </dependency>
-        <dependency>
             <groupId>org.jsonschema2pojo</groupId>
             <artifactId>jsonschema2pojo-core</artifactId>
             <version>0.4.11</version>
@@ -152,13 +140,5 @@
             <version>4.1.5.RELEASE</version>
         </dependency>
     </dependencies>
-
-    <repositories>
-        <!-- Repository where we can found the storm dependencies  -->
-        <repository>
-            <id>clojars.org</id>
-            <url>http://clojars.org/repo</url>
-        </repository>
-    </repositories>
 
 </project>

@@ -17,7 +17,7 @@ public class FindMaxSerial {
 
     }
 
-    private int[] arrays = {31, -41, 59, 26, -53, 58, 97, -93, -23, 84};
+    private int[] arrays = {-2,-1};
 
     public int sum() {
         int max = 0;
