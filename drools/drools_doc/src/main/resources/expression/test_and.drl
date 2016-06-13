@@ -6,37 +6,21 @@ import java.util.List;
 import org.apache.commons.lang3.StringUtils
 
 rule test_and
+    salience 996
     when
-        /*如何将判断和赋值放在一起*/
-//        From(clientIp: ips) and From(clientIp != null) and From(clientNums:nums) and From(clientNums!=null)
-        ((From(clientIp: ips) and From(clientIp != null))
- and
-        (From(clientNums:nums) and From(clientNums!=null)))
+        $emp : Employer()
     then
-        System.out.println("找到想要的值从数据中:" + clientIp + ", "+clientNums);
+        From f = new From();
+        f.setIps($emp.getName());
+        insert(f);
+        System.out.println("fire");
 end
-
-/*rule test_and_0
-    when
-        From(ips!=null)
-        From(ips.length>0)
-    then
-        System.out.println("非空则报错");
-end*/
 
 rule test_and_1
+    salience 977
     when
-        From(notnullIP:ips!=null,notnullIP.length>0,!StringUtils.isBlank(ips))
+        $f : From()
     then
-        System.out.println("非空则报错1");
-end
-
-rule test_and_2
-    when
-        $f:From(ips!=null)
-        eval($f.ips==null&&$f.ips==null)
-//        eval(f.ips.length>0)
-    then
-        System.out.println("非空则报错2");
+        System.out.println("exec");
 end
 

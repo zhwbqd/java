@@ -1,15 +1,15 @@
 package expression;
 
 import domain.Employer;
-import domain.From;
 import org.drools.KnowledgeBase;
 import org.drools.builder.KnowledgeBuilder;
 import org.drools.builder.KnowledgeBuilderFactory;
 import org.drools.builder.ResourceType;
 import org.drools.io.impl.ClassPathResource;
-import org.drools.runtime.StatefulKnowledgeSession;
+import org.drools.runtime.StatelessKnowledgeSession;
 
 import java.util.ArrayList;
+import java.util.List;
 
 /**
  *
@@ -25,18 +25,20 @@ public class TestAnd {
                 ResourceType.DRL);
         KnowledgeBase knowledgeBase = kb.newKnowledgeBase();
 
-        StatefulKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatefulKnowledgeSession();
+        StatelessKnowledgeSession statefulKnowledgeSession = knowledgeBase.newStatelessKnowledgeSession();
 
-        From f = new From();
+//        From f = new From();
         Employer employer = new Employer();
-        f.setNums(new ArrayList(){{
-            add(1);
-        }});
-        f.setIps("1,2,3,4");
-        statefulKnowledgeSession.insert(f);
-        statefulKnowledgeSession.insert(employer);
+//        Employer employer1 = new Employer();
+//        f.setNums(new ArrayList(){{
+//            add(1);
+//        }});
+//        f.setIps("1,2,3,4");
+//        statefulKnowledgeSession.insert(f);
+        List<Object> list = new ArrayList<Object>();
+        list.add(employer);
+//        list.add(employer1);
 
-        statefulKnowledgeSession.fireAllRules();
-        statefulKnowledgeSession.dispose();
+        statefulKnowledgeSession.execute(list);
     }
 }
