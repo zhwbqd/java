@@ -6,7 +6,7 @@ import java.util.concurrent.locks.Lock;
 import java.util.concurrent.locks.ReentrantLock;
 
 /**
- * lockinterruptibly 与 lock相比, 可以让线程在等待的时候响应中断, 而lock只能一直等待
+ * lockinterruptibly
  *
  * @author jack.zhang
  * @since 2015/5/13

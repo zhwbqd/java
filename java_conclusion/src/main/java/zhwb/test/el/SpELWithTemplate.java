@@ -6,7 +6,6 @@ import org.springframework.expression.common.TemplateParserContext;
 import org.springframework.expression.spel.standard.SpelExpressionParser;
 
 /**
- * 相当于模板引擎
  *
  * @author jack.zhang
  * @since 2015/6/28 0028

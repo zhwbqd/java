@@ -2,8 +2,7 @@
 
 1. arithemetic -- 算法与数据结构
 2. design-pattern-study -- 设计模式
-3. drools -- 规则引擎
-4. java_conclusion -- java utils, juc, jvm, jcl. etc
+3. java_conclusion -- java utils, juc, jvm, jcl. etc
 
 
 

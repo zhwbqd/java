@@ -17,10 +17,8 @@ import java.util.Date;
 public class SpEL {
     public static void main(String[] args) {
         ExpressionParser parser = new SpelExpressionParser();
-        //1.给root对象赋值
         EvaluationContext context = new StandardEvaluationContext();
 
-        //2.给自定义变量赋值
         Date now = new Date();
         Date before = DateUtils.addHours(now, -1);
         Date after = DateUtils.addHours(now, 1);
